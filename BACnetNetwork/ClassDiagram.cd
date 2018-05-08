@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="NetAddress" Collapsed="true">
+    <Position X="4.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAAAAEAAAEAYAAAAAAAAAAAAAAEABAAAAAAAA=</HashCode>
+      <FileName>NetAddress.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NPDU" Collapsed="true">
+    <Position X="4.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAgAAAFgABBQCAAAEAogAAIAAAUAAACgAAABAEAAAA=</HashCode>
+      <FileName>NPDU.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CSimpleNetwork">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAABAAAAAAAQAAAABAAAAAAAAAAAACIAEABAA=</HashCode>
+      <FileName>SimpleNetwork.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Address" Collapsed="true">
+    <Position X="2.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>NPDU.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="ControlBits" Collapsed="true">
+    <Position X="2.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAACAAAAAAgAAQAAAAAAAAAAA=</HashCode>
+      <FileName>NPDU.cpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

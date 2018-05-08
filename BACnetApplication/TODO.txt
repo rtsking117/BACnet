@@ -1,0 +1,261 @@
+Confirmed services:
+
+	Alarm/Event services
+		Acknowledge Alarm						- UNSTARTED
+		Confirmed COV Notification				- UNSTARTED
+		Confirmed COV Notification Multiple		- UNSTARTED
+		Confirmed Event Notification			- UNSTARTED
+		Get Alarm Summary Response				- UNSTARTED
+		Get Enrollment Summary					- UNSTARTED
+		Get Enrollment Summary Response			- UNSTARTED
+		Get Event Information					- UNSTARTED
+		Get Event Information Response			- UNSTARTED
+		Life Safety Operation					- UNSTARTED
+		Subscribe COV							- UNSTARTED
+		Subscribe COV Property					- UNSTARTED
+		Subscribe COV Property Multiple			- UNSTARTED
+
+	File Access Services
+		Read File								- COMPLETE
+		Read File Response						- COMPLETE
+		Write File								- COMPLETE
+		Write File Response						- COMPLETE
+
+	Object Access Services
+		Add List Element						- COMPLETE
+		Create Object							- COMPLETE
+		Create Object Response					- COMPLETE
+		Delete Object							- COMPLETE
+		Read Property							- COMPLETE
+		Read Property Response					- COMPLETE
+		Read Property Multiple					- COMPLETE
+		Read Property Multiple Response			- COMPLETE
+		Read Range								- COMPLETE
+		Read Range Response						- COMPLETE
+		Remove List Element						- COMPLETE
+		Write Property							- COMPLETE
+		Write Property Multiple					- COMPLETE
+
+	Remote Device Management
+		Device Communication Control			- COMPLETE
+		Confirmed Private Transfer				- COMPLETE
+		Confirmed Private Transfer Response		- COMPLETE
+		Confirmed Text Message					- COMPLETE
+		Reinitialize Device						- COMPLETE
+
+	Virtual Terminal Services
+		VT Open									- COMPLETE
+		VT Open Response						- COMPLETE
+		VT Close								- COMPLETE
+		VT Data									- COMPLETE
+		VT Data Response						- COMPLETE
+
+Unconfirmed Services:
+
+	Alarm/Event Services
+		Unconfirmed COV Notification			- UNSTARTED
+		Unconfirmed COV Notification Multiple	- UNSTARTED
+		Unconfirmed Event Notification			- UNSTARTED
+		
+	Object Access Services
+		Write Group								- COMPLETE
+
+	Remote Device Management Services
+		
+		I Am									- COMPLETE
+		I Have									- UNSTARTED
+		Unconfirmed Private Transfer			- UNSTARTED
+		Unconfirmed Text Message				- UNSTARTED
+		Time Synchronization					- UNSTARTED
+		UTC Type Syncronization					- UNSTARTED
+		Who Has									- UNSTARTED
+		Who Is									- COMPLETE
+
+Errors:
+	Generic										- COMPLETE
+
+	Alarm/Event Services
+		Subscribe COV Property Multiple Error	- UNSTARTED
+
+	Object Access Services
+		Change List Error						- UNSTARTED
+		Create Object Error						- COMPLETE
+		Write Property Multiple Error			- UNSTARTED
+
+	Remote Device Management Services
+		Confirmed Private Transfer Error		- UNSTARTED
+
+	Virtual Terminal Services
+		VT Close Error							- UNSTARTED
+
+Basic Types:
+	Null										- COMPLETE
+	Boolean										- COMPLETE
+	Unsigned									- COMPLETE
+	Unsigned8/16/32/64							- COMPLETE
+	Signed										- COMPLETE
+	Signed8/16/32/64							- COMPLETE
+	Float										- COMPLETE
+	Double										- COMPLETE
+	OctetString									- COMPLETE
+	CharacterString								- COMPLETE
+	BitString									- COMPLETE
+	Enumerated									- COMPLETE
+	Date										- COMPLETE
+	Time										- COMPLETE
+	ObjectID									- COMPLETE
+	Any											- COMPLETE
+	ApplicationAny								- COMPLETE
+	AnyDateTime									- UNSTARTED
+
+Complex Types:
+	AccessRule									- UNSTARTED
+	AccumulatorRecord							- UNSTARTED
+	ActionCommand								- UNSTARTED
+	ActionList									- UNSTARTED
+	Address										- UNSTARTED
+	AddressBinding								- UNSTARTED
+	AssignedAccessRights						- UNSTARTED
+	AssignedLandingCalls						- UNSTARTED
+	AuthenticationFactor						- UNSTARTED
+	AuthenticationFactorFormat					- UNSTARTED
+	AuthenticationPolicy						- UNSTARTED
+	BDTEntry									- UNSTARTED
+	CalendarEntry								- UNSTARTED
+	ChannelValue								- PARTIAL
+	ClientCOV									- UNSTARTED
+	COVMultipleSubscription						- UNSTARTED
+	COVSubscription								- UNSTARTED
+	CredentialAuthenticationFactor				- UNSTARTED
+	DailySchedule								- UNSTARTED
+	DateRange									- UNSTARTED
+	DateTime									- PARTIAL
+	Destination									- UNSTARTED
+	DeviceObjectPropertyReference				- UNSTARTED
+	DeviceObjectPropertyValue					- UNSTARTED
+	DeviceObjectReference						- UNSTARTED
+	EventLogRecord								- UNSTARTED
+	EventNotificationSubscription				- UNSTARTED
+	EventParameter								- UNSTARTED
+	FaultParameter								- UNSTARTED
+	FDTEntry									- UNSTARTED
+	GroupChannelValue							- PARTIAL
+	HostAddress									- UNSTARTED
+	HostNPort									- UNSTARTED
+	KeyIdentifier								- UNSTARTED
+	LandingCallStatus							- UNSTARTED
+	LandingDoorStatus							- UNSTARTED
+	LiftCallCarState							- UNSTARTED
+	LightingCommand								- UNSTARTED
+	LogData										- UNSTARTED
+	LogMultipleRecord							- UNSTARTED
+	LogRecord									- UNSTARTED
+	NameValue									- UNSTARTED
+	NameValueCollection							- UNSTARTED
+	NetworkSecurityPolicy						- UNSTARTED
+	NotificationParameters						- UNSTARTED
+	ObjectPropertyReference						- UNSTARTED
+	ObjectPropertyValue							- UNSTARTED
+	OptionalBinaryPV							- UNSTARTED
+	OptionalCharacterString						- UNSTARTED
+	OptionalReal								- UNSTARTED
+	OptionalUnsigned							- UNSTARTED
+	PortPermission								- UNSTARTED
+	Prescale									- UNSTARTED
+	PriorityArray								- UNSTARTED
+	PriorityValue								- UNSTARTED
+	ProcessIDSelection							- UNSTARTED
+	PropertyAccessResult						- UNSTARTED
+	PropertyReference							- COMPLETE
+	PropertyStates								- UNSTARTED
+	PropertyValue								- COMPLETE
+	Recipient									- UNSTARTED
+	RecipientProcess							- UNSTARTED
+	RouterEntry									- UNSTARTED
+	Scale										- UNSTARTED
+	SecurityKeySet								- UNSTARTED
+	SetpointReference							- UNSTARTED
+	ShedLevel									- UNSTARTED
+	SpecialEvent								- UNSTARTED
+	TimerStateChangeValue						- UNSTARTED
+	TimeStamp									- UNSTARTED
+	TimeValue									- UNSTARTED
+	VMACEntry									- UNSTARTED
+	VTSession									- UNSTARTED
+	WeekNDay									- UNSTARTED
+	ReadAccessResult							- PARTIAL
+	ReadAccessSpecification						- PARTIAL
+	WriteAccessSpecification					- PARTIAL
+
+Enumerations:
+	AbortReason									- COMPLETE
+	RejectReason								- COMPLETE
+	ErrorClass									- COMPLETE
+	ErrorCode									- COMPLETE
+	AuthenticationFactorDisable					- UNSTARTED
+	AccessCredentialDisableReason				- UNSTARTED
+	AccessEvent									- UNSTARTED
+	AccessPassbackMode							- UNSTARTED
+	AccessUserType								- UNSTARTED
+	AccessZoneOccupancyState					- UNSTARTED
+	Action										- UNSTARTED
+	AuthenticationFactorType					- UNSTARTED
+	AuthenticationStatus						- UNSTARTED
+	AuthorizationExemption						- UNSTARTED
+	AuthorizationMode							- UNSTARTED
+	BackupState									- UNSTARTED
+	BinaryLightingPV							- UNSTARTED
+	BinaryPV									- UNSTARTED
+	DeviceStatus								- UNSTARTED
+	DoorAlarmState								- UNSTARTED
+	DoorSecuredStatus							- UNSTARTED
+	DoorStatus									- UNSTARTED
+	DoorValue									- UNSTARTED
+	EngineeringUnits							- UNSTARTED
+	EscalatorFault								- UNSTARTED
+	EscalatorMode								- UNSTARTED
+	EscalatorOperationDirection					- UNSTARTED
+	EventState									- UNSTARTED
+	EventType									- UNSTARTED
+	FaultType									- UNSTARTED
+	FileAccessMethod							- UNSTARTED
+	IPMode										- UNSTARTED
+	LifeSafetyMode								- UNSTARTED
+	LifeSafetyOperation							- UNSTARTED
+	LifeSafetyState								- UNSTARTED
+	LiftCarDirection							- UNSTARTED
+	LiftCarDoorCommand							- UNSTARTED
+	LiftCarDriveStatus							- UNSTARTED
+	LiftCarMode									- UNSTARTED
+	LiftFault									- UNSTARTED
+	LiftGroupMode								- UNSTARTED
+	LightingInProgress							- UNSTARTED
+	LightingOperation							- UNSTARTED
+	LightingTransition							- UNSTARTED
+	LockStatus									- UNSTARTED
+	LoggingType									- UNSTARTED
+	Maintenance									- UNSTARTED
+	NetworkNumberQuality						- UNSTARTED
+	NetworkPortCommand							- UNSTARTED
+	NetworkType									- UNSTARTED
+	NodeType									- UNSTARTED
+	NotifyType									- UNSTARTED
+	ObjectType									- UNSTARTED
+	Polarity									- UNSTARTED
+	ProgramError								- UNSTARTED
+	ProgramRequest								- UNSTARTED
+	ProgramState								- UNSTARTED
+	PropertyIdentifier							- UNSTARTED
+	ProtocolLevel								- UNSTARTED
+	Relationship								- UNSTARTED
+	Reliability									- UNSTARTED
+	RestartReason								- UNSTARTED
+	SecurityLevel								- UNSTARTED
+	SecurityPolicy								- UNSTARTED
+	Segementation								- COMPLETE
+	ShedState									- UNSTARTED
+	SilencedState								- UNSTARTED
+	TimerState									- UNSTARTED
+	TimerTransition								- UNSTARTED
+	VTClass										- UNSTARTED
+	WriteStatus									- UNSTARTED

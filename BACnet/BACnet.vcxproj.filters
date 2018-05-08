@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Public">
+      <UniqueIdentifier>{04c18d34-ddd6-48ef-bc7f-34749f4d22b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Internal">
+      <UniqueIdentifier>{d8af8bb1-0c01-466d-bc0b-b1ba5165bf30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Private">
+      <UniqueIdentifier>{975220c7-333b-4b38-b16a-141542d5417d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Internal">
+      <UniqueIdentifier>{d3f4ea13-59dd-4a75-b91e-a4cb6c3d74b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Internal\Threading">
+      <UniqueIdentifier>{7f469535-57bd-46be-9ef8-fafee454ea35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Internal\Buffers">
+      <UniqueIdentifier>{280a5be1-a107-460a-a984-4f0d053e0622}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Internal\Threading">
+      <UniqueIdentifier>{36d2a4de-5e1f-428f-8b63-bce5e813d4e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Internal\Buffers">
+      <UniqueIdentifier>{93e46897-0e22-4ac1-b77d-cedcec6661e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Internal\String">
+      <UniqueIdentifier>{e1251001-03d3-4b7e-a45e-1e224daffdcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Internal\String">
+      <UniqueIdentifier>{e36c4c78-9570-4bdf-b49c-05aaca8b3a28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Internal\String\Octet">
+      <UniqueIdentifier>{af0f4b80-b97d-42d5-947d-5dd4b1c223e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Internal\String\Character">
+      <UniqueIdentifier>{7ccb09e1-1a74-4457-b1e5-f169c1843bde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Internal\String\Bit">
+      <UniqueIdentifier>{1e754e07-7b45-400a-a405-5d4f3276c580}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BACnetCommon.h">
+      <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="ComWrapper.h">
+      <Filter>Header Files\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetTypes.h">
+      <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetInterface.h">
+      <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetThreading.h">
+      <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetBuffer.h">
+      <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetCore.h">
+      <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetEvent.h">
+      <Filter>Header Files\Internal\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetMutex.h">
+      <Filter>Header Files\Internal\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadPool.h">
+      <Filter>Header Files\Internal\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffer.h">
+      <Filter>Header Files\Internal\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="TransmitBuffer.h">
+      <Filter>Header Files\Internal\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetSpinLock.h">
+      <Filter>Header Files\Internal\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetString.h">
+      <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Unicode.h">
+      <Filter>Header Files\Internal\String</Filter>
+    </ClInclude>
+    <ClInclude Include="UTF8.h">
+      <Filter>Header Files\Internal\String</Filter>
+    </ClInclude>
+    <ClInclude Include="UTF16.h">
+      <Filter>Header Files\Internal\String</Filter>
+    </ClInclude>
+    <ClInclude Include="ISO 8859-1.h">
+      <Filter>Header Files\Internal\String</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetBitString.h">
+      <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetByteString.h">
+      <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadpoolTimer.h">
+      <Filter>Header Files\Internal\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>Header Files\Internal\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetStringImpl.h">
+      <Filter>Header Files\Internal\String</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPtr.h">
+      <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetResult.h">
+      <Filter>Header Files\Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BACnetTypes.cpp">
+      <Filter>Source Files\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="BACnetEvent.cpp">
+      <Filter>Source Files\Internal\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="BACnetMutex.cpp">
+      <Filter>Source Files\Internal\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="BACnetThreading.cpp">
+      <Filter>Source Files\Internal\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadPool.cpp">
+      <Filter>Source Files\Internal\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="Buffer.cpp">
+      <Filter>Source Files\Internal\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="TransmitBuffer.cpp">
+      <Filter>Source Files\Internal\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="BACnetSpinLock.cpp">
+      <Filter>Source Files\Internal\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="BACnetString.cpp">
+      <Filter>Source Files\Internal\String\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="ISO 8859-1.cpp">
+      <Filter>Source Files\Internal\String\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Unicode.cpp">
+      <Filter>Source Files\Internal\String\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="UTF8.cpp">
+      <Filter>Source Files\Internal\String\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="UTF16.cpp">
+      <Filter>Source Files\Internal\String\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="BACnetByteString.cpp">
+      <Filter>Source Files\Internal\String\Octet</Filter>
+    </ClCompile>
+    <ClCompile Include="BACnetBitString.cpp">
+      <Filter>Source Files\Internal\String\Bit</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadpoolTimer.cpp">
+      <Filter>Source Files\Internal\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread.cpp">
+      <Filter>Source Files\Internal\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Internal\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="BACnetStringImpl.cpp">
+      <Filter>Source Files\Internal\String\Character</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
