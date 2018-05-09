@@ -22,6 +22,8 @@ typedef struct IBACnetRequestParser IBACnetRequestParser;
 
 typedef U32 BACnetObjectID;
 
+static const U32 InvalidObjectID = (BACnetObjectID)-1;
+
 BACNET_FORCEINLINE BACnetObjectID CreateBACnetObjectID(U32 ObjectType, U32 InstanceNumber)
 {
 	return ((ObjectType & 0x3FF) << 22) | (InstanceNumber & 0x3FFFFF);

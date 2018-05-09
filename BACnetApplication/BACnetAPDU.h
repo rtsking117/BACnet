@@ -4,8 +4,6 @@
 #include "ASN1.h"
 #include "BACnetApplication.h"
 
-#define BACNET_INVALID_INDEX (U32)-1
-
 template<typename...>
 struct is_bacnet_template : public std::false_type { };
 
@@ -378,7 +376,6 @@ private:
 	//Stupid, but we have to do this to keep DestroySelection private.
 	//Prevents us from making a mess of the union (outside of here).
 	template<typename...> friend union BACnetChoiceStorage;
-	
 	template<U32, typename...> friend class BACnetChoice;
 
 	void CopySelection(U32 Selection, BACnetChoiceStorage<T, Tail...>& Other)
@@ -455,6 +452,7 @@ public:
 };
 
 static const U32 NoDefault = (U32)-1;
+static const U32 InvalidIndex = (U32)-1;
 
 template<U32 DefaultChoice, typename... Types>
 class BACnetChoice
@@ -484,18 +482,21 @@ public:
 
 	BACnetChoice& operator=(BACnetChoice<DefaultChoice, Types...>& Other)
 	{
-		selection = Other.selection;
-		if(IsValid())
+		if(this != &Other)
 		{
-			//copy the other's storage.
-			storage.CopySelection(selection, Other.storage);
+			selection = Other.selection;
+			if(IsValid())
+			{
+				//copy the other's storage.
+				storage.CopySelection(selection, Other.storage);
+			}
 		}
 		return *this;
 	}
 
 	bool IsValid()
 	{
-		return selection != BACNET_INVALID_INDEX && is_valid_selection(selection);
+		return selection != InvalidIndex && is_valid_selection(selection);
 	}
 
 	bool is_selected(U32 Index)
@@ -520,7 +521,7 @@ public:
 	void clear_selection()
 	{
 		storage.DestroySelection(selection);
-		selection = -1;
+		selection = InvalidIndex;
 	}
 
 	U32 get_selection()
@@ -543,7 +544,7 @@ public:
 		BACnetResult r = storage.Decode(selection, value);
 		if(BCE_FAILED(r))
 		{
-			selection = -1;
+			selection = InvalidIndex;
 		}
 		return r;
 	}
@@ -699,10 +700,10 @@ public:
 	typedef VT ValueType;
 
 private:
-	VT ThisValue;
+	ValueType ThisValue;
 public:
 
-	VT& value()
+	ValueType & value()
 	{
 		return ThisValue;
 	}
@@ -808,7 +809,7 @@ class BACnetSequence<T, Tail...> : private BACnetSequence<Tail...>
 
 public:
 
-	BACnetSequence() : IsPresent(!T::IsOptional) {}
+	BACnetSequence() {}
 
 	template<U32 Index>
 	typename std::enable_if_t<(Index == 0) && (T::IsOptional == false), bool>
@@ -884,11 +885,8 @@ public:
 		{
 			//Are we off the end, or 
 			if(index >= value.GetNumElements() ||
-				//is the value tagged, and the tag doesn't match, or
-				(T::Tag != NoTag && value.GetElement(index).GetTag() != T::Tag))// ||
-				//is the value untagged, and not equivalent to the underlying type?
-				//Need to refactor this - it doesn't work
-				//(T::Tag == NoTag && value.GetElement(index).GetType() != T::ValueType))
+				//is the value tagged, and the tag doesn't match?
+				(T::Tag != NoTag && value.GetElement(index).GetTag() != T::Tag))
 			{
 				//Forward past this element.
 				return BACnetSequence<Tail...>::Decode(value, index);
@@ -906,11 +904,8 @@ public:
 		{
 			//Are we off the end, or 
 			if(index >= value.GetNumElements() ||
-				//is the value tagged, and the tag doesn't match, or
-				(T::Tag != NoTag && value.GetElement(index).GetTag() != T::Tag))// ||
-				//is the value untagged, and not equivalent to the underlying type?
-				//Need to refactor this - it doesn't work
-				//(T::Tag == NoTag && value.GetElement(index).GetType() != T::ValueType))
+				//is the value tagged, and the tag doesn't match?
+				(T::Tag != NoTag && value.GetElement(index).GetTag() != T::Tag))
 			{
 				__debugbreak();
 				return BCE_REJECT_MISSING_REQUIRED_PARAMETER;
@@ -958,6 +953,10 @@ protected:
 		if(BCE_FAILED(r))
 		{
 			return r;
+		}
+		if(VT::Tag == NoTag && is_sequence<VT::ValueType>::value == true)
+		{
+			//untagged sequence - copy the elements of the temporary into the parent sequence.
 		}
 		value.AddValue(val);
 		return BACnetSequence<Tail...>::Encode_(value);

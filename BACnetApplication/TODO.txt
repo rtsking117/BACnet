@@ -63,12 +63,12 @@ Unconfirmed Services:
 	Remote Device Management Services
 		
 		I Am									- COMPLETE
-		I Have									- UNSTARTED
-		Unconfirmed Private Transfer			- UNSTARTED
-		Unconfirmed Text Message				- UNSTARTED
-		Time Synchronization					- UNSTARTED
-		UTC Type Syncronization					- UNSTARTED
-		Who Has									- UNSTARTED
+		I Have									- COMPLETE
+		Unconfirmed Private Transfer			- COMPLETE
+		Unconfirmed Text Message				- COMPLETE
+		Time Synchronization					- COMPLETE
+		UTC Type Syncronization					- COMPLETE
+		Who Has									- COMPLETE
 		Who Is									- COMPLETE
 
 Errors:
