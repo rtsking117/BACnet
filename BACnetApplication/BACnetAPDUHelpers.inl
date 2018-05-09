@@ -1152,7 +1152,7 @@ public:
 	{
 		if(HasArrayIndex())
 		{
-			return -1;
+			return BACNET_INVALID_INDEX;
 		}
 		return get<2>().get();
 	}
@@ -1309,7 +1309,7 @@ public:
 	{
 		if(!HasArrayIndex())
 		{
-			return -1;
+			return BACNET_INVALID_INDEX;
 		}
 		return get<2>().get();
 	}
@@ -2025,7 +2025,7 @@ public:
 		get<0>().add(BACnetUnsigned8Type(RemoteSessionID));
 	}
 
-	void SetRemoteSessionIDs(std::vector<U8> RemoteSessionIDs)
+	void AddRemoteSessionIDs(std::vector<U8> RemoteSessionIDs)
 	{
 		for each(U8 i in RemoteSessionIDs)
 		{

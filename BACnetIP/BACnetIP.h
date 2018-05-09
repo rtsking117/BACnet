@@ -79,16 +79,12 @@ IBACnetLocalSubnet: public IBACnetIPPort
 
 };
 
-//IEC 62443
-
 //Local IP subnet w/BBMD for foreign devices (single BACnet subnetwork).
 BACNET_INTERFACE("{CCA00378-42A2-4C62-969D-1835F2C62D1C}")
 IBACnetWideAreaSubnet: public IBACnetIPPort
 {
 	BCNMETHOD(AddRemotePeer(const CObjectPtr<IBACnetIPAddress> pRemoteAddress)) BCPURE;
 };
-
-//VTS = SL-2
 
 //Foreign Device registration, no local (NAT/BBMD-Router).
 BACNET_INTERFACE("{F7C94926-6066-42E7-9DF3-200290D7C999}")

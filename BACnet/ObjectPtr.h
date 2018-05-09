@@ -11,7 +11,7 @@ private:
 public:
 	CObjectPtr(T* pSource = nullptr, bool IsSoleOwner=false) :pInterface(pSource)
 	{
-		static_assert(std::tr1::is_base_of<IBACnetUnknown, T>::value, "T needs to be IBACnetUnknown based");
+		static_assert(std::is_base_of<IBACnetUnknown, T>::value, "T needs to be IBACnetUnknown based");
 		if(!IsSoleOwner)
 		{
 			AddRef();
@@ -19,7 +19,7 @@ public:
 	}
 	CObjectPtr(const CObjectPtr<T>& rCObjectPtr) : pInterface(rCObjectPtr.pInterface)
 	{
-		static_assert(std::tr1::is_base_of<IBACnetUnknown, T>::value, "T needs to be IBACnetUnknown based");
+		static_assert(std::is_base_of<IBACnetUnknown, T>::value, "T needs to be IBACnetUnknown based");
 		AddRef();
 	}
 	CObjectPtr(CObjectPtr<T>&& rCObjectPtr) : pInterface(rCObjectPtr.pInterface)

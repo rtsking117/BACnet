@@ -13,6 +13,8 @@ class WinSockManager :
 public:
 	WinSockManager();
 	~WinSockManager();
+
+	bool GetVersion(U8& MajorVersion, U8& MinorVersion);
 };
 
 BACnetResult CreateWSADevice(CObjectPtr<WinSockManager> &wsm);

@@ -64,18 +64,18 @@ BACnetResult LocalSocket::WriteBVLL(sockaddr_in to, U8 messageid, CObjectPtr<IBA
 
 BACnetResult LocalSocket::StartListenerThread()
 {
-	return listener->Start();
+	return Listener->Start();
 }
 
 BACnetResult LocalSocket::StopListenerThread()
 {
-	listener->Cancel();
-	if(BCE_FAILED(WaitForObject(listener, 10000)))
+	Listener->Cancel();
+	if(BCE_FAILED(WaitForObject(Listener, 10000)))
 	{
 		//problem.
-		listener->Terminate(BCNRESULT_FROM_SYSTEM(ERROR_DBG_TERMINATE_THREAD));
+		Listener->Terminate(BCNRESULT_FROM_SYSTEM(ERROR_DBG_TERMINATE_THREAD));
 	}
-	return listener->GetExitCode();
+	return Listener->GetExitCode();
 }
 
 // 1 ms = 1000 us. 1 us = 10 hns.
@@ -84,61 +84,61 @@ BACnetResult LocalSocket::StopListenerThread()
 
 BACnetResult LocalSocket::StartRegistrationTimer()
 {
-	return fdregtimer->WaitFor(FDLifetime * MStoHNS, 100, 0);
+	return FDRegTimer->WaitFor(FDLifetime * MStoHNS, 100, 0);
 }
 
 BACnetResult LocalSocket::StopRegistrationTimer()
 {
-	return fdregtimer->Cancel();
+	return FDRegTimer->Cancel();
 }
 
 BACnetResult LocalSocket::SendCommandAndWait(sockaddr_in to, U8 messageid, U8 * pBuffer, U16 BufferLength, U16& ResponseCode)
 {
 	ResponseCode = 0;
-	if(pendingcommand)
+	if(HasPendingCommand)
 	{
 		return BCE_BVLC_COMMAND_PENDING;
 	}
-	cmdresp->Reset();
-	pendingcommand = true;
+	HasPendingCommand = true;
+	HasResponse->Reset();
 	BACnetResult r = WriteBVLL(to, messageid, pBuffer, BufferLength);
 	if(BCE_FAILED(r))
 	{
-		pendingcommand = false;
+		HasPendingCommand = false;
 		return r;
 	}
-	CObjectPtr<IBACnetWaitableObject> o[] = { listener->GetCancellationEvent(), cmdresp };
+	CObjectPtr<IBACnetWaitableObject> o[] = { Listener->GetCancellationEvent(), HasResponse };
 	U32 object = 0;
 	r = WaitForObjects(o, object, false);
 	if(BCE_FAILED(r))
 	{
-		pendingcommand = false;
+		HasPendingCommand = false;
 		return r;
 	}
 	if(object == 0)
 	{
 		//canceled.  <<<<< I think you can tell where I'm from with this.
-		pendingcommand = false;
+		HasPendingCommand = false;
 		return BCE_OPERATION_CANCELED;
 	}
 	//not an error, not a cancellation. Only option - we got back a response!
-	ResponseCode = rc;
-	pendingcommand = false;
+	ResponseCode = AsyncResultCode;
+	HasPendingCommand = false;
 	return BC_OK;
 }
 
 BACnetResult LocalSocket::SignalCommandResponse(U16 ResponseCode)
 {
 	//a command must be pending to signal a response to another thread.
-	if(!pendingcommand)
+	if(!HasPendingCommand)
 	{
 		//we don't actually care about this return code.
 		return BCE_BVLC_NO_PENDING_COMMAND;
 	}
 	//store aside the response code.
-	rc = ResponseCode;
+	AsyncResultCode = ResponseCode;
 	//and wake up the waiting thread.
-	cmdresp->Set();
+	HasResponse->Set();
 	return BC_OK;
 }
 
@@ -149,7 +149,7 @@ BACnetResult LocalSocket::ListenerThread(CObjectPtr<IBACnetThread> thread)
 	while(1)
 	{
 		WSAOVERLAPPED o;
-		o.hEvent = rxevent->GetWaitHandle();
+		o.hEvent = HasRXData->GetWaitHandle();
 		WSABUF bufs[2] = {
 			{sizeof(bvll),(char*)bvll,},
 			{sizeof(tmpbuf),(char*)tmpbuf,},
@@ -161,7 +161,7 @@ BACnetResult LocalSocket::ListenerThread(CObjectPtr<IBACnetThread> thread)
 		int status = WSARecvFrom(sock, bufs, ARRAYSIZE(bufs), &br, &flags, (sockaddr*)&from, &srcaddrsz, &o, nullptr);
 		if(status)
 		{
-			CObjectPtr<IBACnetWaitableObject> h[2] = { rxevent, thread->GetCancellationEvent() };
+			CObjectPtr<IBACnetWaitableObject> h[2] = { HasRXData, thread->GetCancellationEvent() };
 			U32 object = 0;
 			BACnetResult r = WaitForObjects(h, object, false);
 			if(BCE_FAILED(r))
@@ -240,10 +240,10 @@ BACnetResult LocalSocket::ListenerThread(CObjectPtr<IBACnetThread> thread)
 			msg = CreateBACnetBuffer(br - 4, tmpbuf);
 		InvokeCallback:
 			{
-				tpool->QueueAsyncCallback([this,sender,msg](CObjectPtr<IBACnetThreadPool> pPool, CallbackHandle hInst)
+				pool->QueueAsyncCallback([this,sender,msg](CObjectPtr<IBACnetThreadPool> pPool, CallbackHandle hInst)
 				{
 					pPool->CallbackRunsLong(hInst);
-					return callback(sender, msg);
+					return RXCallback(sender, msg);
 				});
 				break;
 			}
@@ -253,24 +253,24 @@ BACnetResult LocalSocket::ListenerThread(CObjectPtr<IBACnetThread> thread)
 			break;
 		}
 		//Wait for the next message.
-		rxevent->Reset();
+		HasRXData->Reset();
 	}
 	return BC_OK;
 }
 
 LocalSocket::LocalSocket(CObjectPtr<IBACnetThreadPool> pThreadPool, U16 PortNumber) :
-	wsm(nullptr),
+	WinSock(nullptr),
 	sock(INVALID_SOCKET),
-	rxevent(CreateBACnetEvent(true, false)),
-	cmdresp(CreateBACnetEvent(true, false)),
-	listener(CreateBACnetThread([this](auto thread) -> auto { return ListenerThread(thread); })),
-	tpool(pThreadPool),
+	HasRXData(CreateBACnetEvent(true, false)),
+	HasResponse(CreateBACnetEvent(true, false)),
+	Listener(CreateBACnetThread([this](auto thread) -> auto { return ListenerThread(thread); })),
+	pool(pThreadPool),
 	FDLifetime(0),
-	bbmdaddr(nullptr),
-	bcastaddr(nullptr),
-	autorenew(false)
+	BBMDAddress(nullptr),
+	BroadcastAddress(nullptr),
+	AutoRenew(false)
 {
-	BACnetResult r = CreateWSADevice(wsm);
+	BACnetResult r = CreateWSADevice(WinSock);
 	if(BCE_FAILED(r))
 	{
 		throw BACnetException("Failed to initialize the Windows Sockets device.", r);
@@ -294,16 +294,16 @@ LocalSocket::LocalSocket(CObjectPtr<IBACnetThreadPool> pThreadPool, U16 PortNumb
 		throw BACnetException("Failed to bind port 47808.", BCNRESULT_FROM_SYSTEM(WSAGetLastError()));
 	}
 	tmpaddr.sin_addr.s_addr = INADDR_BROADCAST;
-	bcastaddr = IPAddress::CreateIPAddress(tmpaddr);
+	BroadcastAddress = IPAddress::CreateIPAddress(tmpaddr);
 	//socket is now bound.
 	//get the real address we're bound to.
-	int addrsz = sizeof(addr);
-	if(getsockname(sock, (sockaddr*)&addr, &addrsz))
+	int addrsz = sizeof(Addr);
+	if(getsockname(sock, (sockaddr*)&Addr, &addrsz))
 	{
 		//problem!
 		throw BACnetException("Failed to retrieve bound address.", BCNRESULT_FROM_SYSTEM(WSAGetLastError()));
 	}
-	fdregtimer = tpool->CreateThreadpoolTimer([this](auto tp, auto h, auto t) -> BACnetResult
+	FDRegTimer = pool->CreateThreadpoolTimer([this](auto tp, auto h, auto t) -> BACnetResult
 	{
 		return RenewForeignDeviceRegistration();
 	});
@@ -313,7 +313,7 @@ LocalSocket::~LocalSocket()
 {
 	Stop();
 	closesocket(sock);
-	CloseHandle(rxevent);
+	CloseHandle(HasRXData);
 }
 
 BACnetResult LocalSocket::WriteMessage(CObjectPtr<IBACnetAddress> pDestinationAddress, CObjectPtr<IBACnetTransmitBuffer> pMessage, bool WaitForTransmit)
@@ -325,10 +325,10 @@ BACnetResult LocalSocket::WriteMessage(CObjectPtr<IBACnetAddress> pDestinationAd
 	IPAddress* to = (IPAddress*)pDestinationAddress.GetInterface();
 	if(to->IsBroadcast())
 	{
-		if(bbmdaddr)
+		if(BBMDAddress)
 		{
 			//we're a foreign device on a BACnet network. Request a broadcast.
-			return WriteBVLL(bbmdaddr->GetSocketAddress(), BVLC_DistributeBroadcastToNetwork, pMessage);
+			return WriteBVLL(BBMDAddress->GetSocketAddress(), BVLC_DistributeBroadcastToNetwork, pMessage);
 		}
 		else
 		{
@@ -353,7 +353,7 @@ CObjectPtr<IBACnetAddress> LocalSocket::CreateAddress(U32 AddressSize, const U8*
 
 CObjectPtr<IBACnetAddress> LocalSocket::GetBroadcastAddress() const
 {
-	return bcastaddr;
+	return BroadcastAddress;
 }
 
 BACnetResult LocalSocket::RegisterReceiverCallback(ReceiverCallbackFunction pCallback)
@@ -362,27 +362,27 @@ BACnetResult LocalSocket::RegisterReceiverCallback(ReceiverCallbackFunction pCal
 	{
 		return BCE_INVALID_PARAMETER;
 	}
-	if(callback)
+	if(RXCallback)
 	{
 		return BCE_HANDLER_ALREADY_BOUND;
 	}
-	callback = pCallback;
+	RXCallback = pCallback;
 	return BC_OK;
 }
 
 BACnetResult LocalSocket::RemoveReceiverCallback()
 {
-	if(callback)
+	if(RXCallback)
 	{
 		Stop();
-		callback = nullptr;
+		RXCallback = nullptr;
 	}
 	return BC_OK;
 }
 
 BACnetResult LocalSocket::Start()
 {
-	if(callback == nullptr)
+	if(RXCallback == nullptr)
 	{
 		return BCE_NOT_INITIALIZED;
 	}
@@ -392,7 +392,7 @@ BACnetResult LocalSocket::Start()
 	{
 		return r;
 	}
-	if(bbmdaddr)
+	if(BBMDAddress)
 	{
 		return RenewForeignDeviceRegistration();
 	}
@@ -440,22 +440,22 @@ BACnetResult LocalSocket::WriteBroadcastTable(const BDTEntry * pBDTEntries, size
 
 BACnetResult LocalSocket::SetIPPort(U16 usPortNumber)
 {
-	if(addr.sin_port == htons(usPortNumber)) return BC_OK;
+	if(Addr.sin_port == htons(usPortNumber)) return BC_OK;
 	bool restart = false;
-	if(listener != INVALID_HANDLE_VALUE)
+	if(Listener != INVALID_HANDLE_VALUE)
 	{
 		Stop();
 		restart = true;
 	}
-	U16 oldport = addr.sin_port;
-	addr.sin_port = htons(usPortNumber);
-	if(::bind(sock, (sockaddr*)&addr, sizeof(addr)))
+	U16 oldport = Addr.sin_port;
+	Addr.sin_port = htons(usPortNumber);
+	if(::bind(sock, (sockaddr*)&Addr, sizeof(Addr)))
 	{
-		addr.sin_port = oldport;
+		Addr.sin_port = oldport;
 		return BCNRESULT_FROM_SYSTEM(WSAGetLastError());
 	}
-	addr.sin_addr.s_addr = INADDR_BROADCAST;
-	bcastaddr = IPAddress::CreateIPAddress(addr);
+	Addr.sin_addr.s_addr = INADDR_BROADCAST;
+	BroadcastAddress = IPAddress::CreateIPAddress(Addr);
 	if(restart) Start();
 	return BC_OK;
 }
@@ -463,7 +463,7 @@ BACnetResult LocalSocket::SetIPPort(U16 usPortNumber)
 BACnetResult LocalSocket::RegisterAsForeignDevice(const CObjectPtr<IBACnetIPAddress> pRemoteAddress, U16 TimeToLive, bool AutoRefresh)
 {
 	//are we currently registered as a foreign device?
-	if(bbmdaddr)
+	if(BBMDAddress)
 	{
 		BACnetResult r = UnregisterAsForeignDevice();
 		if(BCE_FAILED(r))
@@ -472,23 +472,23 @@ BACnetResult LocalSocket::RegisterAsForeignDevice(const CObjectPtr<IBACnetIPAddr
 		}
 	}
 	//set our remote BBMD address to the new one.
-	bbmdaddr = CObjectPtr<IPAddress>((IPAddress*)pRemoteAddress.GetInterface());
+	BBMDAddress = CObjectPtr<IPAddress>((IPAddress*)pRemoteAddress.GetInterface());
 	FDLifetime = TimeToLive;
-	autorenew = AutoRefresh;
+	AutoRenew = AutoRefresh;
 	//Register as a foreign device now.
 	return RenewForeignDeviceRegistration();
 }
 
 BACnetResult LocalSocket::RenewForeignDeviceRegistration()
 {
-	if(!bbmdaddr)
+	if(!BBMDAddress)
 	{
 		return BCE_INVALID_OPERATION;
 	}
 	//send a RegisterForeignDevice command to the bbmd.
 	U16 ttl = htons(FDLifetime);
 	U16 rc = 0;
-	BACnetResult r = SendCommandAndWait(bbmdaddr->GetSocketAddress(), BVLC_RegisterForeignDevice, (U8*)&ttl, 2, rc);
+	BACnetResult r = SendCommandAndWait(BBMDAddress->GetSocketAddress(), BVLC_RegisterForeignDevice, (U8*)&ttl, 2, rc);
 	if(BCE_FAILED(r))
 	{
 		return r;
@@ -498,7 +498,7 @@ BACnetResult LocalSocket::RenewForeignDeviceRegistration()
 		return BCE_BVLC_RENEWAL_FAILED;
 	}
 	//renewal worked. start the timer, unless we don't need to.
-	if(FDLifetime != 0 && autorenew)
+	if(FDLifetime != 0 && AutoRenew)
 	{
 		return StartRegistrationTimer();
 	}
@@ -513,7 +513,7 @@ BACnetResult LocalSocket::UnregisterAsForeignDevice()
 		return r;
 	}
 	//unregister
-	sockaddr_in s = bbmdaddr->GetSocketAddress();
+	sockaddr_in s = BBMDAddress->GetSocketAddress();
 	U8 DeleteFDBuf[6] = {
 		s.sin_addr.s_net,
 		s.sin_addr.s_host,
@@ -533,8 +533,8 @@ BACnetResult LocalSocket::UnregisterAsForeignDevice()
 		//cannot delete the entry!
 		return BCE_BVLC_CANNOT_DELETE_FD_ENTRY;
 	}
-	bbmdaddr = nullptr;
+	BBMDAddress = nullptr;
 	FDLifetime = 0;
-	autorenew = false;
+	AutoRenew = false;
 	return BC_OK;
 }

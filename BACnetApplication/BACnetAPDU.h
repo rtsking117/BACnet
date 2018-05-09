@@ -4,6 +4,8 @@
 #include "ASN1.h"
 #include "BACnetApplication.h"
 
+#define BACNET_INVALID_INDEX (U32)-1
+
 template<typename...>
 struct is_bacnet_template : public std::false_type { };
 
@@ -339,7 +341,14 @@ private:
 	{
 		//if we get here, we did something very wrong.
 		(void)selection;
-		assert(0);
+		assert("DestroySelection called without a selection - Fix This!" && false);
+	}
+
+	void CopySelection(U32 Selection, BACnetChoiceStorage<>& Other)
+	{
+		(void)Selection;
+		(void)Other;
+		assert("CopySelection called without a selection - Fix This!" && false);
 	}
 
 public:
@@ -372,33 +381,46 @@ private:
 	
 	template<U32, typename...> friend class BACnetChoice;
 
-	void DestroySelection(U32 selection)
+	void CopySelection(U32 Selection, BACnetChoiceStorage<T, Tail...>& Other)
 	{
-		if(selection == 0)
+		if(Selection == 0)
+		{
+			choiceval = Other.choiceval;
+		}
+		else
+		{
+			Remaining.CopySelection(--Selection, Other.Remaining);
+		}
+	}
+
+	void DestroySelection(U32 Selection)
+	{
+		if(Selection == 0)
 		{
 			choiceval.~T();
 		}
 		else
 		{
-			Remaining.DestroySelection(--selection);
+			Remaining.DestroySelection(--Selection);
 		}
 	}
 public:
-
-	//explicitly remove the function here. we cannot call it.
-	~BACnetChoiceStorage() = delete; 
+	//default constructor does nothing - we cannot initialize this directly.
+	BACnetChoiceStorage() {}
+	//do nothing - we cannot destroy the value directly
+	~BACnetChoiceStorage() {}
 
 	template <U32 Index>
-	typename std::enable_if<
-		Index == 0, typename BACnetChoiceElementHolder<0, BACnetChoiceStorage<T, Tail...>>::Type::ValueType&>::type
+	typename std::enable_if_t<
+		Index == 0, typename BACnetChoiceElementHolder<0, BACnetChoiceStorage<T, Tail...>>::Type::ValueType&>
 		get()
 	{
 		return choiceval.value();
 	}
 
 	template <U32 Index>
-	typename std::enable_if<
-		Index != 0, typename BACnetChoiceElementHolder<Index, BACnetChoiceStorage<T, Tail...>>::Type::ValueType&>::type
+	typename std::enable_if_t<
+		Index != 0, typename BACnetChoiceElementHolder<Index, BACnetChoiceStorage<T, Tail...>>::Type::ValueType&>
 		get()
 	{
 		return Remaining.get<Index - 1>();
@@ -451,9 +473,29 @@ public:
 		}
 	}
 
+	BACnetChoice(BACnetChoice<DefaultChoice, Types...>& Other) : selection(Other.selection)
+	{
+		if(IsValid())
+		{
+			//copy the other's storage.
+			storage.CopySelection(selection, Other.storage);
+		}
+	}
+
+	BACnetChoice& operator=(BACnetChoice<DefaultChoice, Types...>& Other)
+	{
+		selection = Other.selection;
+		if(IsValid())
+		{
+			//copy the other's storage.
+			storage.CopySelection(selection, Other.storage);
+		}
+		return *this;
+	}
+
 	bool IsValid()
 	{
-		return selection != -1u && is_valid_selection(selection);
+		return selection != BACNET_INVALID_INDEX && is_valid_selection(selection);
 	}
 
 	bool is_selected(U32 Index)
@@ -680,7 +722,7 @@ public:
 	}
 
 	template<U8 VTag = Tag>
-	typename std::enable_if<VTag != NoTag, BACnetResult>::type
+	typename std::enable_if_t<VTag != NoTag, BACnetResult>
 		Encode(BACnetValue& value)
 	{
 		//tagged application data.
@@ -690,7 +732,7 @@ public:
 	}
 
 	template<U8 VTag = Tag>
-	typename std::enable_if<VTag == NoTag, BACnetResult>::type
+	typename std::enable_if_t<VTag == NoTag, BACnetResult>
 		Encode(BACnetValue& value)
 	{
 		//untagged application data.
@@ -769,63 +811,57 @@ public:
 	BACnetSequence() : IsPresent(!T::IsOptional) {}
 
 	template<U32 Index>
-	typename std::enable_if<
-		Index == 0 && T::IsOptional == false, constexpr bool>::type
+	typename std::enable_if_t<(Index == 0) && (T::IsOptional == false), bool>
 		is_present()
 	{
 		return true;
 	}
 
 	template <U32 Index>
-	typename std::enable_if<
-		Index == 0, bool>::type
+	typename std::enable_if_t<Index == 0, bool>
 		is_present()
 	{
 		return IsPresent;
 	}
 
 	template <U32 Index>
-	typename std::enable_if<
-		Index != 0, bool>::type
+	typename std::enable_if_t<Index != 0, bool> 
 		is_present()
 	{
 		return BACnetSequence<Tail...>::is_present<Index - 1>();
 	}
 
 	template<U32 Index>
-	typename std::enable_if<
-		Index == 0 && T::IsOptional == false, void>::type
+	typename std::enable_if_t<Index == 0 && T::IsOptional == false, void>
 		make_present(bool ShouldBePresent)
 	{
 	}
 
 	template <U32 Index>
-	typename std::enable_if<
-		Index == 0, void>::type
+	typename std::enable_if_t<Index == 0, void>
 		make_present(bool ShouldBePresent)
 	{
 		IsPresent = ShouldBePresent;
 	}
 
 	template <U32 Index>
-	typename std::enable_if<
-		Index != 0, void>::type
+	typename std::enable_if_t<Index != 0, void>
 		make_present(bool ShouldBePresent)
 	{
 		BACnetSequence<Tail...>::make_present<Index - 1>(ShouldBePresent);
 	}
 
 	template <U32 Index>
-	typename std::enable_if<
-		Index == 0, typename BACnetSequenceElementHolder<0, BACnetSequence<T, Tail...>>::Type::ValueType&>::type
+	typename std::enable_if_t<
+		Index == 0, typename BACnetSequenceElementHolder<0, BACnetSequence<T, Tail...>>::Type::ValueType&>
 		get()
 	{
 		return ThisValue.value();
 	}
 
 	template <U32 Index>
-	typename std::enable_if<
-		Index != 0, typename BACnetSequenceElementHolder<Index, BACnetSequence<T, Tail...>>::Type::ValueType&>::type
+	typename std::enable_if_t<
+		Index != 0, typename BACnetSequenceElementHolder<Index, BACnetSequence<T, Tail...>>::Type::ValueType&>
 		get()
 	{
 		return BACnetSequence<Tail...>::get<Index - 1>();
@@ -893,8 +929,8 @@ public:
 protected:
 
 	template<typename VT = T>
-	typename std::enable_if<
-		VT::IsOptional == true, BACnetResult>::type
+	typename std::enable_if_t<
+		VT::IsOptional == true, BACnetResult>
 		Encode_(BACnetValue &value)
 	{
 		if(IsPresent)
@@ -912,8 +948,8 @@ protected:
 	}
 
 	template<typename VT = T>
-	typename std::enable_if<
-		VT::IsOptional == false, BACnetResult>::type
+	typename std::enable_if_t<
+		VT::IsOptional == false, BACnetResult>
 		Encode_(BACnetValue &value)
 	{
 		//encode the value.

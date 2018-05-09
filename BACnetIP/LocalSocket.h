@@ -9,21 +9,21 @@ using namespace std;
 class LocalSocket :
 	public ComWrapper<IBACnetLocalSubnet>
 {
-	ReceiverCallbackFunction callback;
-	sockaddr_in addr;
-	CObjectPtr<WinSockManager> wsm;
-	CObjectPtr<IBACnetThreadPool> tpool;
-	CObjectPtr<IBACnetThread> listener;
-	CObjectPtr<IBACnetEvent> rxevent;
-	CObjectPtr<IBACnetEvent> cmdresp;
-	CObjectPtr<IPAddress> bcastaddr;
-	CObjectPtr<IPAddress> bbmdaddr;
-	CObjectPtr<IBACnetThreadpoolTimer> fdregtimer;
+	ReceiverCallbackFunction RXCallback;
+	sockaddr_in Addr;
+	CObjectPtr<WinSockManager> WinSock;
+	CObjectPtr<IBACnetThreadPool> pool;
+	CObjectPtr<IBACnetThread> Listener;
+	CObjectPtr<IBACnetEvent> HasRXData;
+	CObjectPtr<IBACnetEvent> HasResponse;
+	CObjectPtr<IPAddress> BroadcastAddress;
+	CObjectPtr<IPAddress> BBMDAddress;
+	CObjectPtr<IBACnetThreadpoolTimer> FDRegTimer;
 	SOCKET sock;
-	U16 rc;
+	U16 AsyncResultCode;
 	U16 FDLifetime;
-	atomic<bool> pendingcommand;
-	bool autorenew;
+	atomic<bool> HasPendingCommand;
+	bool AutoRenew;
 
 	BACnetResult WriteBVLL(sockaddr_in to, U8 messageid, U8 * pBuffer, U16 BufferLength);
 	BACnetResult WriteBVLL(sockaddr_in to, U8 messageid, CObjectPtr<IBACnetTransmitBuffer> pBuffer);

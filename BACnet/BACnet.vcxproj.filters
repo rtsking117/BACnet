@@ -120,9 +120,6 @@
     <ClInclude Include="Thread.h">
       <Filter>Header Files\Internal\Threading</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BACnetStringImpl.h">
       <Filter>Header Files\Internal\String</Filter>
     </ClInclude>
@@ -131,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="BACnetResult.h">
       <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\Internal\Threading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
