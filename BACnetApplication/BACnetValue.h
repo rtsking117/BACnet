@@ -24,7 +24,9 @@ enum BACnetValueType : U8
 	ValueType_ObjectID,
 	ValueType_ContextTagged = 16,
 	ValueType_Constructed,
-	ValueType_ParseRoot
+	ValueType_ParseRoot,
+
+	ValueType_NotSet = 0xFF,
 };
 
 enum BACnetValueFlags
@@ -76,8 +78,9 @@ public:
 	bool IsUntaggedData() const { return Type < ValueType_ContextTagged; }
 	bool IsContextTaggedData() const { return Type == ValueType_ContextTagged; }
 	bool IsPrimitiveData() const { return Type < ValueType_Constructed; }
-	bool IsConstructedData() const { return Type >= ValueType_Constructed; }
+	bool IsConstructedData() const { return Type >= ValueType_Constructed && Type != ValueType_NotSet; }
 	bool IsParserRootElement() const { return Type == ValueType_ParseRoot; }
+	bool IsUninitialized() const { return Type == ValueType_NotSet; }
 	bool IsAllocatedInPlace() const { return (Flags & ValueFlag_AllocateInPlace); }
 
 	U32 GetDataLength() const { return IsPrimitiveData() ? pv.DataLength : 0; }

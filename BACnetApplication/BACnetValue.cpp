@@ -2,7 +2,7 @@
 #include "BACnetValue.h"
 
 BACnetValue::BACnetValue(bool IsRoot) : 
-	Type(IsRoot ? ValueType_ParseRoot : ValueType_Null),
+	Type(IsRoot ? ValueType_ParseRoot : ValueType_NotSet),
 	Tag(NoTag),
 	Flags(0)
 {
@@ -93,13 +93,17 @@ BACnetValue::~BACnetValue()
 		pv.DataLength = 0;
 		memset(Extra, 0, sizeof(Extra));
 	}
-	Type = ValueType_Null;
+	Type = ValueType_NotSet;
 	Tag = 0;
 	Flags = 0;
 }
 
 BACnetValue & BACnetValue::operator=(const BACnetValue & rhs)
 {
+	if(this == &rhs)
+	{
+		return *this;
+	}
 	if(IsConstructedData() && cv.pElements)
 	{
 		delete[] cv.pElements;
@@ -222,6 +226,10 @@ void BACnetValue::SetType(BACnetValueType NewType)
 
 bool BACnetValue::IsValueValid() const
 {
+	if(Type == ValueType_NotSet)
+	{
+		return false;
+	}
 	if(IsConstructedData())
 	{
 		bool ret = ((Tag == NoTag) ^ (!IsParserRootElement()));

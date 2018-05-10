@@ -654,7 +654,7 @@ public:
 	BACnetResult Encode(BACnetValue& value)
 	{
 		//set up a constructed value.
-		if(!value.IsParserRootElement())
+		if(value.IsUninitalized())
 		{
 			value.SetType(ValueType_Constructed);
 			value.SetTag(NoTag);
@@ -965,7 +965,7 @@ protected:
 public:
 	BACnetResult Encode(BACnetValue& value)
 	{
-		if(!value.IsParserRootElement())
+		if(value.IsUninitalized())
 		{
 			value.SetType(ValueType_Constructed);
 			value.SetTag(NoTag);
