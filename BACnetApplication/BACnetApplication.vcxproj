@@ -182,6 +182,14 @@
   <ItemGroup>
     <Text Include="TODO.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="BACnetAlarmServices.inl" />
+    <None Include="BACnetBasicTypes.inl" />
+    <None Include="BACnetCommonTypes.inl" />
+    <None Include="BACnetFileServices.inl" />
+    <None Include="BACnetPropertyServices.inl" />
+    <None Include="BACnetPropertyTypes.inl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

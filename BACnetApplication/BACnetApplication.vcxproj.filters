@@ -19,6 +19,9 @@
     <Filter Include="Source Files\Internal">
       <UniqueIdentifier>{f7cd0310-6f47-4f83-817b-4fdcb2933066}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Public\APDU">
+      <UniqueIdentifier>{fdff6d24-417e-4446-9a36-c009567a5c3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BACnetApplication.h">
@@ -27,19 +30,19 @@
     <ClInclude Include="BACnetValue.h">
       <Filter>Header Files\Public</Filter>
     </ClInclude>
-    <ClInclude Include="BACnetAPDU.h">
-      <Filter>Header Files\Public</Filter>
-    </ClInclude>
     <ClInclude Include="ASN1.h">
-      <Filter>Header Files\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="BACnetAPDUHelpers.inl">
       <Filter>Header Files\Public</Filter>
     </ClInclude>
     <ClInclude Include="BACnetError.h">
       <Filter>Header Files\Public</Filter>
     </ClInclude>
     <ClInclude Include="BACnetEnum.h">
+      <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetAPDU.h">
+      <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="BACnetAPDUHelpers.inl">
       <Filter>Header Files\Public</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,5 +56,25 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BACnetBasicTypes.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetAlarmServices.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetPropertyTypes.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetCommonTypes.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetPropertyServices.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetFileServices.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
   </ItemGroup>
 </Project>

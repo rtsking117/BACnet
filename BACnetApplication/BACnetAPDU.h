@@ -22,6 +22,8 @@ struct is_sequence : public std::false_type { };
 template<typename...>
 struct is_sequence_element : public std::false_type { };
 
+static const U8 NoTag = 0xFF;
+
 /*
 Application value.
 Used for Enumerated, Date, Time, ObjectID, Unsigned, etc.
@@ -242,13 +244,15 @@ struct is_application<BACnetApplicationAnyType> : public std::true_type { };
 
 static_assert(is_application<BACnetApplicationAnyType>::value == true, "is_application does not return true on BACnetApplicationAnyType");
 
-template<U32 TN, typename T>
+template<U32 Tag, typename T>
 class BACnetChoiceElement
 {
 	T elem;
 public:
-	static constexpr U32 TagNumber = TN;
+	static constexpr U32 TagNumber = Tag;
 	typedef T ValueType;
+
+	static_assert(TagNumber != NoTag || is_application<ValueType>::value == true, "An untagged choice element must be an application tagged type!");
 
 	ValueType& value()
 	{
@@ -287,7 +291,10 @@ public:
 		{
 			return r;
 		}
-		value.SetTag(TagNumber);
+		if(TagNumber != NoTag)
+		{
+			value.SetTag(TagNumber);
+		}
 		return BC_OK;
 	}
 };
@@ -297,8 +304,6 @@ struct is_bacnet_template<BACnetChoiceElement<TN, T>> : std::true_type {};
 
 template<U32 TN, typename T>
 struct is_choice_element<BACnetChoiceElement<TN, T>> : std::true_type { };
-
-static const U8 NoTag = 0xFF;
 
 /*
 Choice type
@@ -427,8 +432,17 @@ public:
 	{
 		if(value.IsUntaggedData())
 		{
-			__debugbreak();
-			return BCE_REJECT_INVALID_TAG;
+			//does this choice element have a tag number?
+			if(T::TagNumber == NoTag)
+			{
+				//No. Speculatively parse ahead, and skip this choice if we get an error.
+				if(BCE_SUCCEEDED(choiceval.Decode(value)))
+				{
+					return BC_OK;
+				}
+			}
+			//We need a tag number, but this value does not have one. skip to the next.
+			return Remaining.Decode(++selection, value);
 		}
 		if(value.GetTag() == T::TagNumber)
 		{
@@ -690,14 +704,14 @@ struct is_bacnet_template<BACnetSequenceOf<T>> : public std::true_type {};
 template<typename T>
 struct is_sequence<BACnetSequenceOf<T>> : public std::true_type { };
 
-template<U8 T, typename VT, bool O>
+template<U8 TagValue, typename T, bool Optional>
 class BACnetSequenceElement
 {
 	//static_assert((T != NoTag) || (is_application<VT>::value), "Complex or context-tagged data must have a valid tag.");
 public:
-	static constexpr U8 Tag = T;
-	static constexpr bool IsOptional = O;
-	typedef VT ValueType;
+	static constexpr U8 Tag = TagValue;
+	static constexpr bool IsOptional = Optional;
+	typedef T ValueType;
 
 private:
 	ValueType ThisValue;
@@ -741,11 +755,11 @@ public:
 	}
 };
 
-template<U8 T, typename VT, bool O>
-struct is_bacnet_template<BACnetSequenceElement<T, VT, O>> : public std::true_type {};
+template<U8 Tag, typename T, bool Opt>
+struct is_bacnet_template<BACnetSequenceElement<Tag, T, Opt>> : public std::true_type {};
 
-template<U8 T, typename VT, bool O>
-struct is_sequence_element<BACnetSequenceElement<T,VT,O>> : public std::true_type { };
+template<U8 Tag, typename T, bool Opt>
+struct is_sequence_element<BACnetSequenceElement<Tag,T,Opt>> : public std::true_type { };
 
 template<typename... T> class BACnetSequence;
 
@@ -980,4 +994,4 @@ struct is_sequence<BACnetSequence<T, Tail...>> : public std::true_type { };
 template<typename T, typename... Tail>
 struct is_bacnet_template<BACnetSequence<T, Tail...>> : public std::true_type {};
 
-#include "BACnetAPDUHelpers.inl"
+//#include "BACnetAPDUHelpers.inl"

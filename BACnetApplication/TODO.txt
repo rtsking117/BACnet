@@ -1,19 +1,19 @@
 Confirmed services:
 
 	Alarm/Event services
-		Acknowledge Alarm						- UNSTARTED
-		Confirmed COV Notification				- UNSTARTED
-		Confirmed COV Notification Multiple		- UNSTARTED
-		Confirmed Event Notification			- UNSTARTED
-		Get Alarm Summary Response				- UNSTARTED
-		Get Enrollment Summary					- UNSTARTED
-		Get Enrollment Summary Response			- UNSTARTED
-		Get Event Information					- UNSTARTED
-		Get Event Information Response			- UNSTARTED
-		Life Safety Operation					- UNSTARTED
-		Subscribe COV							- UNSTARTED
-		Subscribe COV Property					- UNSTARTED
-		Subscribe COV Property Multiple			- UNSTARTED
+		Acknowledge Alarm						- PARTIAL
+		Confirmed COV Notification				- PARTIAL
+		Confirmed COV Notification Multiple		- PARTIAL
+		Confirmed Event Notification			- PARTIAL
+		Get Alarm Summary Response				- PARTIAL
+		Get Enrollment Summary					- PARTIAL
+		Get Enrollment Summary Response			- PARTIAL
+		Get Event Information					- PARTIAL
+		Get Event Information Response			- PARTIAL
+		Life Safety Operation					- PARTIAL
+		Subscribe COV							- PARTIAL
+		Subscribe COV Property					- PARTIAL
+		Subscribe COV Property Multiple			- PARTIAL
 
 	File Access Services
 		Read File								- COMPLETE
@@ -113,7 +113,7 @@ Complex Types:
 	AccumulatorRecord							- UNSTARTED
 	ActionCommand								- UNSTARTED
 	ActionList									- UNSTARTED
-	Address										- UNSTARTED
+	Address										- PARTIAL
 	AddressBinding								- UNSTARTED
 	AssignedAccessRights						- UNSTARTED
 	AssignedLandingCalls						- UNSTARTED
@@ -169,8 +169,8 @@ Complex Types:
 	PropertyReference							- COMPLETE
 	PropertyStates								- UNSTARTED
 	PropertyValue								- COMPLETE
-	Recipient									- UNSTARTED
-	RecipientProcess							- UNSTARTED
+	Recipient									- PARTIAL
+	RecipientProcess							- PARTIAL
 	RouterEntry									- UNSTARTED
 	Scale										- UNSTARTED
 	SecurityKeySet								- UNSTARTED
@@ -178,11 +178,10 @@ Complex Types:
 	ShedLevel									- UNSTARTED
 	SpecialEvent								- UNSTARTED
 	TimerStateChangeValue						- UNSTARTED
-	TimeStamp									- UNSTARTED
-	TimeValue									- UNSTARTED
+	TimeStamp									- PARTIAL
+	TimeValue									- PARTIAL
 	VMACEntry									- UNSTARTED
-	VTSession									- UNSTARTED
-	WeekNDay									- UNSTARTED
+	VTSession									- PARTIAL
 	ReadAccessResult							- PARTIAL
 	ReadAccessSpecification						- PARTIAL
 	WriteAccessSpecification					- PARTIAL
@@ -259,3 +258,7 @@ Enumerations:
 	TimerTransition								- UNSTARTED
 	VTClass										- UNSTARTED
 	WriteStatus									- UNSTARTED
+
+Typedefs:
+	
+	WeekNDay									- PARTIAL
