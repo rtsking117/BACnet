@@ -168,7 +168,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ASN1.h" />
-    <ClInclude Include="BACnetAPDUHelpers.inl" />
     <ClInclude Include="BACnetAPDU.h" />
     <ClInclude Include="BACnetApplication.h" />
     <ClInclude Include="BACnetEnum.h" />
@@ -185,10 +184,13 @@
   <ItemGroup>
     <None Include="BACnetAlarmServices.inl" />
     <None Include="BACnetBasicTypes.inl" />
-    <None Include="BACnetCommonTypes.inl" />
+    <None Include="BACnetComplexTypes.inl" />
+    <None Include="BACnetErrorTypes.inl" />
     <None Include="BACnetFileServices.inl" />
-    <None Include="BACnetPropertyServices.inl" />
+    <None Include="BACnetObjectAccessServices.inl" />
     <None Include="BACnetPropertyTypes.inl" />
+    <None Include="BACnetRemoteDeviceManagementServices.inl" />
+    <None Include="BACnetVirtualTerminalServices.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

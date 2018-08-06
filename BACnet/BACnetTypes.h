@@ -20,9 +20,19 @@ U16 BACNET_ENTRYPOINT ToHost16(U16 uiNet);
 U32 BACNET_ENTRYPOINT ToHost32(U32 uiNet);
 U64 BACNET_ENTRYPOINT ToHost64(U64 uiNet);
 
+U32 BACNET_ENTRYPOINT CountLeadingZeros(U32 Value);
+U32 BACNET_ENTRYPOINT CountTrailingZeros(U32 Value);
 U32 BACNET_ENTRYPOINT FindFirstSet(U32 Value);
-
 U32 BACNET_ENTRYPOINT Log2(U32 Value);
+
+U32 BACNET_ENTRYPOINT CountLeadingZeros64(U64 Value);
+U32 BACNET_ENTRYPOINT CountTrailingZeros64(U64 Value);
+U32 BACNET_ENTRYPOINT FindFirstSet64(U64 Value);
+U32 BACNET_ENTRYPOINT Log2_64(U64 Value);
+
+size_t BACNET_ENTRYPOINT GenerateHash(U8* pDataBuffer, size_t BufferLength);
+U32 BACNET_ENTRYPOINT GenerateHash32(U8* pDataBuffer, size_t BufferLength);
+U64 BACNET_ENTRYPOINT GenerateHash64(U8* pDataBuffer, size_t BufferLength);
 
 #include "BACnetByteString.h"
 #include "BACnetString.h"

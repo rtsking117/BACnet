@@ -42,9 +42,6 @@
     <ClInclude Include="BACnetAPDU.h">
       <Filter>Header Files\Public</Filter>
     </ClInclude>
-    <ClInclude Include="BACnetAPDUHelpers.inl">
-      <Filter>Header Files\Public</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ASN1.cpp">
@@ -67,13 +64,22 @@
     <None Include="BACnetPropertyTypes.inl">
       <Filter>Header Files\Public\APDU</Filter>
     </None>
-    <None Include="BACnetCommonTypes.inl">
-      <Filter>Header Files\Public\APDU</Filter>
-    </None>
-    <None Include="BACnetPropertyServices.inl">
-      <Filter>Header Files\Public\APDU</Filter>
-    </None>
     <None Include="BACnetFileServices.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetObjectAccessServices.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetRemoteDeviceManagementServices.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetVirtualTerminalServices.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetErrorTypes.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetComplexTypes.inl">
       <Filter>Header Files\Public\APDU</Filter>
     </None>
   </ItemGroup>

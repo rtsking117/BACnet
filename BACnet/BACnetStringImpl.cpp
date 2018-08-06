@@ -188,7 +188,7 @@ size_t ConvertToUTF32(const BACnetStringImpl * const s, U32 * const str, size_t 
 	// length == num codepoints == countof equivalent UTF-32 string.
 	// iterating over code unit "pairs" up to length will be safe unless we messed up the length calculation.
 	size_t index = 0;
-	for(int i = 0; i < slen; ++i)
+	for(size_t i = 0; i < slen; ++i)
 	{
 		str[i] = DecodeCodePoint16(&s->str[index]);
 		index += GetNumCodeUnits16(str[i]);

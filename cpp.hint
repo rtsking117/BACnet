@@ -1,0 +1,17 @@
+
+#define BCNMETHOD(method) virtual BACnetResult method
+#define BCNMETHODTYPE(type,method) virtual type method
+#define BCNMETHODV(method) virtual BACnetResult method
+#define BCNMETHODVTYPE(type,method) virtual type method
+#define BACNET_INTERFACE(x) struct BACNET_UUID(x) BACNET_NOVTABLE
+#define BCPURE = 0
+#define BACNET_NOVTABLE __declspec(novtable)
+#define BACNET_UUID(x) __declspec(uuid(x))
+#define BACNET_NOTHROW __declspec(nothrow)
+#define BACNET_SELECTANY __declspec(selectany)
+#define BACNET_STDCALL __stdcall
+#define BACNET_CDECL __cdecl
+#define BACNET_FORCEINLINE inline __forceinline
+#define BACNET_UNREACHABLECASE default: __assume(0)
+#define BACNET_EXPORT __declspec(dllexport)
+#define BACNET_IMPORT __declspec(dllimport)

@@ -1,6 +1,11 @@
 #include "BACnetRequestParser.h"
-#include <BACnetAPDU.h>
-#include <ASN1.h>
+#include <BACnetApplication.h>
+#include <BACnetErrorTypes.inl>
+#include <BACnetAlarmServices.inl>
+#include <BACnetFileServices.inl>
+#include <BACnetObjectAccessServices.inl>
+#include <BACnetRemoteDeviceManagementServices.inl>
+#include <BACnetVirtualTerminalServices.inl>
 
 enum ConfirmedServiceChoice
 {
@@ -167,7 +172,7 @@ BACnetResult BACnetRequestParser::OnUnconfirmedRequest(CObjectPtr<IBACnetNetwork
 				IAmRequest iar;
 				iar.SetObjectID(DeviceID);
 				iar.SetMaxAPDUSize(1476);
-				iar.SetSegmentationSettings(Segmentation_Both);
+				iar.SetSegmentationSettings(BACnetSegmentation::Both);
 				iar.SetVendorID(10);
 				BACnetValue vo(true);
 				iar.Encode(vo);

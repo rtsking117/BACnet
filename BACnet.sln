@@ -51,6 +51,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ASHRAE-D-86451.pdf = ASHRAE-D-86451.pdf
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hint Files", "Hint Files", "{41D439A5-1867-418B-8275-D345D167F8B9}"
+	ProjectSection(SolutionItems) = preProject
+		cpp.hint = cpp.hint
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -131,5 +136,9 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DC9F9009-2200-4E66-AB87-02DC534AA4AF} = {C13FE10F-6FE3-49A7-86A5-D9C7E0ACC871}
+		{41D439A5-1867-418B-8275-D345D167F8B9} = {DF072AE8-47E2-42AB-B197-FF592F3B09F2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4B6EB0CA-EBF6-4E48-B5AC-932F1D71AD00}
 	EndGlobalSection
 EndGlobal

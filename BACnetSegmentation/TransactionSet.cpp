@@ -1,4 +1,5 @@
 #include "TransactionSet.h"
+#include <cstddef>
 
 TransactionSet::TransactionSet()
 {
@@ -56,5 +57,5 @@ size_t TransactionSet::HashAddressPair::operator()(const TransactionKey& Key) co
 	{
 		portaddr->WriteAddress(&buffer[3], len);
 	}
-	return _Hash_seq(buffer, 3 + len);
+	return GenerateHash(buffer, 3 + len);
 }

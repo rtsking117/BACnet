@@ -76,7 +76,6 @@ IBACnetLocalSubnet: public IBACnetIPPort
 	BCNMETHOD(RegisterAsForeignDevice(const CObjectPtr<IBACnetIPAddress> pRemoteAddress, U16 TimeToLive, bool AutoRefresh = true)) BCPURE;
 	BCNMETHOD(RenewForeignDeviceRegistration()) BCPURE;
 	BCNMETHOD(UnregisterAsForeignDevice()) BCPURE;
-
 };
 
 //Local IP subnet w/BBMD for foreign devices (single BACnet subnetwork).
@@ -86,7 +85,7 @@ IBACnetWideAreaSubnet: public IBACnetIPPort
 	BCNMETHOD(AddRemotePeer(const CObjectPtr<IBACnetIPAddress> pRemoteAddress)) BCPURE;
 };
 
-//Foreign Device registration, no local (NAT/BBMD-Router).
+//Foreign Device registration, no local network operation (NAT/BBMD-Router).
 BACNET_INTERFACE("{F7C94926-6066-42E7-9DF3-200290D7C999}")
 IBACnetRemoteSubnet: public IBACnetPort
 {

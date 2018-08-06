@@ -979,7 +979,7 @@ protected:
 public:
 	BACnetResult Encode(BACnetValue& value)
 	{
-		if(value.IsUninitalized())
+		if(value.IsUninitialized())
 		{
 			value.SetType(ValueType_Constructed);
 			value.SetTag(NoTag);

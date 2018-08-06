@@ -1,9 +1,8 @@
 #pragma once
 
 #include "BACnetBasicTypes.inl"
-#include "BACnetCommonTypes.inl"
-#include "BACnetPropertyTypes.inl"
-#include "BACnetAlarmTypes.inl"
+#include "BACnetComplexTypes.inl"
+//#include "BACnetAlarmTypes.inl"
 
 //=============================================================================================
 //							CONFIRMED ALARM AND EVENT SERVICES
@@ -238,3 +237,11 @@ class SubscribeCOVPropertyMultipleRequest : public
 public:
 
 };
+
+//=============================================================================================
+//							UNCONFIRMED ALARM AND EVENT SERVICES
+//=============================================================================================
+
+
+
+

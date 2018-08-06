@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BACnetBasicTypes.inl"
-#include "BACnetCommonTypes.inl"
+#include "BACnetComplexTypes.inl"
 
 //Property Access Result
 
