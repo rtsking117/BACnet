@@ -1,10 +1,10 @@
 #pragma once
 #include "WinSockManager.h"
-#include <ComWrapper.h>
+#include <ObjectWrapper.h>
 #include "BACnetIP.h"
 
 class IPAddress :
-	public ComWrapper<IBACnetIPAddress>
+	public ObjectWrapper<IBACnetIPAddress>
 {
 	sockaddr_in addr;
 	U8 mask[4];

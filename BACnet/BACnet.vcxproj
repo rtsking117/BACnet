@@ -163,7 +163,7 @@
     <ClInclude Include="BACnetTypes.h" />
     <ClInclude Include="Buffer.h" />
     <ClInclude Include="ObjectPtr.h" />
-    <ClInclude Include="ComWrapper.h" />
+    <ClInclude Include="ObjectWrapper.h" />
     <ClInclude Include="ISO 8859-1.h" />
     <ClInclude Include="Thread.h" />
     <ClInclude Include="ThreadPool.h" />

@@ -1,9 +1,9 @@
 #pragma once
-#include "ComWrapper.h"
+#include "ObjectWrapper.h"
 #include <Windows.h>
 
 class CBACnetMutex :
-	public ComWrapper<IBACnetMutex>
+	public ObjectWrapper<IBACnetMutex>
 {
 	HANDLE mutex;
 

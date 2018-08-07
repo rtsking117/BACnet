@@ -1,5 +1,5 @@
 #pragma once
-#include "ComWrapper.h"
+#include "ObjectWrapper.h"
 #include <vector>
 using namespace std;
 

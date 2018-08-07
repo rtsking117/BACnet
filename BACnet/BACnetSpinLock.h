@@ -1,9 +1,9 @@
 #pragma once
-#include "ComWrapper.h"
+#include "ObjectWrapper.h"
 #include <Windows.h>
 
 class CBACnetSpinLock :
-	public ComWrapper<IBACnetSpinLock>
+	public ObjectWrapper<IBACnetSpinLock>
 {
 	CRITICAL_SECTION cs;
 public:

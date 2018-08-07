@@ -1,9 +1,9 @@
 #pragma once
-#include "ComWrapper.h"
+#include "ObjectWrapper.h"
 #include <Windows.h>
 
 class CThreadpoolTimer :
-	public ComWrapper<IBACnetThreadpoolTimer>
+	public ObjectWrapper<IBACnetThreadpoolTimer>
 {
 	TimerCallbackFunction callback;
 	CObjectPtr<IBACnetThreadPool> tp;

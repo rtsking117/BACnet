@@ -98,4 +98,10 @@ CreateLocalSubnet(
 	CObjectPtr<IBACnetThreadPool> pThreadPool,
 	U16 PortNumber = 0xBAC0);
 
+CObjectPtr<IBACnetWideAreaSubnet>
+BACNETIP_ENTRYPOINT
+CreateWideAreaSubnet(
+	CObjectPtr<IBACnetThreadPool> pThreadPool,
+	U16 PortNumber = 0xBAC0);
+
 #endif

@@ -1,10 +1,10 @@
 #pragma once
 
 #include <BACnetInterface.h>
-#include <ComWrapper.h>
+#include <ObjectWrapper.h>
 
 class RoutedPortAddress :
-	public ComWrapper<IBACnetAddress>
+	public ObjectWrapper<IBACnetAddress>
 {
 	U8 Addr[8];
 	U8 AddrLen;
@@ -53,7 +53,7 @@ public:
 };
 
 class NetAddress :
-	public ComWrapper<IBACnetNetworkAddress>
+	public ObjectWrapper<IBACnetNetworkAddress>
 {
 	CObjectPtr<IBACnetAddress> portaddr;
 	U16 netid;

@@ -1,10 +1,10 @@
 #pragma once
-#include "ComWrapper.h"
+#include "ObjectWrapper.h"
 #include <Windows.h>
 #include <process.h>
 
 class CThread :
-	public ComWrapper<IBACnetThread>
+	public ObjectWrapper<IBACnetThread>
 {
 	ThreadFunction tf;
 	CObjectPtr<IBACnetEvent> cancel;

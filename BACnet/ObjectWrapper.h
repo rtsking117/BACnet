@@ -6,7 +6,7 @@
 #include "BACnetInterface.h"
 
 /*
-ComWrapper.h - Contains the ComWrapper template class,
+ObjectWrapper.h - Contains the ObjectWrapper template class,
  which implements the AddRef and Release methods of
  IBACnetUnknown.
 
@@ -19,7 +19,7 @@ struct BACnetException : public std::exception
 
 };
 
-template<typename T> class ComWrapper: public T
+template<typename T> class ObjectWrapper: public T
 {
 	//AddRef and Release are IBACnetUnknown methods. If we don't inherit from IBACnetUnknown, we may not 
 	//implement the methods correctly, or add methods that don't exist. So we check here, and statically.
@@ -28,10 +28,10 @@ template<typename T> class ComWrapper: public T
 	//atomic counter for multithreaded access/updates
 	std::atomic<U32> refcount;
 public:
-	ComWrapper() :refcount(1)
+	ObjectWrapper() :refcount(1)
 	{
 	}
-	virtual ~ComWrapper()
+	virtual ~ObjectWrapper()
 	{}
 
 	U32 BACNETMETHODCALLTYPE AddRef() { return ++refcount; }

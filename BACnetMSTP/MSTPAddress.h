@@ -1,10 +1,10 @@
 #pragma once
 #include <BACnetInterface.h>
-#include <ComWrapper.h>
+#include <ObjectWrapper.h>
 #include <memory>
 
 class MSTPAddress :
-	public ComWrapper<IBACnetAddress>
+	public ObjectWrapper<IBACnetAddress>
 {
 	U8 NodeAddr;
 public:

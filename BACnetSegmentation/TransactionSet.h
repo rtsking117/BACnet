@@ -8,7 +8,7 @@ class TransactionSet;
 #include "Transaction.h"
 
 class TransactionSet : 
-	public ComWrapper<IBACnetUnknown>
+	public ObjectWrapper<IBACnetUnknown>
 {
 	typedef pair<U8, CObjectPtr<IBACnetNetworkAddress>> TransactionKey;
 	struct HashAddressPair

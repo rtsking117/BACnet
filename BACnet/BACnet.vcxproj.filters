@@ -57,9 +57,6 @@
     <ClInclude Include="BACnetCommon.h">
       <Filter>Header Files\Public</Filter>
     </ClInclude>
-    <ClInclude Include="ComWrapper.h">
-      <Filter>Header Files\Private</Filter>
-    </ClInclude>
     <ClInclude Include="BACnetTypes.h">
       <Filter>Header Files\Public</Filter>
     </ClInclude>
@@ -131,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Header Files\Internal\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectWrapper.h">
+      <Filter>Header Files\Private</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

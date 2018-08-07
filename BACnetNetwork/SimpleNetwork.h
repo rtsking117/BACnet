@@ -1,12 +1,12 @@
 #pragma once
 
 #include "BACnetNetwork.h"
-#include <ComWrapper.h>
+#include <ObjectWrapper.h>
 #include <map>
 #include "NPDU.h"
 
 class CSimpleNetwork :
-	public ComWrapper<IBACnetSimpleNetwork>
+	public ObjectWrapper<IBACnetSimpleNetwork>
 {
 	APDUHandlerFunction apduhandler;
 	typedef std::pair<U16, CObjectPtr<IBACnetAddress>> routerent;

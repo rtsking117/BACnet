@@ -1,9 +1,9 @@
 #pragma once
-#include "ComWrapper.h"
+#include "ObjectWrapper.h"
 #include <Windows.h>
 
 class CTimer :
-	public ComWrapper<IBACnetTimer>
+	public ObjectWrapper<IBACnetTimer>
 {
 	HANDLE timer;
 public:

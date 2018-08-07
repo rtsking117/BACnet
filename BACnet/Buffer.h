@@ -1,9 +1,9 @@
 #pragma once
 #include "BACnetInterface.h"
-#include "ComWrapper.h"
+#include "ObjectWrapper.h"
 
 class Buffer :
-	public ComWrapper < IBACnetBuffer >
+	public ObjectWrapper < IBACnetBuffer >
 {
 	U8* data;
 	//0 <= rindex <= windex <= len

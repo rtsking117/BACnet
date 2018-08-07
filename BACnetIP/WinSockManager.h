@@ -4,10 +4,10 @@
 #include <WinSock2.h>
 
 #include <BACnetInterface.h>
-#include <ComWrapper.h>
+#include <ObjectWrapper.h>
 
 class WinSockManager :
-	public ComWrapper < IBACnetUnknown >
+	public ObjectWrapper < IBACnetUnknown >
 {
 	WSADATA wsa;
 public:

@@ -1,13 +1,13 @@
 #pragma once
 
 #include "BACnetInterface.h"
-#include "ComWrapper.h"
+#include "ObjectWrapper.h"
 #include <list>
 using namespace std;
 
 
 class TransmitBuffer :
-	public ComWrapper<IBACnetTransmitBuffer>
+	public ObjectWrapper<IBACnetTransmitBuffer>
 {
 	list<CObjectPtr<IBACnetBuffer>> buflist;
 	U32 totlen;

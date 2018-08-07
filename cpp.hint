@@ -1,4 +1,5 @@
 
+#define BACNETMETHODCALLTYPE 
 #define BCNMETHOD(method) virtual BACnetResult method
 #define BCNMETHODTYPE(type,method) virtual type method
 #define BCNMETHODV(method) virtual BACnetResult method

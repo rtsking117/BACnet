@@ -3,12 +3,12 @@
 #include <Windows.h>
 
 #include "BACnetMSTP.h"
-#include <ComWrapper.h>
+#include <ObjectWrapper.h>
 
 //ASHRAE 135-2012, 9.5.4
 
 class MSTPMaster :
-	public ComWrapper<IBACnetMSTPPort>
+	public ObjectWrapper<IBACnetMSTPPort>
 {
 	//these are organized to maximize structure packing
 	// and alignment.

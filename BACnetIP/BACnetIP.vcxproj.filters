@@ -45,6 +45,9 @@
     <ClInclude Include="IPAddress.h">
       <Filter>Header Files\Internal</Filter>
     </ClInclude>
+    <ClInclude Include="WideAreaSubnet.h">
+      <Filter>Header Files\Private</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinSockManager.cpp">
@@ -61,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="BACnetIP.cpp">
       <Filter>Source Files\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="WideAreaSubnet.cpp">
+      <Filter>Source Files\Private</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

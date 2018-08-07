@@ -1,13 +1,13 @@
 #pragma once
-#include <ObjectWrapper.h>
+
 #include "BACnetIP.h"
+#include <ObjectWrapper.h>
 #include "WinSockManager.h"
 #include "IPAddress.h"
 #include <atomic>
 using namespace std;
 
-class LocalSocket :
-	public ObjectWrapper<IBACnetLocalSubnet>
+class WideAreaSubnet : public ObjectWrapper<IBACnetWideAreaSubnet>
 {
 	ReceiverCallbackFunction RXCallback;
 	sockaddr_in Addr;
@@ -17,31 +17,24 @@ class LocalSocket :
 	CObjectPtr<IBACnetEvent> HasRXData;
 	CObjectPtr<IBACnetEvent> HasResponse;
 	CObjectPtr<IPAddress> BroadcastAddress;
-	CObjectPtr<IPAddress> BBMDAddress;
-	CObjectPtr<IBACnetThreadpoolTimer> FDRegTimer;
 	SOCKET sock;
 	U16 AsyncResultCode;
-	U16 FDLifetime;
 	atomic<bool> HasPendingCommand;
-	bool AutoRenew;
 
 	BACnetResult WriteBVLL(sockaddr_in to, U8 messageid, U8 * pBuffer, U16 BufferLength);
 	BACnetResult WriteBVLL(sockaddr_in to, U8 messageid, CObjectPtr<IBACnetTransmitBuffer> pBuffer);
-	
+
 	BACnetResult StartListenerThread();
 	BACnetResult StopListenerThread();
-
-	BACnetResult StartRegistrationTimer();
-	BACnetResult StopRegistrationTimer();
 
 	BACnetResult SendCommandAndWait(sockaddr_in to, U8 messageid, U8 * pBuffer, U16 BufferLength, U16& ResponseCode);
 	BACnetResult SignalCommandResponse(U16 ResponseCode);
 
 	BACnetResult ListenerThread(CObjectPtr<IBACnetThread>);
-	
+
 public:
-	LocalSocket(CObjectPtr<IBACnetThreadPool> pThreadPool, U16 PortNumber);
-	~LocalSocket();
+	WideAreaSubnet(CObjectPtr<IBACnetThreadPool> pThreadPool, U16 PortNumber);
+	~WideAreaSubnet();
 
 	//IBACnetPort
 	BACnetResult BACNETMETHODCALLTYPE WriteMessage(CObjectPtr<IBACnetAddress> pDestinationAddress, CObjectPtr<IBACnetTransmitBuffer> pMessage, bool WaitForTransmit = false);
@@ -64,9 +57,7 @@ public:
 	BACnetResult BACNETMETHODCALLTYPE WriteBroadcastTable(const BDTEntry* pBDTEntries, size_t BDTEntryCount);
 	BACnetResult BACNETMETHODCALLTYPE SetIPPort(U16 usPortNumber);
 
-	//IBACnetLocalSubnet
-	BACnetResult BACNETMETHODCALLTYPE RegisterAsForeignDevice(const CObjectPtr<IBACnetIPAddress> pRemoteAddress, U16 TimeToLive, bool AutoRefresh = true);
-	BACnetResult BACNETMETHODCALLTYPE RenewForeignDeviceRegistration();
-	BACnetResult BACNETMETHODCALLTYPE UnregisterAsForeignDevice();
+	//IBACnetWideAreaNetwork
+	BACnetResult BACNETMETHODCALLTYPE AddRemotePeer(const CObjectPtr<IBACnetIPAddress> pRemoteAddress);
 };
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "ComWrapper.h"
+#include <ObjectWrapper.h>
 #include "APCI.h"
 #include <Windows.h>
 #include "SegmentBuffer.h"
@@ -19,7 +19,7 @@ enum TSMState
 };
 
 class CTransaction :
-	public ComWrapper<IBACnetTransaction>
+	public ObjectWrapper<IBACnetTransaction>
 {
 protected:
 	CSegmentBuffer segs;

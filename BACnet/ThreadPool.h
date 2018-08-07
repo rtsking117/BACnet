@@ -1,10 +1,10 @@
 #pragma once
 #include <list>
 #include <Windows.h>
-#include "ComWrapper.h"
+#include "ObjectWrapper.h"
 
 class CThreadPool :
-	public ComWrapper<IBACnetThreadPool>
+	public ObjectWrapper<IBACnetThreadPool>
 {
 	struct CallbackDispatchStruct
 	{

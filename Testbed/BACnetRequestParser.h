@@ -1,12 +1,12 @@
 #pragma once
 
-#include <ComWrapper.h>
+#include <ObjectWrapper.h>
 #include <BACnetApplication.h>
 
 typedef std::function<BACnetResult(U8, bool, BACnetValue&)> DisplayCallback;
 
 class BACnetRequestParser :
-	public ComWrapper<IBACnetUnknown>
+	public ObjectWrapper<IBACnetUnknown>
 {
 	CObjectPtr<IBACnetTransactionManager> tsm;
 	DisplayCallback DisplayCallbackFunction;

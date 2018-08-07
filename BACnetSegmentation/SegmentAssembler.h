@@ -1,5 +1,5 @@
 #pragma once
-#include "ComWrapper.h"
+#include <ObjectWrapper.h>
 #include <map>
 #include <set>
 #include <vector>
@@ -11,7 +11,7 @@ class CSegmentAssembler;
 #include "TransactionSet.h"
 
 class CSegmentAssembler :
-	public ComWrapper<IBACnetTransactionManager>
+	public ObjectWrapper<IBACnetTransactionManager>
 {
 	UnconfirmedRequestHandler OnUnconfirmedRequest;
 public:

@@ -1,9 +1,9 @@
 #pragma once
-#include "ComWrapper.h"
+#include "ObjectWrapper.h"
 #include <Windows.h>
 
 class CBACnetEvent :
-	public ComWrapper<IBACnetEvent>
+	public ObjectWrapper<IBACnetEvent>
 {
 	HANDLE evt;
 public:
