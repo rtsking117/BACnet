@@ -244,6 +244,103 @@ struct is_application<BACnetApplicationAnyType> : public std::true_type { };
 
 static_assert(is_application<BACnetApplicationAnyType>::value == true, "is_application does not return true on BACnetApplicationAnyType");
 
+/*
+"Specialization" of BACnetAnyType specifically for use in BACnetNameValue.
+This is used for supporting tags.
+*/
+class BACnetApplicationAnyDateTimeType
+{
+	BACnetValue v;
+public:
+
+	BACnetApplicationAnyDateTimeType() = default;
+	explicit BACnetApplicationAnyDateTimeType(const BACnetValue& InitialValue) : v(InitialValue) {}
+
+	BACnetValue get()
+	{
+		return v;
+	}
+
+	bool set(BACnetValue &val)
+	{
+		if(!val.IsPrimitiveData())
+		{
+			if(val.GetNumElements() != 2 || (val.GetElement(0).GetTag != ValueType_Date || val.GetElement(1).GetTag() != ValueType_Time))
+			{
+				return false;
+			}
+		}
+		v = val;
+		return true;
+	}
+
+	bool IsValid()
+	{
+		return v.IsValueValid();
+	}
+
+	BACnetResult Decode(const BACnetValue &value)
+	{
+		if(!value.IsPrimitiveData())
+		{
+			return BCE_REJECT_INVALID_PARAMETER_DATATYPE;
+		}
+		v = value;
+		return BC_OK;
+	}
+
+	BACnetResult Decode(const BACnetValue& value, U32& index)
+	{
+		BACnetValue v1 = value.GetElement(index++);
+		if(v1.GetTag() == ValueType_Date)
+		{
+			if(value.GetNumElements() > index)
+			{
+				BACnetValue v2 = value.GetElement(index++);
+				if(v2.GetTag == ValueType_Time)
+				{
+					//Date/Time encoded value. 
+					v.SetType(ValueType_Constructed);
+					v.SetTag(NoTag);
+					v.AddValue(v1);
+					v.AddValue(v2);
+					return BC_OK;
+				}
+				//back up by one.
+				--index;
+			}
+		}
+		return Decode(v1);
+	}
+
+	BACnetResult Encode(BACnetValue &value)
+	{
+		if(v.IsConstructedData())
+		{
+			if(value.IsUninitialized())
+			{
+				value.SetType(ValueType_Constructed);
+				value.SetTag(NoTag);
+			}
+			value.AddValue(v.GetElement(0));
+			value.AddValue(v.GetElement(1));
+			return BC_OK;
+		}
+		value = v;
+		return BC_OK;
+	}
+};
+
+template<>
+struct is_bacnet_template<BACnetApplicationAnyDateTimeType> : public std::true_type {};
+
+static_assert(is_bacnet_template<BACnetApplicationAnyDateTimeType>::value == true, "is_bacnet_template does not return true on BACnetApplicationAnyDateTimeType");
+
+template<>
+struct is_application<BACnetApplicationAnyDateTimeType> : public std::true_type {};
+
+static_assert(is_application<BACnetApplicationAnyDateTimeType>::value == true, "is_application does not return true on BACnetApplicationAnyDateTimeType");
+
 template<U32 Tag, typename T>
 class BACnetChoiceElement
 {

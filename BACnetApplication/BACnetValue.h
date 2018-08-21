@@ -96,7 +96,7 @@ public:
 	U32 GetNumElements() const { return IsConstructedData() ? cv.NumElements : 0; }
 	const BACnetValue& GetElement(U32 ElementIndex) const;
 
-	BACnetResult AddValue(BACnetValue& val);
+	BACnetResult AddValue(const BACnetValue& val);
 	BACnetResult ReserveValueSpace(U32 SubvalueCount);
 
 	static BACnetResult CreateFromBuffer(CObjectPtr<IBACnetBuffer> pBuffer, BACnetValue& val);
