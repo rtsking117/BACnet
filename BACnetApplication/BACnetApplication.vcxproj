@@ -182,14 +182,17 @@
     <Text Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BACnetAlarmServices.inl" />
+    <None Include="BACnetAccessControlTypes.inl" />
+    <None Include="BACnetAlarmAndEventServices.inl" />
     <None Include="BACnetBasicTypes.inl" />
     <None Include="BACnetComplexTypes.inl" />
+    <None Include="BACnetAlarmAndEventTypes.inl" />
     <None Include="BACnetErrorTypes.inl" />
     <None Include="BACnetFileServices.inl" />
     <None Include="BACnetObjectAccessServices.inl" />
     <None Include="BACnetPropertyTypes.inl" />
     <None Include="BACnetRemoteDeviceManagementServices.inl" />
+    <None Include="BACnetScheduleTypes.inl" />
     <None Include="BACnetVirtualTerminalServices.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

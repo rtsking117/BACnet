@@ -39,7 +39,7 @@ typedef BACnetUnsignedType BACnetAccessThreatLevelType;
 typedef BACnetEnumeratedType BACnetAccessUserTypeType;
 typedef BACnetEnumeratedType BACnetAccessZoneOccupancyStateType;
 typedef BACnetEnumeratedType BACnetActionType;
-typedef BACnetEnumeratedType BACnetAuthenticationFactorType;
+typedef BACnetEnumeratedType BACnetAuthenticationFactorTypeType;
 typedef BACnetEnumeratedType BACnetAuthenticationStatusType;
 typedef BACnetEnumeratedType BACnetAuthorizationExemptionType;
 typedef BACnetEnumeratedType BACnetAuthorizationModeType;

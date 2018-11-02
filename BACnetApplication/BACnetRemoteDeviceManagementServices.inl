@@ -9,9 +9,9 @@
 //Confirmed Private Transfer
 class ConfirmedPrivateTransferRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetUnsigned16Type, false>,
-	BACnetSequenceElement<1, BACnetUnsignedType, false>,
-	BACnetSequenceElement<2, BACnetAnyType, true>
+		BACnetSequenceElement<0, BACnetUnsigned16Type, false>,
+		BACnetSequenceElement<1, BACnetUnsignedType, false>,
+		BACnetSequenceElement<2, BACnetAnyType, true>
 	>
 {
 public:
@@ -59,9 +59,9 @@ public:
 //Confirmed Private Transfer Ack
 class ConfirmedPrivateTransferResponse : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetUnsigned16Type, false>,
-	BACnetSequenceElement<1, BACnetUnsignedType, false>,
-	BACnetSequenceElement<2, BACnetAnyType, true>
+		BACnetSequenceElement<0, BACnetUnsigned16Type, false>,
+		BACnetSequenceElement<1, BACnetUnsignedType, false>,
+		BACnetSequenceElement<2, BACnetAnyType, true>
 	>
 {
 public:
@@ -109,15 +109,16 @@ public:
 //Confirmed Text Message
 class ConfirmedTextMessageRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetObjectIDType, false>,
-	BACnetSequenceElement<1,
-	BACnetChoice<NoDefault,
-	BACnetChoiceElement<0, BACnetUnsignedType>,
-	BACnetChoiceElement<1, BACnetCharacterStringType>
-	>
-	, true>,
-	BACnetSequenceElement<2, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<3, BACnetCharacterStringType, false>
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1,
+			BACnetChoice<NoDefault,
+				BACnetChoiceElement<0, BACnetUnsignedType>,
+				BACnetChoiceElement<1, BACnetCharacterStringType>
+			>, 
+			true
+		>,
+		BACnetSequenceElement<2, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<3, BACnetCharacterStringType, false>
 	>
 {
 public:
@@ -215,9 +216,9 @@ public:
 //Device Communication Control
 class DeviceCommunicationControlRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetUnsigned16Type, true>,
-	BACnetSequenceElement<1, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<2, BACnetCharacterStringType, true>
+		BACnetSequenceElement<0, BACnetUnsigned16Type, true>,
+		BACnetSequenceElement<1, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<2, BACnetCharacterStringType, true>
 	>
 {
 public:
@@ -285,8 +286,8 @@ public:
 //Reinitialize Device
 class ReinitializeDeviceRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<1, BACnetCharacterStringType, true>
+		BACnetSequenceElement<0, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<1, BACnetCharacterStringType, true>
 	>
 {
 public:
@@ -333,10 +334,10 @@ public:
 //I Am
 class IAmRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<NoTag, BACnetObjectIDType, false>,
-	BACnetSequenceElement<NoTag, BACnetUnsignedType, false>,
-	BACnetSequenceElement<NoTag, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<NoTag, BACnetUnsigned16Type, false>
+		BACnetSequenceElement<NoTag, BACnetObjectIDType, false>,
+		BACnetSequenceElement<NoTag, BACnetUnsignedType, false>,
+		BACnetSequenceElement<NoTag, BACnetSegmentationType, false>,
+		BACnetSequenceElement<NoTag, BACnetUnsigned16Type, false>
 	>
 {
 public:
@@ -384,9 +385,9 @@ public:
 //I Have
 class IHaveRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<NoTag, BACnetObjectIDType, false>,
-	BACnetSequenceElement<NoTag, BACnetObjectIDType, false>,
-	BACnetSequenceElement<NoTag, BACnetCharacterStringType, false>
+		BACnetSequenceElement<NoTag, BACnetObjectIDType, false>,
+		BACnetSequenceElement<NoTag, BACnetObjectIDType, false>,
+		BACnetSequenceElement<NoTag, BACnetCharacterStringType, false>
 	>
 {
 public:
@@ -425,9 +426,9 @@ public:
 //Unconfirmed Private Transfer
 class UnconfirmedPrivateTransferRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetUnsigned16Type, false>,
-	BACnetSequenceElement<1, BACnetUnsignedType, false>,
-	BACnetSequenceElement<2, BACnetAnyType, true>
+		BACnetSequenceElement<0, BACnetUnsigned16Type, false>,
+		BACnetSequenceElement<1, BACnetUnsignedType, false>,
+		BACnetSequenceElement<2, BACnetAnyType, true>
 	>
 {
 public:
@@ -467,14 +468,16 @@ public:
 //Unconfirmed Text Message
 class UnconfirmedTextMessageRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetObjectIDType, false>,
-	BACnetSequenceElement<1,
-	BACnetChoice<NoDefault,
-	BACnetChoiceElement<0, BACnetUnsignedType>,
-	BACnetChoiceElement<1, BACnetCharacterStringType>
-	>, true>,
-	BACnetSequenceElement<2, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<3, BACnetCharacterStringType, false>
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1,
+			BACnetChoice<NoDefault,
+				BACnetChoiceElement<0, BACnetUnsignedType>,
+				BACnetChoiceElement<1, BACnetCharacterStringType>
+			>,
+			true
+		>,
+		BACnetSequenceElement<2, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<3, BACnetCharacterStringType, false>
 	>
 {
 public:
@@ -620,18 +623,20 @@ class UTCTimeSynchronizationRequest : public
 //Who Has
 class WhoHasRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<NoTag,
-	BACnetSequence<
-	BACnetSequenceElement<0, BACnetUnsignedType, false>,
-	BACnetSequenceElement<1, BACnetUnsignedType, false>
-	>, true
-	>,
-	BACnetSequenceElement<NoTag,
-	BACnetChoice<NoDefault,
-	BACnetChoiceElement<2, BACnetObjectIDType>,
-	BACnetChoiceElement<3, BACnetCharacterStringType>
-	>, false
-	>
+		BACnetSequenceElement<NoTag,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetUnsignedType, false>
+			>, 
+			true
+		>,
+		BACnetSequenceElement<NoTag,
+			BACnetChoice<NoDefault,
+				BACnetChoiceElement<2, BACnetObjectIDType>,
+				BACnetChoiceElement<3, BACnetCharacterStringType>
+			>, 
+			false
+		>
 	>
 {
 public:
@@ -716,12 +721,13 @@ public:
 //Who Is
 class WhoIsRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<NoTag,
-	BACnetSequence<
-	BACnetSequenceElement<0, BACnetUnsignedType, false>,
-	BACnetSequenceElement<1, BACnetUnsignedType, false>
-	>, true
-	>
+		BACnetSequenceElement<NoTag,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetUnsignedType, false>
+			>, 
+			true
+		>
 	>
 {
 public:

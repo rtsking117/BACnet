@@ -9,8 +9,8 @@
 //VT Open
 class VTOpenRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<NoTag, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<NoTag, BACnetUnsigned8Type, false>
+		BACnetSequenceElement<NoTag, BACnetVTClassType, false>,
+		BACnetSequenceElement<NoTag, BACnetUnsigned8Type, false>
 	>
 {
 public:
@@ -39,7 +39,7 @@ public:
 //VT Open Ack
 class VTOpenResponse : public
 	BACnetSequence<
-	BACnetSequenceElement<NoTag, BACnetUnsigned8Type, false>
+		BACnetSequenceElement<NoTag, BACnetUnsigned8Type, false>
 	>
 {
 public:
@@ -58,9 +58,7 @@ public:
 //VT Close
 class VTCloseRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<NoTag,
-	BACnetSequenceOf<BACnetUnsigned8Type>
-	, false>
+		BACnetSequenceElement<NoTag, BACnetSequenceOf<BACnetUnsigned8Type>, false>
 	>
 {
 public:
@@ -106,9 +104,9 @@ public:
 //VT Data
 class VTDataRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<NoTag, BACnetUnsigned8Type, false>,
-	BACnetSequenceElement<NoTag, BACnetOctetStringType, false>,
-	BACnetSequenceElement<NoTag, BACnetUnsignedType, false>
+		BACnetSequenceElement<NoTag, BACnetUnsigned8Type, false>,
+		BACnetSequenceElement<NoTag, BACnetOctetStringType, false>,
+		BACnetSequenceElement<NoTag, BACnetUnsignedType, false>
 	>
 {
 public:
@@ -146,8 +144,8 @@ public:
 //VT Data Ack
 class VTDataResponse : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetBooleanType, false>,
-	BACnetSequenceElement<1, BACnetUnsignedType, true>
+		BACnetSequenceElement<0, BACnetBooleanType, false>,
+		BACnetSequenceElement<1, BACnetUnsignedType, true>
 	>
 {
 public:

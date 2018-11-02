@@ -91,9 +91,9 @@ public:
 		return 0;
 	}
 
-	bool set(int val)
+	bool set()
 	{
-		(void)val;
+		//(void)val;
 		return true;
 	}
 
@@ -265,7 +265,7 @@ public:
 	{
 		if(!val.IsPrimitiveData())
 		{
-			if(val.GetNumElements() != 2 || (val.GetElement(0).GetTag != ValueType_Date || val.GetElement(1).GetTag() != ValueType_Time))
+			if(val.GetNumElements() != 2 || (val.GetElement(0).GetTag() != ValueType_Date || val.GetElement(1).GetTag() != ValueType_Time))
 			{
 				return false;
 			}
@@ -297,7 +297,7 @@ public:
 			if(value.GetNumElements() > index)
 			{
 				BACnetValue v2 = value.GetElement(index++);
-				if(v2.GetTag == ValueType_Time)
+				if(v2.GetTag() == ValueType_Time)
 				{
 					//Date/Time encoded value. 
 					v.SetType(ValueType_Constructed);

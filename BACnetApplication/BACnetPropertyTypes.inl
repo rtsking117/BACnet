@@ -2,70 +2,165 @@
 
 #include "BACnetBasicTypes.inl"
 #include "BACnetComplexTypes.inl"
+#include "BACnetErrorTypes.inl"
+
+
+//Device Object Property Reference
+class BACnetDeviceObjectPropertyReference : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<2, BACnetUnsignedType, true>,
+		BACnetSequenceElement<3, BACnetObjectIDType, true>
+	>
+{
+public:
+
+};
+
+//Device Object Property Value
+class BACnetDeviceObjectPropertyValue : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1, BACnetObjectIDType, false>,
+		BACnetSequenceElement<2, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<3, BACnetUnsignedType, true>,
+		BACnetSequenceElement<4, BACnetAnyType, false>
+	>
+{
+public:
+
+};
+
+//Device Object Reference
+class BACnetDeviceObjectReference : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetObjectIDType, true>,
+		BACnetSequenceElement<1, BACnetObjectIDType, false>
+	>
+{
+public:
+
+};
+
+//Group Channel Value
+class BACnetGroupChannelValue : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetUnsigned16Type, false>,
+		BACnetSequenceElement<1, BACnetUnsignedType, true>,
+		BACnetSequenceElement<NoTag, BACnetChannelValue, false>
+	>
+{
+public:
+
+};
+
+//Object Property Reference
+class BACnetObjectPropertyReference : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<2, BACnetUnsignedType, true>
+	>
+{
+public:
+
+};
+
+//Object Property Value
+class BACnetObjectPropertyValue : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<2, BACnetUnsignedType, true>,
+		BACnetSequenceElement<3, BACnetAnyType, false>,
+		BACnetSequenceElement<4, BACnetUnsignedType, true>,
+	>
+{
+public:
+
+};
 
 //Property Access Result
+class BACnetPropertyAccessResult : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<2, BACnetUnsignedType, true>,
+		BACnetSequenceElement<3, BACnetObjectIDType, true>,
+		BACnetSequenceElement<NoTag,
+			BACnetChoice<NoDefault,
+				BACnetChoiceElement<4, BACnetAnyType>,
+				BACnetChoiceElement<5, BACnetError>,
+			>, false
+		>
+	>
+{
+public:
+
+};
 
 //Property States
 class BACnetPropertyStates : public
 	BACnetChoice<NoDefault,
-	BACnetChoiceElement<0, BACnetBooleanType>,
-	BACnetChoiceElement<1, BACnetBinaryPVType>,
-	BACnetChoiceElement<2, BACnetEventTypeType>,
-	BACnetChoiceElement<3, BACnetPolarityType>,
-	BACnetChoiceElement<4, BACnetProgramRequestType>,
-	BACnetChoiceElement<5, BACnetProgramStateType>,
-	BACnetChoiceElement<6, BACnetProgramErrorType>,
-	BACnetChoiceElement<7, BACnetReliabilityType>,
-	BACnetChoiceElement<8, BACnetEventStateType>,
-	BACnetChoiceElement<9, BACnetDeviceStatusType>,
-	BACnetChoiceElement<10, BACnetEngineeringUnitsType>,
-	BACnetChoiceElement<11, BACnetUnsignedType>,
-	BACnetChoiceElement<12, BACnetLifeSafetyModeType>,
-	BACnetChoiceElement<13, BACnetLifeSafetyStateType>,
-	BACnetChoiceElement<14, BACnetRestartReasonType>,
-	BACnetChoiceElement<15, BACnetDoorAlarmStateType>,
-	BACnetChoiceElement<16, BACnetActionType>,
-	BACnetChoiceElement<17, BACnetDoorSecuredStatusType>,
-	BACnetChoiceElement<18, BACnetDoorStatusType>,
-	BACnetChoiceElement<19, BACnetDoorValueType>,
-	BACnetChoiceElement<20, BACnetFileAccessMethodType>,
-	BACnetChoiceElement<21, BACnetLockStatusType>,
-	BACnetChoiceElement<22, BACnetLifeSafetyOperationType>,
-	BACnetChoiceElement<23, BACnetMaintenanceType>,
-	BACnetChoiceElement<24, BACnetNodeTypeType>,
-	BACnetChoiceElement<25, BACnetNotifyTypeType>,
-	BACnetChoiceElement<26, BACnetSecurityLevelType>,
-	BACnetChoiceElement<27, BACnetShedStateType>,
-	BACnetChoiceElement<28, BACnetSilencedStateType>,
-	BACnetChoiceElement<30, BACnetAccessEventType>,
-	BACnetChoiceElement<31, BACnetAccessZoneOccupancyStateType>,
-	BACnetChoiceElement<32, BACnetAccessCredentialDisableReasonType>,
-	BACnetChoiceElement<33, BACnetAccessCredentialDisableType>,
-	BACnetChoiceElement<34, BACnetAuthenticationStatusType>,
-	BACnetChoiceElement<36, BACnetBackupStateType>,
-	BACnetChoiceElement<37, BACnetWriteStatusType>,
-	BACnetChoiceElement<38, BACnetLightingInProgressType>,
-	BACnetChoiceElement<39, BACnetLightingOperationType>,
-	BACnetChoiceElement<30, BACnetLightingTransitionType>,
-	BACnetChoiceElement<41, BACnetSignedType>,
-	BACnetChoiceElement<42, BACnetBinaryLightingPVType>,
-	BACnetChoiceElement<43, BACnetTimerStateType>,
-	BACnetChoiceElement<44, BACnetTimerTransitionType>,
-	BACnetChoiceElement<45, BACnetIPModeType>,
-	BACnetChoiceElement<46, BACnetNetworkPortCommandType>,
-	BACnetChoiceElement<47, BACnetNetworkTypeType>,
-	BACnetChoiceElement<48, BACnetNetworkNumberQualityType>,
-	BACnetChoiceElement<49, BACnetEscalatorOperationDirectionType>,
-	BACnetChoiceElement<40, BACnetEscalatorFaultType>,
-	BACnetChoiceElement<31, BACnetEscalatorModeType>,
-	BACnetChoiceElement<52, BACnetLiftCarDirectionType>,
-	BACnetChoiceElement<53, BACnetLiftCarDoorCommandType>,
-	BACnetChoiceElement<54, BACnetLiftCarDriveStatusType>,
-	BACnetChoiceElement<55, BACnetLiftCarModeType>,
-	BACnetChoiceElement<56, BACnetLiftGroupModeType>,
-	BACnetChoiceElement<57, BACnetLiftFaultType>,
-	BACnetChoiceElement<58, BACnetProtocolLevelType>,
-	BACnetChoiceElement<63, BACnetUnsigned32Type>
+		BACnetChoiceElement<0, BACnetBooleanType>,
+		BACnetChoiceElement<1, BACnetBinaryPVType>,
+		BACnetChoiceElement<2, BACnetEventTypeType>,
+		BACnetChoiceElement<3, BACnetPolarityType>,
+		BACnetChoiceElement<4, BACnetProgramRequestType>,
+		BACnetChoiceElement<5, BACnetProgramStateType>,
+		BACnetChoiceElement<6, BACnetProgramErrorType>,
+		BACnetChoiceElement<7, BACnetReliabilityType>,
+		BACnetChoiceElement<8, BACnetEventStateType>,
+		BACnetChoiceElement<9, BACnetDeviceStatusType>,
+		BACnetChoiceElement<10, BACnetEngineeringUnitsType>,
+		BACnetChoiceElement<11, BACnetUnsignedType>,
+		BACnetChoiceElement<12, BACnetLifeSafetyModeType>,
+		BACnetChoiceElement<13, BACnetLifeSafetyStateType>,
+		BACnetChoiceElement<14, BACnetRestartReasonType>,
+		BACnetChoiceElement<15, BACnetDoorAlarmStateType>,
+		BACnetChoiceElement<16, BACnetActionType>,
+		BACnetChoiceElement<17, BACnetDoorSecuredStatusType>,
+		BACnetChoiceElement<18, BACnetDoorStatusType>,
+		BACnetChoiceElement<19, BACnetDoorValueType>,
+		BACnetChoiceElement<20, BACnetFileAccessMethodType>,
+		BACnetChoiceElement<21, BACnetLockStatusType>,
+		BACnetChoiceElement<22, BACnetLifeSafetyOperationType>,
+		BACnetChoiceElement<23, BACnetMaintenanceType>,
+		BACnetChoiceElement<24, BACnetNodeTypeType>,
+		BACnetChoiceElement<25, BACnetNotifyTypeType>,
+		BACnetChoiceElement<26, BACnetSecurityLevelType>,
+		BACnetChoiceElement<27, BACnetShedStateType>,
+		BACnetChoiceElement<28, BACnetSilencedStateType>,
+		BACnetChoiceElement<30, BACnetAccessEventType>,
+		BACnetChoiceElement<31, BACnetAccessZoneOccupancyStateType>,
+		BACnetChoiceElement<32, BACnetAccessCredentialDisableReasonType>,
+		BACnetChoiceElement<33, BACnetAccessCredentialDisableType>,
+		BACnetChoiceElement<34, BACnetAuthenticationStatusType>,
+		BACnetChoiceElement<36, BACnetBackupStateType>,
+		BACnetChoiceElement<37, BACnetWriteStatusType>,
+		BACnetChoiceElement<38, BACnetLightingInProgressType>,
+		BACnetChoiceElement<39, BACnetLightingOperationType>,
+		BACnetChoiceElement<30, BACnetLightingTransitionType>,
+		BACnetChoiceElement<41, BACnetSignedType>,
+		BACnetChoiceElement<42, BACnetBinaryLightingPVType>,
+		BACnetChoiceElement<43, BACnetTimerStateType>,
+		BACnetChoiceElement<44, BACnetTimerTransitionType>,
+		BACnetChoiceElement<45, BACnetIPModeType>,
+		BACnetChoiceElement<46, BACnetNetworkPortCommandType>,
+		BACnetChoiceElement<47, BACnetNetworkTypeType>,
+		BACnetChoiceElement<48, BACnetNetworkNumberQualityType>,
+		BACnetChoiceElement<49, BACnetEscalatorOperationDirectionType>,
+		BACnetChoiceElement<40, BACnetEscalatorFaultType>,
+		BACnetChoiceElement<31, BACnetEscalatorModeType>,
+		BACnetChoiceElement<52, BACnetLiftCarDirectionType>,
+		BACnetChoiceElement<53, BACnetLiftCarDoorCommandType>,
+		BACnetChoiceElement<54, BACnetLiftCarDriveStatusType>,
+		BACnetChoiceElement<55, BACnetLiftCarModeType>,
+		BACnetChoiceElement<56, BACnetLiftGroupModeType>,
+		BACnetChoiceElement<57, BACnetLiftFaultType>,
+		BACnetChoiceElement<58, BACnetProtocolLevelType>,
+		BACnetChoiceElement<63, BACnetUnsigned32Type>
 	>
 {
 public:
@@ -75,8 +170,8 @@ public:
 //Property Reference
 class BACnetPropertyReference : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetPropertyIdentifierType, false>,
-	BACnetSequenceElement<1, BACnetUnsignedType, true>
+		BACnetSequenceElement<0, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<1, BACnetUnsignedType, true>
 	>
 {
 public:
@@ -134,10 +229,10 @@ public:
 //Propery Value
 class BACnetPropertyValue : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetPropertyIdentifierType, false>,
-	BACnetSequenceElement<1, BACnetUnsignedType, true>,
-	BACnetSequenceElement<2, BACnetAnyType, false>,
-	BACnetSequenceElement<3, BACnetUnsignedType, true>
+		BACnetSequenceElement<0, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<1, BACnetUnsignedType, true>,
+		BACnetSequenceElement<2, BACnetAnyType, false>,
+		BACnetSequenceElement<3, BACnetUnsignedType, true>
 	>
 {
 public:
@@ -225,4 +320,55 @@ public:
 	{
 		make_present<3>(false);
 	}
+};
+
+//forward declaration because BACnet is mean and self-referencing. :(
+class BACnetError;
+
+//Read Access Result
+class ReadAccessResult : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1,
+			BACnetSequenceOf<
+				BACnetSequence<
+					BACnetSequenceElement<2, BACnetPropertyIdentifierType, false>,
+					BACnetSequenceElement<3, BACnetUnsignedType, true>,
+					BACnetSequenceElement<NoTag,
+						BACnetChoice<NoDefault,
+							BACnetChoiceElement<4, BACnetAnyType>,
+							BACnetChoiceElement<5, BACnetError>
+						>,
+						false
+					>
+				>
+			>,
+			true
+		>
+	>
+{
+public:
+
+};
+
+//Read Access Specification
+class ReadAccessSpecification : public
+	BACnetSequence<
+	BACnetSequenceElement<0, BACnetObjectIDType, false>,
+	BACnetSequenceElement<1, BACnetSequenceOf<BACnetPropertyReference>, false>
+	>
+{
+public:
+
+};
+
+//Write Access Result
+class WriteAccessSpecification : public
+	BACnetSequence<
+	BACnetSequenceElement<0, BACnetObjectIDType, false>,
+	BACnetSequenceElement<1, BACnetSequenceOf<BACnetPropertyValue>, false>
+	>
+{
+public:
+
 };
