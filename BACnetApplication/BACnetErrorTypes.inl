@@ -9,8 +9,8 @@
 //Generic Error
 class BACnetError : public
 	BACnetSequence<
-	BACnetSequenceElement<NoTag, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<NoTag, BACnetEnumeratedType, false>
+		BACnetSequenceElement<NoTag, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<NoTag, BACnetEnumeratedType, false>
 	>
 {
 public:
@@ -35,14 +35,24 @@ public:
 	}
 };
 
-//Change List Error
+#include "BACnetPropertyTypes.inl"
 
+//Change List Error
+class ChangeListError : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetError, false>,
+		BACnetSequenceElement<1, BACnetUnsignedType, false>
+	>
+{
+public:
+
+};
 
 //Create Object Error
 class CreateObjectError : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetError, false>,
-	BACnetSequenceElement<1, BACnetUnsignedType, false>
+		BACnetSequenceElement<0, BACnetError, false>,
+		BACnetSequenceElement<1, BACnetUnsignedType, false>
 	>
 {
 public:
@@ -79,6 +89,56 @@ public:
 		return get<1>().set(PropIndex);
 	}
 
+};
+
+//Confirmed Private Transfer Error
+class ConfirmedPrivateTransferError : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetError, false>,
+		BACnetSequenceElement<1, BACnetUnsigned16Type, false>,
+		BACnetSequenceElement<2, BACnetUnsignedType, false>,
+		BACnetSequenceElement<3, BACnetAnyType, true>
+	>
+{
+public:
 
 };
 
+//Subscribe COV Property Multiple Error
+class SubscribeCOVPropertyMultipleError : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetError, false>,
+		BACnetSequenceElement<1, 
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetObjectIDType, false>,
+				BACnetSequenceElement<1, BACnetPropertyReference, false>,
+				BACnetSequenceElement<2, BACnetError, false>,
+			>, false
+		>
+	>
+{
+public:
+
+};
+
+//Write Property Multiple Error
+class WritePropertyMultipleError : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetError, false>,
+		BACnetSequenceElement<1, BACnetObjectPropertyReference, false>
+	>
+{
+public:
+
+};
+
+//VT Close Error
+class VTCloseError : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetError, false>,
+		BACnetSequenceElement<1, BACnetSequenceOf<BACnetUnsigned8Type>, true>
+	>
+{
+public:
+
+};

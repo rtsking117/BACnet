@@ -2,7 +2,8 @@
 
 #include "BACnetBasicTypes.inl"
 #include "BACnetComplexTypes.inl"
-//#include "BACnetAlarmTypes.inl"
+#include "BACnetAlarmAndEventTypes.inl"
+#include "BACnetPropertyTypes.inl" 
 
 //=============================================================================================
 //							CONFIRMED ALARM AND EVENT SERVICES
@@ -242,6 +243,67 @@ public:
 //							UNCONFIRMED ALARM AND EVENT SERVICES
 //=============================================================================================
 
+class UnconfirmedCOVNotificationRequest : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
+		BACnetSequenceElement<1, BACnetObjectIDType, false>,
+		BACnetSequenceElement<2, BACnetObjectIDType, false>,
+		BACnetSequenceElement<3, BACnetUnsignedType, false>,
+		BACnetSequenceElement<4, BACnetSequenceOf<BACnetPropertyValue>, false>,
+	>
+{
+public:
 
+};
 
+class UnconfirmedCOVNotificationMultipleRequest : public
+	BACnetSequence <
+		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
+		BACnetSequenceElement<1, BACnetObjectIDType, false>,
+		BACnetSequenceElement<2, BACnetUnsignedType, false>,
+		BACnetSequenceElement<3, BACnetDateTimeType, true>,
+		BACnetSequenceElement<4,
+			BACnetSequenceOf<
+				BACnetSequence<
+					BACnetSequenceElement<0, BACnetObjectIDType, false>,
+					BACnetSequenceElement<1,
+						BACnetSequenceOf<
+							BACnetSequence<
+								BACnetSequenceElement<0, BACnetPropertyIdentifierType, false>,
+								BACnetSequenceElement<1, BACnetUnsignedType, true>,
+								BACnetSequenceElement<2, BACnetAnyType, false>,
+								BACnetSequenceElement<3, BACnetTimeType, true>,
+							>
+						>,
+						false
+					>,
+				>
+			>,
+			false
+		>,
+	>
+{
+public:
 
+};
+
+class UnconfirmedEventNotificationRequest : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
+		BACnetSequenceElement<1, BACnetObjectIDType, false>,
+		BACnetSequenceElement<2, BACnetObjectIDType, false>,
+		BACnetSequenceElement<3, BACnetTimeStamp, false>,
+		BACnetSequenceElement<4, BACnetUnsignedType, false>,
+		BACnetSequenceElement<5, BACnetUnsigned8Type, false>,
+		BACnetSequenceElement<6, BACnetEventTypeType, false>,
+		BACnetSequenceElement<7, BACnetCharacterStringType, true>,
+		BACnetSequenceElement<8, BACnetNotifyTypeType, false>,
+		BACnetSequenceElement<9, BACnetBooleanType, true>,
+		BACnetSequenceElement<10, BACnetEventStateType, true>,
+		BACnetSequenceElement<11, BACnetEventStateType, false>,
+		BACnetSequenceElement<12, BACnetNotificationParameters, true>,
+	>
+{
+public:
+
+};

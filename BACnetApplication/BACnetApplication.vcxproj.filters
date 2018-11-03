@@ -58,9 +58,6 @@
     <None Include="BACnetBasicTypes.inl">
       <Filter>Header Files\Public\APDU</Filter>
     </None>
-    <None Include="BACnetAlarmServices.inl">
-      <Filter>Header Files\Public\APDU</Filter>
-    </None>
     <None Include="BACnetPropertyTypes.inl">
       <Filter>Header Files\Public\APDU</Filter>
     </None>
@@ -80,6 +77,18 @@
       <Filter>Header Files\Public\APDU</Filter>
     </None>
     <None Include="BACnetComplexTypes.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetAccessControlTypes.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetScheduleTypes.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetAlarmAndEventServices.inl">
+      <Filter>Header Files\Public\APDU</Filter>
+    </None>
+    <None Include="BACnetAlarmAndEventTypes.inl">
       <Filter>Header Files\Public\APDU</Filter>
     </None>
   </ItemGroup>

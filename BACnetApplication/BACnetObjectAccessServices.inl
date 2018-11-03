@@ -10,10 +10,10 @@
 //Add List Element
 class AddListElementRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetObjectIDType, false>,
-	BACnetSequenceElement<1, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<2, BACnetUnsignedType, true>,
-	BACnetSequenceElement<3, BACnetAnyType, false>
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<2, BACnetUnsignedType, true>,
+		BACnetSequenceElement<3, BACnetAnyType, false>
 	>
 {
 public:
@@ -76,15 +76,14 @@ public:
 //Create Object
 class CreateObjectRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<0,
-	BACnetChoice<NoDefault,
-	BACnetChoiceElement<0, BACnetEnumeratedType>,
-	BACnetChoiceElement<1, BACnetObjectIDType>
-	>, false
-	>,
-	BACnetSequenceElement<1,
-	BACnetSequenceOf<BACnetPropertyValue>
-	, true>
+		BACnetSequenceElement<0,
+			BACnetChoice<NoDefault,
+				BACnetChoiceElement<0, BACnetEnumeratedType>,
+				BACnetChoiceElement<1, BACnetObjectIDType>
+			>, 
+			false
+		>,
+		BACnetSequenceElement<1, BACnetSequenceOf<BACnetPropertyValue>, true>
 	>
 {
 public:
@@ -174,7 +173,7 @@ public:
 //Delete Object
 class DeleteObjectRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<NoTag, BACnetObjectIDType, false>
+		BACnetSequenceElement<NoTag, BACnetObjectIDType, false>
 	>
 {
 public:
@@ -192,9 +191,9 @@ public:
 //Read Property
 class ReadPropertyRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetObjectIDType, false>,
-	BACnetSequenceElement<1, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<2, BACnetUnsignedType, true>
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<2, BACnetUnsignedType, true>
 	>
 {
 public:
@@ -248,10 +247,10 @@ public:
 //Read Property Ack
 class ReadPropertyResponse : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetObjectIDType, false>,
-	BACnetSequenceElement<1, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<2, BACnetUnsignedType, true>,
-	BACnetSequenceElement<3, BACnetAnyType, false>
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<2, BACnetUnsignedType, true>,
+		BACnetSequenceElement<3, BACnetAnyType, false>
 	>
 {
 public:
@@ -315,7 +314,7 @@ public:
 //Read Property Multiple
 class ReadPropertyMultipleRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<NoTag, BACnetSequenceOf<ReadAccessSpecification>, false>
+		BACnetSequenceElement<NoTag, BACnetSequenceOf<ReadAccessSpecification>, false>
 	>
 {
 public:
@@ -354,7 +353,7 @@ public:
 //Read Property Multiple Ack
 class ReadPropertyMultipleResponse : public
 	BACnetSequence<
-	BACnetSequenceElement<NoTag, BACnetSequenceOf<ReadAccessResult>, false>
+		BACnetSequenceElement<NoTag, BACnetSequenceOf<ReadAccessResult>, false>
 	>
 {
 public:
@@ -392,31 +391,32 @@ public:
 //Read Range
 class ReadRangeRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetObjectIDType, false>,
-	BACnetSequenceElement<1, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<2, BACnetUnsignedType, true>,
-	BACnetSequenceElement<NoTag,
-	BACnetChoice<NoDefault,
-	BACnetChoiceElement<3,
-	BACnetSequence<
-	BACnetSequenceElement<NoTag, BACnetUnsignedType, false>,
-	BACnetSequenceElement<NoTag, BACnetSigned16Type, false>
-	>
-	>,
-	BACnetChoiceElement<6,
-	BACnetSequence<
-	BACnetSequenceElement<NoTag, BACnetUnsignedType, false>,
-	BACnetSequenceElement<NoTag, BACnetSigned16Type, false>
-	>
-	>,
-	BACnetChoiceElement<7,
-	BACnetSequence<
-	BACnetSequenceElement<NoTag, BACnetDateTimeType, false>,
-	BACnetSequenceElement<NoTag, BACnetSigned16Type, false>
-	>
-	>
-	>, true
-	>
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<2, BACnetUnsignedType, true>,
+		BACnetSequenceElement<NoTag,
+			BACnetChoice<NoDefault,
+				BACnetChoiceElement<3,
+					BACnetSequence<
+						BACnetSequenceElement<NoTag, BACnetUnsignedType, false>,
+						BACnetSequenceElement<NoTag, BACnetSigned16Type, false>
+					>
+				>,
+				BACnetChoiceElement<6,
+					BACnetSequence<
+						BACnetSequenceElement<NoTag, BACnetUnsignedType, false>,
+						BACnetSequenceElement<NoTag, BACnetSigned16Type, false>
+					>
+				>,
+				BACnetChoiceElement<7,
+					BACnetSequence<
+						BACnetSequenceElement<NoTag, BACnetDateTimeType, false>,
+						BACnetSequenceElement<NoTag, BACnetSigned16Type, false>
+					>
+				>
+			>, 
+			true
+		>
 	>
 {
 public:
@@ -565,15 +565,13 @@ public:
 //Read Range Ack
 class ReadRangeResponse : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetObjectIDType, false>,
-	BACnetSequenceElement<1, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<2, BACnetUnsignedType, true>,
-	BACnetSequenceElement<3, BACnetBitStringType, false>,
-	BACnetSequenceElement<4, BACnetUnsignedType, false>,
-	BACnetSequenceElement<5,
-	BACnetSequenceOf<BACnetAnyType>,
-	false>,
-	BACnetSequenceElement<6, BACnetUnsigned32Type, true>
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<2, BACnetUnsignedType, true>,
+		BACnetSequenceElement<3, BACnetBitStringType, false>,
+		BACnetSequenceElement<4, BACnetUnsignedType, false>,
+		BACnetSequenceElement<5, BACnetSequenceOf<BACnetAnyType>, false>,
+		BACnetSequenceElement<6, BACnetUnsigned32Type, true>
 	>
 {
 public:
@@ -707,10 +705,10 @@ public:
 //Remove List Element
 class RemoveListElementRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetObjectIDType, false>,
-	BACnetSequenceElement<1, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<2, BACnetUnsignedType, true>,
-	BACnetSequenceElement<3, BACnetAnyType, false>
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<2, BACnetUnsignedType, true>,
+		BACnetSequenceElement<3, BACnetAnyType, false>
 	>
 {
 public:
@@ -773,11 +771,11 @@ public:
 //Write Property
 class WritePropertyRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetObjectIDType, false>,
-	BACnetSequenceElement<1, BACnetEnumeratedType, false>,
-	BACnetSequenceElement<2, BACnetUnsignedType, true>,
-	BACnetSequenceElement<3, BACnetAnyType, false>,
-	BACnetSequenceElement<4, BACnetUnsignedType, true>
+		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<1, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<2, BACnetUnsignedType, true>,
+		BACnetSequenceElement<3, BACnetAnyType, false>,
+		BACnetSequenceElement<4, BACnetUnsignedType, true>
 	>
 {
 public:
@@ -865,7 +863,7 @@ public:
 //Write Property Multiple
 class WritePropertyMultipleRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<NoTag, BACnetSequenceOf<WriteAccessSpecification>, false>
+		BACnetSequenceElement<NoTag, BACnetSequenceOf<WriteAccessSpecification>, false>
 	>
 {
 public:
@@ -908,12 +906,10 @@ public:
 //Write Group
 class WriteGroupRequest : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
-	BACnetSequenceElement<1, BACnetUnsignedType, false>,
-	BACnetSequenceElement<2,
-	BACnetSequenceOf<BACnetGroupChannelValue>,
-	false>,
-	BACnetSequenceElement<3, BACnetBooleanType, true>
+		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
+		BACnetSequenceElement<1, BACnetUnsignedType, false>,
+		BACnetSequenceElement<2, BACnetSequenceOf<BACnetGroupChannelValue>, false>,
+		BACnetSequenceElement<3, BACnetBooleanType, true>
 	>
 {
 public:

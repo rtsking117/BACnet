@@ -475,7 +475,7 @@ const BACnetValue & BACnetValue::GetElement(U32 ElementIndex) const
 	return cv.pElements[ElementIndex];
 }
 
-BACnetResult BACnetValue::AddValue(BACnetValue & val)
+BACnetResult BACnetValue::AddValue(const BACnetValue & val)
 {
 	if(cv.NumElements == 0)
 	{
