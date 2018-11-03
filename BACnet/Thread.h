@@ -20,6 +20,7 @@ public:
 	void* BACNETMETHODCALLTYPE GetWaitHandle() const { return thread; }
 	BACnetResult BACNETMETHODCALLTYPE Start();
 	BACnetResult BACNETMETHODCALLTYPE Cancel();
+	bool BACNETMETHODCALLTYPE IsRunning();
 	CObjectPtr<IBACnetEvent> BACNETMETHODCALLTYPE GetCancellationEvent();
 	BACnetResult BACNETMETHODCALLTYPE Terminate(BACnetResult TerminationCode);
 	BACnetResult BACNETMETHODCALLTYPE Stop(U32 Timeout = 10000);

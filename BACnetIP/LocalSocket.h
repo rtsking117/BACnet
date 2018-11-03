@@ -58,9 +58,9 @@ public:
 
 	//IBACnetIPPort
 	CObjectPtr<IBACnetIPAddress> BACNETMETHODCALLTYPE CreateIPAddress(const U8 * const pIpAddress, U16 usPort, const U8 * const pSubnetMask) const;
-	BACnetResult BACNETMETHODCALLTYPE ReadForeignDeviceTable(const FDTEntry* &ppFDTEntries, size_t &pFDTEntryCount);
+	BACnetResult BACNETMETHODCALLTYPE ReadForeignDeviceTable(const FDTEntry* pFDTEntries, size_t &pFDTEntryCount);
 	BACnetResult BACNETMETHODCALLTYPE WriteForeignDeviceTable(const FDTEntry* pFDTEntries, size_t FDTEntryCount);
-	BACnetResult BACNETMETHODCALLTYPE ReadBroadcastTable(const BDTEntry* &ppBDTEntries, size_t &pBDTEntryCount);
+	BACnetResult BACNETMETHODCALLTYPE ReadBroadcastTable(const BDTEntry* pBDTEntries, size_t &pBDTEntryCount);
 	BACnetResult BACNETMETHODCALLTYPE WriteBroadcastTable(const BDTEntry* pBDTEntries, size_t BDTEntryCount);
 	BACnetResult BACNETMETHODCALLTYPE SetIPPort(U16 usPortNumber);
 

@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BACnetIP.h" />
+    <ClInclude Include="BVLC.h" />
     <ClInclude Include="IPAddress.h" />
     <ClInclude Include="LocalSocket.h" />
     <ClInclude Include="WideAreaSubnet.h" />

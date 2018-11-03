@@ -60,7 +60,7 @@ enum BACnetAddressType
 };
 
 //To add a custom address type, use the following macro
-#define MAKE_CUSTOM_ADDRESS(AddressTypeValue,VendorID) ((U32)(((((U32)(AddressTypeValue))&0x7FFF)<<16) | (((U32)(VendorID))&0xFFFF) | Address_Custom)
+#define MAKE_CUSTOM_ADDRESS(AddressTypeValue, VendorID) ((U32)(((((U32)(AddressTypeValue))&0x7FFF)<<16) | (((U32)(VendorID))&0xFFFF) | Address_Custom)
 
 BACNET_INTERFACE("{2C64C484-845B-413D-97A1-64E20DD3F47A}")
 IBACnetAddress: public IBACnetUnknown

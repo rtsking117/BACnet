@@ -1,23 +1,5 @@
 #include "LocalSocket.h"
-
-#include <process.h>
-
-enum BVLLMessageType
-{
-	BVLC_Result,
-	BVLC_WriteBDT,
-	BVLC_ReadBDT,
-	BVLC_ReadBDTAck,
-	BVLC_ForwardedNPDU,
-	BVLC_RegisterForeignDevice,
-	BVLC_ReadFDT,
-	BVLC_ReadFDTAck,
-	BVLC_DeleteForeignDevice,
-	BVLC_DistributeBroadcastToNetwork,
-	BVLC_OriginalUnicast,
-	BVLC_OriginalBroadcast,
-	BVLC_SecureBVLL,
-};
+#include "BVLC.h"
 
 BACnetResult LocalSocket::WriteBVLL(sockaddr_in to, U8 messageid, U8* pBuffer, U16 BufferLength)
 {
@@ -313,7 +295,6 @@ LocalSocket::~LocalSocket()
 {
 	Stop();
 	closesocket(sock);
-	CloseHandle(HasRXData);
 }
 
 BACnetResult LocalSocket::WriteMessage(CObjectPtr<IBACnetAddress> pDestinationAddress, CObjectPtr<IBACnetTransmitBuffer> pMessage, bool WaitForTransmit)
@@ -418,7 +399,7 @@ CObjectPtr<IBACnetIPAddress> LocalSocket::CreateIPAddress(const U8* const pIpAdd
 	return IPAddress::CreateIPAddress(addr, pSubnetMask);
 }
 
-BACnetResult LocalSocket::ReadForeignDeviceTable(const FDTEntry *& ppFDTEntries, size_t & pFDTEntryCount)
+BACnetResult LocalSocket::ReadForeignDeviceTable(const FDTEntry *pFDTEntries, size_t & pFDTEntryCount)
 {
 	return BCE_INVALID_OPERATION;
 }
@@ -428,7 +409,7 @@ BACnetResult LocalSocket::WriteForeignDeviceTable(const FDTEntry * pFDTEntries, 
 	return BCE_INVALID_OPERATION;
 }
 
-BACnetResult LocalSocket::ReadBroadcastTable(const BDTEntry *& ppBDTEntries, size_t & pBDTEntryCount)
+BACnetResult LocalSocket::ReadBroadcastTable(const BDTEntry *pBDTEntries, size_t & pBDTEntryCount)
 {
 	return BCE_INVALID_OPERATION;
 }
@@ -442,7 +423,7 @@ BACnetResult LocalSocket::SetIPPort(U16 usPortNumber)
 {
 	if(Addr.sin_port == htons(usPortNumber)) return BC_OK;
 	bool restart = false;
-	if(Listener != INVALID_HANDLE_VALUE)
+	if(Listener->IsRunning())
 	{
 		Stop();
 		restart = true;

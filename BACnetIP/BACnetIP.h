@@ -61,9 +61,9 @@ BACNET_INTERFACE("{5080A26F-1B1A-4B90-A6F6-F7C5FC7F9479}")
 IBACnetIPPort: public IBACnetPort
 {
 	BCNMETHODTYPE(CObjectPtr<IBACnetIPAddress>, CreateIPAddress(const U8* const pIpAddress, U16 usPort, const U8* const pSubnetMask = nullptr) const) BCPURE;
-	BCNMETHOD(ReadForeignDeviceTable(const FDTEntry* &ppFDTEntries, size_t &pFDTEntryCount)) BCPURE;
+	BCNMETHOD(ReadForeignDeviceTable(const FDTEntry* pFDTEntries, size_t &pFDTEntryCount)) BCPURE;
 	BCNMETHOD(WriteForeignDeviceTable(const FDTEntry* pFDTEntries, size_t FDTEntryCount)) BCPURE;
-	BCNMETHOD(ReadBroadcastTable(const BDTEntry* &ppBDTEntries, size_t &pBDTEntryCount)) BCPURE;
+	BCNMETHOD(ReadBroadcastTable(const BDTEntry* pBDTEntries, size_t &pBDTEntryCount)) BCPURE;
 	BCNMETHOD(WriteBroadcastTable(const BDTEntry* pBDTEntries, size_t BDTEntryCount)) BCPURE;
 	BCNMETHOD(SetIPPort(U16 usPortNumber)) BCPURE;
 };

@@ -120,6 +120,7 @@ IBACnetThread : public IBACnetWaitableObject
 {
 	BCNMETHOD(Start()) BCPURE;
 	BCNMETHOD(Cancel()) BCPURE;
+	BCNMETHODTYPE(bool, IsRunning()) BCPURE;
 	BCNMETHODTYPE(CObjectPtr<IBACnetEvent>, GetCancellationEvent()) BCPURE;
 	BCNMETHOD(Terminate(BACnetResult TerminationCode)) BCPURE;
 	BCNMETHOD(Stop(U32 Timeout = 10000)) BCPURE;

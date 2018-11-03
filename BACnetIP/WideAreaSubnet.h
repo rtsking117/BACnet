@@ -5,12 +5,31 @@
 #include "WinSockManager.h"
 #include "IPAddress.h"
 #include <atomic>
-using namespace std;
+#include <list>
+#include <set>
+
+template<typename T>
+struct CompareXDTEntry
+{
+	constexpr bool operator()(const T& lhs, const T& rhs) const
+	{
+		int v = memcmp(lhs.IpAddress, rhs.IpAddress, 4);
+		if(!v)
+		{
+			return lhs.Port < rhs.Port;
+		}
+		return v < 0;
+	}
+};
 
 class WideAreaSubnet : public ObjectWrapper<IBACnetWideAreaSubnet>
 {
 	ReceiverCallbackFunction RXCallback;
 	sockaddr_in Addr;
+	std::set<BDTEntry, CompareXDTEntry<BDTEntry>> bdt;
+	CObjectPtr<IBACnetSpinLock> bdtlock;
+	std::set<FDTEntry, CompareXDTEntry<FDTEntry>> fdt;
+	CObjectPtr<IBACnetSpinLock> fdtlock;
 	CObjectPtr<WinSockManager> WinSock;
 	CObjectPtr<IBACnetThreadPool> pool;
 	CObjectPtr<IBACnetThread> Listener;
@@ -19,7 +38,7 @@ class WideAreaSubnet : public ObjectWrapper<IBACnetWideAreaSubnet>
 	CObjectPtr<IPAddress> BroadcastAddress;
 	SOCKET sock;
 	U16 AsyncResultCode;
-	atomic<bool> HasPendingCommand;
+	std::atomic<bool> HasPendingCommand;
 
 	BACnetResult WriteBVLL(sockaddr_in to, U8 messageid, U8 * pBuffer, U16 BufferLength);
 	BACnetResult WriteBVLL(sockaddr_in to, U8 messageid, CObjectPtr<IBACnetTransmitBuffer> pBuffer);
@@ -51,9 +70,9 @@ public:
 
 	//IBACnetIPPort
 	CObjectPtr<IBACnetIPAddress> BACNETMETHODCALLTYPE CreateIPAddress(const U8 * const pIpAddress, U16 usPort, const U8 * const pSubnetMask) const;
-	BACnetResult BACNETMETHODCALLTYPE ReadForeignDeviceTable(const FDTEntry* &ppFDTEntries, size_t &pFDTEntryCount);
+	BACnetResult BACNETMETHODCALLTYPE ReadForeignDeviceTable(const FDTEntry* pFDTEntries, size_t &pFDTEntryCount);
 	BACnetResult BACNETMETHODCALLTYPE WriteForeignDeviceTable(const FDTEntry* pFDTEntries, size_t FDTEntryCount);
-	BACnetResult BACNETMETHODCALLTYPE ReadBroadcastTable(const BDTEntry* &ppBDTEntries, size_t &pBDTEntryCount);
+	BACnetResult BACNETMETHODCALLTYPE ReadBroadcastTable(const BDTEntry* pBDTEntries, size_t &pBDTEntryCount);
 	BACnetResult BACNETMETHODCALLTYPE WriteBroadcastTable(const BDTEntry* pBDTEntries, size_t BDTEntryCount);
 	BACnetResult BACNETMETHODCALLTYPE SetIPPort(U16 usPortNumber);
 

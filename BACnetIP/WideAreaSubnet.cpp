@@ -1,6 +1,204 @@
 #include "WideAreaSubnet.h"
+#include "BVLC.h"
 
 
+BACnetResult WideAreaSubnet::WriteBVLL(sockaddr_in to, U8 messageid, U8 * pBuffer, U16 BufferLength)
+{
+	U16 length = (BufferLength)+4;
+	U8 bvll[4] = {
+		0x81,
+		messageid,
+		(U8)((length & 0xFF00) >> 8),
+		(U8)(length & 0xFF),
+	};
+	WSABUF bufs[2] = {
+		{ sizeof(bvll),(char*)bvll, },
+	{ BufferLength,(char*)pBuffer, },
+	};
+	DWORD bw = 0;
+	WSASendTo(sock, bufs, ARRAYSIZE(bufs), &bw, 0, (sockaddr*)&to, sizeof(to), nullptr, nullptr);
+	return BC_OK;
+}
+
+BACnetResult WideAreaSubnet::WriteBVLL(sockaddr_in to, U8 messageid, CObjectPtr<IBACnetTransmitBuffer> pBuffer)
+{
+	U16 length = (pBuffer->GetTotalBufferLength()) + 4;
+	U8 bvll[4] = {
+		0x81,
+		messageid,
+		(U8)((length & 0xFF00) >> 8),
+		(U8)(length & 0xFF),
+	};
+	U32 nbufs = pBuffer->GetNumBuffers() + 1;
+	WSABUF* bufs = (WSABUF*)calloc(nbufs, sizeof(WSABUF));
+	bufs[0].buf = (char*)bvll;
+	bufs[0].len = sizeof(bvll);
+	for(U32 i = 1; i < nbufs; ++i)
+	{
+		CObjectPtr<IBACnetBuffer> buf = pBuffer->GetBuffer(i - 1);
+		bufs[i].len = buf->GetSize();
+		bufs[i].buf = (char*)buf->GetBuffer();
+	}
+	DWORD bw = 0;
+	WSASendTo(sock, bufs, nbufs, &bw, 0, (sockaddr*)&to, sizeof(to), nullptr, nullptr);
+	free(bufs);
+	return BC_OK;
+}
+
+BACnetResult WideAreaSubnet::ListenerThread(CObjectPtr<IBACnetThread> thread)
+{
+	static U8 bvll[4] = { 0 };
+	static U8 tmpbuf[1536] = { 0 };
+	while(1)
+	{
+		WSAOVERLAPPED o;
+		o.hEvent = HasRXData->GetWaitHandle();
+		WSABUF bufs[2] = {
+			{ sizeof(bvll),(char*)bvll, },
+		{ sizeof(tmpbuf),(char*)tmpbuf, },
+		};
+		sockaddr_in from = { 0 };
+		int srcaddrsz = sizeof(from);
+		DWORD br = 0;
+		DWORD flags = 0;
+		int status = WSARecvFrom(sock, bufs, ARRAYSIZE(bufs), &br, &flags, (sockaddr*)&from, &srcaddrsz, &o, nullptr);
+		if(status)
+		{
+			CObjectPtr<IBACnetWaitableObject> h[2] = { HasRXData, thread->GetCancellationEvent() };
+			U32 object = 0;
+			BACnetResult r = WaitForObjects(h, object, false);
+			if(BCE_FAILED(r))
+			{
+				return r;
+			}
+			if(object == 1)
+			{
+				//close the thread. This will also cancel the pending I/O.
+				return BC_OK;
+			}
+			//Data came in.
+			//check the overlapped result.
+			if(!WSAGetOverlappedResult(sock, &o, &br, FALSE, &flags))
+			{
+				int code = WSAGetLastError();
+				switch(code)
+				{
+				case WSA_IO_INCOMPLETE:
+					//shouldn't happen. This indicates a fault in Windows.
+					__debugbreak();
+					break;
+				default:
+					return BCNRESULT_FROM_SYSTEM(code);
+				}
+			}
+		}
+		U16 errcode;
+		CObjectPtr<IBACnetAddress> sender = nullptr;
+		CObjectPtr<IBACnetBuffer> msg = nullptr;
+		//packet is available.
+		//check the BVLL code.
+		switch(bvll[1])
+		{
+		case BVLC_Result:
+			//response from something.
+			SignalCommandResponse(ntohs(((U16*)tmpbuf)[0]));
+			break;
+		case BVLC_WriteBDT:
+			//WriteBDT
+			
+		case BVLC_ReadBDT:
+			//ReadBDT
+			
+			goto writeerr;
+		case BVLC_RegisterForeignDevice:
+			//Register Foreign Device
+			{
+				//Take the FDTLock.
+				FDTEntry NewEntry = { 0 };
+				memcpy(NewEntry.IpAddress, tmpbuf, sizeof(NewEntry.IpAddress));
+				NewEntry.Port = ntohs(((U16*)(tmpbuf[4]))[0]);
+				NewEntry.TimeToLive = ntohs(((U16*)(tmpbuf[6]))[0]);
+				NewEntry.RemainingTime = NewEntry.TimeToLive;
+				fdtlock->Lock();
+				//Find the relevant FDTEntry
+				auto it = fdt.insert(NewEntry);
+				if(!it.second)
+				{
+					auto hint = it.first;
+					++hint;
+					fdt.erase(it.first);
+					fdt.insert(hint, NewEntry);
+				}
+				fdtlock->Unlock();
+				errcode = 0;
+				WriteBVLL(from, (U8)BVLC_Result, (U8*)&errcode, 2);
+				break;
+			}
+		case BVLC_ReadFDT:
+			//Read FDT
+			errcode = htons(0x0040);
+			goto writeerr;
+		case BVLC_DeleteForeignDevice:
+			//Register Foreign Device
+			{
+				//Take the FDTLock.
+				FDTEntry NewEntry = { 0 };
+				memcpy(NewEntry.IpAddress, tmpbuf, sizeof(NewEntry.IpAddress));
+				NewEntry.Port = ntohs(((U16*)(tmpbuf[4]))[0]);
+				fdtlock->Lock();
+				//Find the relevant FDTEntry
+				auto it = fdt.find(NewEntry);
+				if(it != fdt.end())
+				{
+					fdt.erase(it);
+					fdtlock->Unlock();
+					errcode = 0;
+				}
+				else
+				{
+					fdtlock->Unlock();
+					errcode = htons(0x0050);
+				}
+				WriteBVLL(from, (U8)BVLC_Result, (U8*)&errcode, 2);
+				break;
+			}
+		case BVLC_DistributeBroadcastToNetwork:
+			//Distribute Broadcast To Network
+			errcode = htons(0x0060);
+		writeerr:
+			WriteBVLL(from, 0x00, (U8*)&errcode, 2);
+			break;
+		case BVLC_ForwardedNPDU:
+			//Forwarded NPDU
+			//source address is stored AFTER the BVLL header.
+			sender = CreateAddress(6, tmpbuf);
+			msg = CreateBACnetBuffer(br - 10, tmpbuf + 6);
+			goto InvokeCallback;
+		case BVLC_OriginalUnicast:
+			//Original Unicast
+		case BVLC_OriginalBroadcast:
+			//Original Broadcast
+			sender = IPAddress::CreateIPAddress(from);
+			msg = CreateBACnetBuffer(br - 4, tmpbuf);
+		InvokeCallback:
+			{
+				pool->QueueAsyncCallback([this, sender, msg](CObjectPtr<IBACnetThreadPool> pPool, CallbackHandle hInst)
+				{
+					pPool->CallbackRunsLong(hInst);
+					return RXCallback(sender, msg);
+				});
+				break;
+			}
+		default:
+			//Unknown or unsupported.
+			//drop it.
+			break;
+		}
+		//Wait for the next message.
+		HasRXData->Reset();
+	}
+	return BC_OK;
+}
 
 WideAreaSubnet::WideAreaSubnet(CObjectPtr<IBACnetThreadPool> pThreadPool, U16 PortNumber):
 	sock(INVALID_SOCKET),
@@ -31,7 +229,7 @@ WideAreaSubnet::WideAreaSubnet(CObjectPtr<IBACnetThreadPool> pThreadPool, U16 Po
 	tmpaddr.sin_addr.s_addr = INADDR_ANY;
 	if(::bind(sock, (sockaddr*)&tmpaddr, sizeof(tmpaddr)))
 	{
-		throw BACnetException("Failed to bind port 47808.", BCNRESULT_FROM_SYSTEM(WSAGetLastError()));
+		throw BACnetException("Failed to bind to the specified port.", BCNRESULT_FROM_SYSTEM(WSAGetLastError()));
 	}
 	tmpaddr.sin_addr.s_addr = INADDR_BROADCAST;
 	BroadcastAddress = IPAddress::CreateIPAddress(tmpaddr);
@@ -50,7 +248,6 @@ WideAreaSubnet::~WideAreaSubnet()
 {
 	Stop();
 	closesocket(sock);
-	CloseHandle(HasRXData);
 }
 
 BACnetResult WideAreaSubnet::WriteMessage(CObjectPtr<IBACnetAddress> pDestinationAddress, CObjectPtr<IBACnetTransmitBuffer> pMessage, bool WaitForTransmit)
@@ -60,22 +257,44 @@ BACnetResult WideAreaSubnet::WriteMessage(CObjectPtr<IBACnetAddress> pDestinatio
 
 CObjectPtr<IBACnetAddress> WideAreaSubnet::CreateAddress(U32 AddressSize, const U8 * const AddressDataBuffer) const
 {
-	return CObjectPtr<IBACnetAddress>();
+	if(AddressSize < 6)
+	{
+		return nullptr;
+	}
+	sockaddr_in addr;
+	memcpy(&addr.sin_addr.s_addr, AddressDataBuffer, 4);
+	memcpy(&addr.sin_port, AddressDataBuffer + 4, 2);
+	addr.sin_family = AF_INET;
+	return IPAddress::CreateIPAddress(addr);
 }
 
 CObjectPtr<IBACnetAddress> WideAreaSubnet::GetBroadcastAddress() const
 {
-	return CObjectPtr<IBACnetAddress>();
+	return BroadcastAddress;
 }
 
 BACnetResult WideAreaSubnet::RegisterReceiverCallback(ReceiverCallbackFunction pCallback)
 {
-	return BACnetResult();
+	if(!pCallback)
+	{
+		return BCE_INVALID_PARAMETER;
+	}
+	if(RXCallback)
+	{
+		return BCE_HANDLER_ALREADY_BOUND;
+	}
+	RXCallback = pCallback;
+	return BC_OK;
 }
 
 BACnetResult WideAreaSubnet::RemoveReceiverCallback()
 {
-	return BACnetResult();
+	if(RXCallback)
+	{
+		Stop();
+		RXCallback = nullptr;
+	}
+	return BC_OK;
 }
 
 BACnetResult WideAreaSubnet::Start()
@@ -90,35 +309,127 @@ BACnetResult WideAreaSubnet::Stop()
 
 CObjectPtr<IBACnetIPAddress> WideAreaSubnet::CreateIPAddress(const U8 * const pIpAddress, U16 usPort, const U8 * const pSubnetMask) const
 {
-	return CObjectPtr<IBACnetIPAddress>();
+	sockaddr_in addr;
+	memcpy(&addr.sin_addr.s_addr, pIpAddress, 4);
+	addr.sin_port = usPort;
+	addr.sin_family = AF_INET;
+	return IPAddress::CreateIPAddress(addr, pSubnetMask);
 }
 
-BACnetResult WideAreaSubnet::ReadForeignDeviceTable(const FDTEntry *& ppFDTEntries, size_t & pFDTEntryCount)
+BACnetResult WideAreaSubnet::ReadForeignDeviceTable(const FDTEntry* pFDTEntries, size_t& pFDTEntryCount)
 {
-	return BACnetResult();
+	if(!pFDTEntries)
+	{
+		//This lock may not be necessary - check the generated assembly.
+		fdtlock->Lock();
+		pFDTEntryCount = fdt.size();
+		fdtlock->Unlock();
+		return BC_FALSE;
+	}
+	size_t i = 0;
+	fdtlock->Lock();
+	for(auto it = fdt.begin(); i < pFDTEntryCount && it != fdt.end(); ++i, ++it)
+	{
+		memcpy((void*)&pFDTEntries[i], &(*it), sizeof(FDTEntry));
+	}
+	fdtlock->Unlock();
+	pFDTEntryCount = i;
+	return BC_OK;
 }
 
-BACnetResult WideAreaSubnet::WriteForeignDeviceTable(const FDTEntry * pFDTEntries, size_t FDTEntryCount)
+BACnetResult WideAreaSubnet::WriteForeignDeviceTable(const FDTEntry* pFDTEntries, size_t FDTEntryCount)
 {
-	return BACnetResult();
+	if(!pFDTEntries && FDTEntryCount != 0)
+	{
+		return BCE_INVALID_PARAMETER;
+	}
+	size_t i = 0;
+	fdtlock->Lock();
+	fdt.clear();
+	for(size_t i = 0; i < FDTEntryCount; ++i)
+	{
+		fdt.insert(pFDTEntries[i]);
+	}
+	fdtlock->Unlock();
+	return BC_OK;
 }
 
-BACnetResult WideAreaSubnet::ReadBroadcastTable(const BDTEntry *& ppBDTEntries, size_t & pBDTEntryCount)
+BACnetResult WideAreaSubnet::ReadBroadcastTable(const BDTEntry* pBDTEntries, size_t& pBDTEntryCount)
 {
-	return BACnetResult();
+	if(!pBDTEntries)
+	{
+		//This lock may not be necessary - check the generated assembly.
+		bdtlock->Lock();
+		pBDTEntryCount = bdt.size();
+		bdtlock->Unlock();
+		return BC_FALSE;
+	}
+	size_t i = 0;
+	bdtlock->Lock();
+	for(auto it = bdt.begin(); i < pBDTEntryCount && it != bdt.end(); ++i, ++it)
+	{
+		memcpy((void*)&pBDTEntries[i], &(*it), sizeof(BDTEntry));
+	}
+	bdtlock->Unlock();
+	pBDTEntryCount = i;
+	return BC_OK;
 }
 
-BACnetResult WideAreaSubnet::WriteBroadcastTable(const BDTEntry * pBDTEntries, size_t BDTEntryCount)
+BACnetResult WideAreaSubnet::WriteBroadcastTable(const BDTEntry* pBDTEntries, size_t BDTEntryCount)
 {
-	return BACnetResult();
+	if(!pBDTEntries && BDTEntryCount != 0)
+	{
+		return BCE_INVALID_PARAMETER;
+	}
+	size_t i = 0;
+	bdtlock->Lock();
+	bdt.clear();
+	for(size_t i = 0; i < BDTEntryCount; ++i)
+	{
+		bdt.insert(pBDTEntries[i]);
+	}
+	bdtlock->Unlock();
+	return BC_OK;
 }
 
 BACnetResult WideAreaSubnet::SetIPPort(U16 usPortNumber)
 {
-	return BACnetResult();
+	if(Addr.sin_port == htons(usPortNumber)) return BC_OK;
+	bool restart = false;
+	if(Listener->IsRunning())
+	{
+		Stop();
+		restart = true;
+	}
+	U16 oldport = Addr.sin_port;
+	Addr.sin_port = htons(usPortNumber);
+	if(::bind(sock, (sockaddr*)&Addr, sizeof(Addr)))
+	{
+		Addr.sin_port = oldport;
+		return BCNRESULT_FROM_SYSTEM(WSAGetLastError());
+	}
+	Addr.sin_addr.s_addr = INADDR_BROADCAST;
+	BroadcastAddress = IPAddress::CreateIPAddress(Addr);
+	if(restart) Start();
+	return BC_OK;
 }
 
 BACnetResult WideAreaSubnet::AddRemotePeer(const CObjectPtr<IBACnetIPAddress> pRemoteAddress)
 {
-	return BACnetResult();
+	if(pRemoteAddress->GetTypeCode() != Address_BACnetIP || pRemoteAddress->GetAddressLength() != 4)
+	{
+		return BCE_INVALID_ADDRESS_TYPE;
+	}
+	BDTEntry NewEntry = { 0 };
+	BCE_RETURN_ON_FAIL(pRemoteAddress->GetIpAddress(NewEntry.IpAddress, 4));
+	NewEntry.Port = pRemoteAddress->GetPort();
+	BCE_RETURN_ON_FAIL(pRemoteAddress->GetSubnetMask(NewEntry.SubnetMask, 4));
+	bdtlock->Lock();
+	auto it = bdt.insert(NewEntry);
+	bdtlock->Unlock();
+	if(!it.second)
+	{
+		return BCE_ENTRY_ALREADY_EXISTS;
+	}
+	return BC_OK;
 }
