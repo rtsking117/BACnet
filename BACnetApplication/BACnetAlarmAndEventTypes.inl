@@ -113,7 +113,7 @@ class BACnetEventNotificationSubscription : public
 		BACnetSequenceElement<0, BACnetRecipient, false>,
 		BACnetSequenceElement<1, BACnetUnsigned32Type, false>,
 		BACnetSequenceElement<2, BACnetBooleanType, false>,
-		BACnetSequenceElement<3, BACnetUnsignedType, false>,
+		BACnetSequenceElement<3, BACnetUnsignedType, false>
 	>
 {
 public:
@@ -121,8 +121,248 @@ public:
 };
 
 //Event Parameter
+class BACnetEventParameter : public
+	BACnetChoice<NoDefault,
+		BACnetChoiceElement<0,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetBitStringType, false>,
+				BACnetSequenceElement<2, BACnetSequenceOf<BACnetBitStringType>, false>
+			>
+		>,
+		BACnetChoiceElement<1,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetSequenceOf<BACnetPropertyStates>, false>
+			>
+		>,
+		BACnetChoiceElement<2,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, 
+					BACnetChoice<NoDefault,
+						BACnetChoiceElement<0, BACnetBitStringType>,
+						BACnetChoiceElement<1, BACnetRealValueType>
+					>,
+					false
+				>
+			>
+		>,
+		BACnetChoiceElement<3, 
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetDeviceObjectPropertyReference, false>
+			>
+		>,
+		BACnetChoiceElement<4,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetDeviceObjectPropertyReference, false>,
+				BACnetSequenceElement<2, BACnetRealValueType, false>,
+				BACnetSequenceElement<3, BACnetRealValueType, false>,
+				BACnetSequenceElement<4, BACnetRealValueType, false>
+			>
+		>,
+		BACnetChoiceElement<5, 
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetRealValueType, false>,
+				BACnetSequenceElement<2, BACnetRealValueType, false>,
+				BACnetSequenceElement<3, BACnetRealValueType, false>
+			>
+		>,
+		BACnetChoiceElement<8,
+			BACnetSequence<
+				BACnetSequenceElement<0,BACnetUnsignedType, false>,
+				BACnetSequenceElement<1,BACnetSequenceOf<BACnetLifeSafetyStateType>, false>,
+				BACnetSequenceElement<2, BACnetSequenceOf<BACnetLifeSafetyStateType>, false>,
+				BACnetSequenceElement<3, BACnetDeviceObjectPropertyReference, false>
+			>
+		>,
+		BACnetChoiceElement<9,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsigned16Type, false>,
+				BACnetSequenceElement<1, BACnetUnsignedType, false>,
+				BACnetSequenceElement<2,
+					BACnetSequenceOf<
+						BACnetChoice<NoDefault,
+							BACnetChoiceElement<NoTag, BACnetNullType>,
+							BACnetChoiceElement<NoTag, BACnetRealValueType>,
+							BACnetChoiceElement<NoTag, BACnetUnsignedType>,
+							BACnetChoiceElement<NoTag, BACnetBooleanType>,
+							BACnetChoiceElement<NoTag, BACnetSignedType>,
+							BACnetChoiceElement<NoTag, BACnetDoubleType>,
+							BACnetChoiceElement<NoTag, BACnetOctetStringType>,
+							BACnetChoiceElement<NoTag, BACnetCharacterStringType>,
+							BACnetChoiceElement<NoTag, BACnetEnumeratedType>,
+							BACnetChoiceElement<NoTag, BACnetDateType>,
+							BACnetChoiceElement<NoTag, BACnetTimeType>,
+							BACnetChoiceElement<NoTag, BACnetObjectIDType>,
+							BACnetChoiceElement<0, BACnetDeviceObjectPropertyReference>
+						>
+					>,
+					false
+				>
+			>
+		>,
+		BACnetChoiceElement<10,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetUnsigned32Type, false>
+			>
+		>,
+		BACnetChoiceElement<11,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetUnsignedType, false>,
+				BACnetSequenceElement<2, BACnetUnsignedType, false>
+			>
+		>,
+		BACnetChoiceElement<13,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetSequenceOf<BACnetAccessEventType>, false>,
+				BACnetSequenceElement<1, BACnetDeviceObjectPropertyReference, false>
+			>
+		>,
+		BACnetChoiceElement<14,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetDoubleType, false>,
+				BACnetSequenceElement<2, BACnetDoubleType, false>,
+				BACnetSequenceElement<3, BACnetDoubleType, false>
+			>
+		>,
+		BACnetChoiceElement<15,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetSignedType, false>,
+				BACnetSequenceElement<2, BACnetSignedType, false>,
+				BACnetSequenceElement<3, BACnetUnsignedType, false>
+			>
+		>,
+		BACnetChoiceElement<16,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetUnsignedType, false>,
+				BACnetSequenceElement<2, BACnetUnsignedType, false>,
+				BACnetSequenceElement<3, BACnetUnsignedType, false>
+			>
+		>,
+		BACnetChoiceElement<17,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetSequenceOf<BACnetCharacterStringType>, false>
+			>
+		>,
+		BACnetChoiceElement<18,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetStatusFlagsType, false>
+			>
+		>,
+		BACnetChoiceElement<20, BACnetNullType>,
+		BACnetChoiceElement<21,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>
+			>
+		>,
+		BACnetChoiceElement<22, 
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<1, BACnetSequenceOf<BACnetTimerStateType>, false>,
+				BACnetSequenceElement<2, BACnetDeviceObjectPropertyReference, false>
+			>
+		>
+	>
+{
+public:
+
+};
 
 //Fault Parameter
+class BACnetFaultParameter : public
+	BACnetChoice<NoDefault,
+		BACnetChoiceElement<0, BACnetNullType>,
+		BACnetChoiceElement<1, 
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetSequenceOf<BACnetCharacterStringType>, false>
+			>
+		>,
+		BACnetChoiceElement<2,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsigned16Type, false>,
+				BACnetSequenceElement<1, BACnetUnsignedType, false>,
+				BACnetSequenceElement<2,
+					BACnetSequenceOf<
+						BACnetChoice<NoDefault,
+							BACnetChoiceElement<NoTag, BACnetNullType>,
+							BACnetChoiceElement<NoTag, BACnetRealValueType>,
+							BACnetChoiceElement<NoTag, BACnetUnsignedType>,
+							BACnetChoiceElement<NoTag, BACnetBooleanType>,
+							BACnetChoiceElement<NoTag, BACnetSignedType>,
+							BACnetChoiceElement<NoTag, BACnetDoubleType>,
+							BACnetChoiceElement<NoTag, BACnetOctetStringType>,
+							BACnetChoiceElement<NoTag, BACnetCharacterStringType>,
+							BACnetChoiceElement<NoTag, BACnetBitStringType>,
+							BACnetChoiceElement<NoTag, BACnetEnumeratedType>,
+							BACnetChoiceElement<NoTag, BACnetDateType>,
+							BACnetChoiceElement<NoTag, BACnetTimeType>,
+							BACnetChoiceElement<NoTag, BACnetObjectIDType>,
+							BACnetChoiceElement<0, BACnetDeviceObjectPropertyReference>
+						>
+					>,
+					false
+				>
+			>
+		>,
+		BACnetChoiceElement<3, 
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetSequenceOf<BACnetLifeSafetyStateType>, false>,
+				BACnetSequenceElement<1, BACnetDeviceObjectPropertyReference, false>
+			>
+		>,
+		BACnetChoiceElement<4, 
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetSequenceOf<BACnetPropertyStates>, false>
+			>
+		>,
+		BACnetChoiceElement<5, 
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetDeviceObjectPropertyReference, false>,
+			>
+		>,
+		BACnetChoiceElement<6,
+			BACnetSequence<
+				BACnetSequenceElement<0,
+					BACnetChoice<NoDefault,
+						BACnetChoiceElement<NoTag, BACnetRealValueType>,
+						BACnetChoiceElement<NoTag, BACnetUnsignedType>,
+						BACnetChoiceElement<NoTag, BACnetDoubleType>,
+						BACnetChoiceElement<NoTag, BACnetSignedType>
+					>,
+					false
+				>,
+				BACnetSequenceElement<1,
+					BACnetChoice<NoDefault,
+						BACnetChoiceElement<NoTag, BACnetRealValueType>,
+						BACnetChoiceElement<NoTag, BACnetUnsignedType>,
+						BACnetChoiceElement<NoTag, BACnetDoubleType>,
+						BACnetChoiceElement<NoTag, BACnetSignedType>
+					>,
+					false
+				>
+			>
+		>,
+		BACnetChoiceElement<7,
+			BACnetSequence<
+				BACnetSequenceElement<0, BACnetDeviceObjectPropertyReference, false>
+			>
+		>
+	>
+{
+public:
+
+};
 
 //Log Data
 class BACnetLogData : public
