@@ -28,9 +28,9 @@ void CClientTransaction::RequestTimerTimeout()
 	switch(State)
 	{
 	case State_AwaitResponse:
+		StopTimer(true);
 		if(RetryCount < Nretry)
 		{
-			StopTimer(true);
 			++RetryCount;
 			if(segs.IsSegmentedData())
 			{
@@ -71,6 +71,10 @@ void CClientTransaction::RequestTimerTimeout()
 				StartRequestTimer(Tout);
 				return;
 			}
+		}
+		else
+		{
+			CompletePDUProcessing(BCE_ABORT_TSM_TIMEOUT);
 		}
 	}
 }
@@ -203,8 +207,7 @@ BACnetResult CClientTransaction::StartClientTSM(U8 Service, MaxAPDU MaxAPDUSz, C
 BACnetResult CClientTransaction::OnConfirmedRequest(U8 PDUType, U8 PDUFlags, U8 SequenceNumber, U8 ProposedWindowSize, U8 ServiceChoice, CObjectPtr<IBACnetBuffer> pBuffer)
 {
 	//client requests cannot receive confirmed requests.
-	//No information from the standard. Just drop the call.
-	return BCE_INVALID_OPERATION;
+	return Abort(Abort_InvalidAPDUInThisState);
 }
 
 BACnetResult CClientTransaction::OnSegmentAck(U8 PDUType, U8 SequenceNumber, U8 ActualWindowSz)

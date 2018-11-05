@@ -1,7 +1,7 @@
 #include "BACnetNetwork.h"
 #include "SimpleNetwork.h"
 
-CObjectPtr<IBACnetSimpleNetwork> BACNETNETWORK_ENTRYPOINT CreateSimpleNetwork(CObjectPtr<IBACnetThreadPool> pThreadPool)
+CObjectPtr<IBACnetSimpleNetwork> BACNETNETWORK_ENTRYPOINT CreateSimpleNetwork(CObjectPtr<IBACnetThreadpool> pThreadPool)
 {
 	try
 	{

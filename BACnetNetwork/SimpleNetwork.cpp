@@ -56,7 +56,7 @@ BACnetResult CSimpleNetwork::OnReceive(CObjectPtr<IBACnetAddress> sender, CObjec
 		else
 		{
 			//Urgent and lower are queued. they are scheduled and dispatched as needed.
-			return tpool->QueueAsyncCallback([this, netadr, msg](CObjectPtr<IBACnetThreadPool> pPool, CallbackHandle hInst)->BACnetResult
+			return tpool->QueueAsyncCallback([this, netadr, msg](CObjectPtr<IBACnetThreadpool> pPool, CallbackHandle hInst)->BACnetResult
 			{
 				pPool->CallbackRunsLong(hInst);
 				return apduhandler(netadr, msg);
@@ -192,7 +192,7 @@ void CSimpleNetwork::SendNetworkNumber()
 	}
 }
 
-CSimpleNetwork::CSimpleNetwork(CObjectPtr<IBACnetThreadPool> pThreadPool) :
+CSimpleNetwork::CSimpleNetwork(CObjectPtr<IBACnetThreadpool> pThreadPool) :
 	tpool(pThreadPool),
 	nmfailed(CreateBACnetEvent(true,false)),
 	nid(0),

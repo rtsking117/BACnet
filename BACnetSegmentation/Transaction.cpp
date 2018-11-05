@@ -1,44 +1,49 @@
 #include "Transaction.h"
 
+BACnetResult CTransaction::OnTimerExpired(CObjectPtr<IBACnetThreadpool> pThreadpool, CallbackHandle pHandle, CObjectPtr<IBACnetThreadpoolTimer> pTimer)
+{
+	if(segwait)
+	{
+		SegmentTimerTimeout();
+	}
+	else
+	{
+		RequestTimerTimeout();
+	}
+	return BC_OK;
+}
 
 void CTransaction::StartRequestTimer(U32 Timeout)
 {
-	if(Timer == INVALID_HANDLE_VALUE)
+	if(Timer)
 	{
-		CreateTimerQueueTimer(&Timer, nullptr, [](PVOID pParam, BOOLEAN Fired) -> void
-		{
-			CTransaction* me = ((CTransaction*)pParam);
-			me->RequestTimerTimeout();
-		}, this, Timeout, 0, 0);
+		segwait = false;
+		Timer->WaitFor(Timeout, 0);
 	}
 }
 
 void CTransaction::StopTimer(bool DontBlock)
 {
-	if(Timer != INVALID_HANDLE_VALUE)
+	if(Timer)
 	{
-		DeleteTimerQueueTimer(nullptr, Timer, DontBlock ? nullptr : INVALID_HANDLE_VALUE);
-		Timer = INVALID_HANDLE_VALUE;
+		Timer->Cancel();
 	}
 }
 
 void CTransaction::ResetTimer(U32 Timeout)
 {
-	if(Timer != INVALID_HANDLE_VALUE)
+	if(Timer)
 	{
-		ChangeTimerQueueTimer(nullptr, Timer, Timeout, 0);
+		Timer->WaitFor(Timeout, 0);
 	}
 }
 
 void CTransaction::StartSegmentTimer(U32 Timeout)
 {
-	if(Timer == INVALID_HANDLE_VALUE)
+	if(Timer)
 	{
-		CreateTimerQueueTimer(&Timer, nullptr, [](PVOID pParam, BOOLEAN Fired) -> void
-		{
-			CTransaction* me = ((CTransaction*)pParam);
-			me->SegmentTimerTimeout();
-		}, this, Timeout, 0, 0);
+		segwait = true;
+		Timer->WaitFor(Timeout, 0);
 	}
 }
 
@@ -80,11 +85,11 @@ BACnetResult CTransaction::CompletePDUProcessing(BACnetResult ReturnCode)
 	return BC_OK;
 }
 
-CTransaction::CTransaction(CObjectPtr<CSegmentAssembler> Parent, U8 InvokeId, CObjectPtr<IBACnetNetworkAddress> pDest):
+CTransaction::CTransaction(CObjectPtr<CSegmentAssembler> Parent, U8 InvokeId, CObjectPtr<IBACnetNetworkAddress> pDest) :
 	p(Parent),
 	dest(pDest),
 	pEvent(CreateBACnetEvent(true, false)),
-	Timer(INVALID_HANDLE_VALUE),
+	Timer(CreateBACnetThreadpoolTimer(std::bind(&CTransaction::OnTimerExpired, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3))),
 	ResultCode(0),
 	RetryCount(0),
 	SegmentRetryCount(0),

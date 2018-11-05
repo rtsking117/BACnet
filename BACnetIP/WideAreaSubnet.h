@@ -31,7 +31,7 @@ class WideAreaSubnet : public ObjectWrapper<IBACnetWideAreaSubnet>
 	std::set<FDTEntry, CompareXDTEntry<FDTEntry>> fdt;
 	CObjectPtr<IBACnetSpinLock> fdtlock;
 	CObjectPtr<WinSockManager> WinSock;
-	CObjectPtr<IBACnetThreadPool> pool;
+	CObjectPtr<IBACnetThreadpool> pool;
 	CObjectPtr<IBACnetThread> Listener;
 	CObjectPtr<IBACnetEvent> HasRXData;
 	CObjectPtr<IBACnetEvent> HasResponse;
@@ -52,7 +52,7 @@ class WideAreaSubnet : public ObjectWrapper<IBACnetWideAreaSubnet>
 	BACnetResult ListenerThread(CObjectPtr<IBACnetThread>);
 
 public:
-	WideAreaSubnet(CObjectPtr<IBACnetThreadPool> pThreadPool, U16 PortNumber);
+	WideAreaSubnet(CObjectPtr<IBACnetThreadpool> pThreadPool, U16 PortNumber);
 	~WideAreaSubnet();
 
 	//IBACnetPort

@@ -14,7 +14,7 @@ class CSimpleNetwork :
 	typedef std::pair<U32, NetworkMessageHandlerFunction> NMHPair;
 	std::map<U32, NetworkMessageHandlerFunction> nmhandlermap;
 	CObjectPtr<IBACnetPort> port;
-	CObjectPtr<IBACnetThreadPool> tpool;
+	CObjectPtr<IBACnetThreadpool> tpool;
 	CObjectPtr<IBACnetEvent> nmfailed;
 	U16 nid;
 	bool config;
@@ -31,7 +31,7 @@ class CSimpleNetwork :
 	void SendNetworkNumber();
 
 public:
-	CSimpleNetwork(CObjectPtr<IBACnetThreadPool> pThreadPool);
+	CSimpleNetwork(CObjectPtr<IBACnetThreadpool> pThreadPool);
 	~CSimpleNetwork();
 
 	BACnetResult BACNETMETHODCALLTYPE AttachPort(U16 NetworkID, CObjectPtr<IBACnetPort> pPort);

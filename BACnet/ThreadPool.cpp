@@ -69,7 +69,7 @@ BACnetResult CThreadPool::QueueAsyncCallback(AsyncCallbackFunction pCallbackFunc
 	{
 		CallbackDispatchStruct cds = *(CallbackDispatchStruct*)param;
 		cds.pThreadPool->ReleaseDispatchStruct((CallbackDispatchStruct*)param);
-		BACnetResult r = cds.pCallbackFunction(CObjectPtr<IBACnetThreadPool>(cds.pThreadPool), (CallbackHandle)inst);
+		BACnetResult r = cds.pCallbackFunction(CObjectPtr<IBACnetThreadpool>(cds.pThreadPool), (CallbackHandle)inst);
 		//check result.
 		if(BCE_FAILED(r))
 		{
@@ -89,14 +89,14 @@ bool CThreadPool::CallbackRunsLong(CallbackHandle pHandle)
 
 CObjectPtr<IBACnetThreadpoolTimer> CThreadPool::CreateThreadpoolTimer(TimerCallbackFunction pCallback)
 {
-	return CObjectPtr<IBACnetThreadpoolTimer>(new CThreadpoolTimer(pCallback, CObjectPtr<IBACnetThreadPool>(this), &env), true);
+	return CObjectPtr<IBACnetThreadpoolTimer>(new CThreadpoolTimer(pCallback, CObjectPtr<IBACnetThreadpool>(this), &env), true);
 }
 
-CObjectPtr<IBACnetThreadPool> CreateThreadPool()
+CObjectPtr<IBACnetThreadpool> CreateThreadpool()
 {
 	try
 	{
-		return CObjectPtr<IBACnetThreadPool>(new CThreadPool(), true);
+		return CObjectPtr<IBACnetThreadpool>(new CThreadPool(), true);
 	}
 	catch(BACnetException e)
 	{

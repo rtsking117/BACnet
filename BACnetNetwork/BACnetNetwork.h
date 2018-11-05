@@ -27,9 +27,9 @@ IBACnetRoutingNetwork : public IBACnetNetwork
 CObjectPtr<IBACnetSimpleNetwork> 
 BACNETNETWORK_ENTRYPOINT
 CreateSimpleNetwork(
-	CObjectPtr<IBACnetThreadPool> pThreadPool);
+	CObjectPtr<IBACnetThreadpool> pThreadPool);
 
 CObjectPtr<IBACnetRoutingNetwork>
 BACNETNETWORK_ENTRYPOINT
 CreateRoutingNetwork(
-	CObjectPtr<IBACnetThreadPool> pThreadPool);
+	CObjectPtr<IBACnetThreadpool> pThreadPool);

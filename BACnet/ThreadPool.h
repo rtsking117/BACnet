@@ -4,7 +4,7 @@
 #include "ObjectWrapper.h"
 
 class CThreadPool :
-	public ObjectWrapper<IBACnetThreadPool>
+	public ObjectWrapper<IBACnetThreadpool>
 {
 	struct CallbackDispatchStruct
 	{

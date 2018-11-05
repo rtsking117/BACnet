@@ -182,7 +182,7 @@ BACnetResult WideAreaSubnet::ListenerThread(CObjectPtr<IBACnetThread> thread)
 			msg = CreateBACnetBuffer(br - 4, tmpbuf);
 		InvokeCallback:
 			{
-				pool->QueueAsyncCallback([this, sender, msg](CObjectPtr<IBACnetThreadPool> pPool, CallbackHandle hInst)
+				pool->QueueAsyncCallback([this, sender, msg](CObjectPtr<IBACnetThreadpool> pPool, CallbackHandle hInst)
 				{
 					pPool->CallbackRunsLong(hInst);
 					return RXCallback(sender, msg);
@@ -200,7 +200,7 @@ BACnetResult WideAreaSubnet::ListenerThread(CObjectPtr<IBACnetThread> thread)
 	return BC_OK;
 }
 
-WideAreaSubnet::WideAreaSubnet(CObjectPtr<IBACnetThreadPool> pThreadPool, U16 PortNumber):
+WideAreaSubnet::WideAreaSubnet(CObjectPtr<IBACnetThreadpool> pThreadPool, U16 PortNumber):
 	sock(INVALID_SOCKET),
 	HasRXData(CreateBACnetEvent(true, false)),
 	HasResponse(CreateBACnetEvent(true, false)),

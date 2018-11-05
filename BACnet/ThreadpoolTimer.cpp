@@ -18,7 +18,7 @@ void CThreadpoolTimer::TimerEntry(CallbackHandle h, PTP_TIMER t)
 	}
 }
 
-CThreadpoolTimer::CThreadpoolTimer(TimerCallbackFunction pCallback, CObjectPtr<IBACnetThreadPool> pThreadPool, PTP_CALLBACK_ENVIRON env) :
+CThreadpoolTimer::CThreadpoolTimer(TimerCallbackFunction pCallback, CObjectPtr<IBACnetThreadpool> pThreadPool, PTP_CALLBACK_ENVIRON env) :
 	timer(nullptr),
 	callback(pCallback),
 	tp(pThreadPool)
@@ -51,7 +51,7 @@ BACnetResult BACNETMETHODCALLTYPE CThreadpoolTimer::WaitUntil(I64 AbsoluteTime, 
 	FILETIME duetime;
 	duetime.dwHighDateTime = li.HighPart;
 	duetime.dwLowDateTime = li.LowPart;
-	SetThreadpoolTimer(timer, &duetime, RepeatAfter, MaxAllowedDelay);
+	SetThreadpoolTimerEx(timer, &duetime, RepeatAfter, MaxAllowedDelay);
 	return BC_OK;
 }
 
@@ -69,12 +69,18 @@ BACnetResult BACNETMETHODCALLTYPE CThreadpoolTimer::WaitFor(I64 RelativeTime, U3
 	FILETIME duetime;
 	duetime.dwHighDateTime = li.HighPart;
 	duetime.dwLowDateTime = li.LowPart;
-	SetThreadpoolTimer(timer, &duetime, RepeatAfter, MaxAllowedDelay);
+	SetThreadpoolTimerEx(timer, &duetime, RepeatAfter, MaxAllowedDelay);
 	return BC_OK;
 }
 
 BACnetResult BACNETMETHODCALLTYPE CThreadpoolTimer::Cancel()
 {
-	SetThreadpoolTimer(timer, nullptr, 0, 0);
+	SetThreadpoolTimerEx(timer, nullptr, 0, 0);
 	return BC_OK;
+}
+
+
+CObjectPtr<IBACnetThreadpoolTimer> CreateBACnetThreadpoolTimer(TimerCallbackFunction pTimerCallback)
+{
+	return CObjectPtr<IBACnetThreadpoolTimer>(new CThreadpoolTimer(pTimerCallback, nullptr, nullptr), true);
 }

@@ -22,9 +22,9 @@ typedef struct IBACnetMutex IBACnetMutex;
 typedef struct IBACnetSpinLock IBACnetSpinLock;
 #endif
 
-#ifndef __IBACnetThreadPool__FWD_DEFINED__
-#define __IBACnetThreadPool__FWD_DEFINED__
-typedef struct IBACnetThreadPool IBACnetThreadPool;
+#ifndef __IBACnetThreadpool__FWD_DEFINED__
+#define __IBACnetThreadpool__FWD_DEFINED__
+typedef struct IBACnetThreadpool IBACnetThreadpool;
 #endif
 
 #ifndef __IBACnetThreadpoolTimer__FWD_DEFINED__
@@ -102,11 +102,11 @@ WaitForObjects(CObjectPtr<IBACnetWaitableObject> (&pObjectList)[size], U32& Sign
 	return WaitForObjects(pObjectList, size, SignaledObject, WaitForAll, msTimeout);
 }
 
-typedef std::function<BACnetResult(CObjectPtr<IBACnetThreadPool> pPool, CallbackHandle pHandle)> AsyncCallbackFunction;
-typedef std::function<BACnetResult(CObjectPtr<IBACnetThreadPool> pPool, CallbackHandle pHandle, CObjectPtr<IBACnetThreadpoolTimer> pTimer)> TimerCallbackFunction;
+typedef std::function<BACnetResult(CObjectPtr<IBACnetThreadpool> pPool, CallbackHandle pHandle)> AsyncCallbackFunction;
+typedef std::function<BACnetResult(CObjectPtr<IBACnetThreadpool> pPool, CallbackHandle pHandle, CObjectPtr<IBACnetThreadpoolTimer> pTimer)> TimerCallbackFunction;
 
 BACNET_INTERFACE("{D4629B16-4755-4719-93C7-B3D82B1C7181}")
-IBACnetThreadPool : public IBACnetUnknown
+IBACnetThreadpool : public IBACnetUnknown
 {
 	BCNMETHOD(QueueAsyncCallback(AsyncCallbackFunction pCallbackFunction)) BCPURE;
 	BCNMETHODTYPE(bool, CallbackRunsLong(CallbackHandle pHandle)) BCPURE;
@@ -132,9 +132,9 @@ BACNET_ENTRYPOINT
 CreateBACnetThread(
 	ThreadFunction pThreadFunction);
 
-CObjectPtr<IBACnetThreadPool>
+CObjectPtr<IBACnetThreadpool>
 BACNET_ENTRYPOINT
-CreateThreadPool();
+CreateThreadpool();
 
 CObjectPtr<IBACnetEvent>
 BACNET_ENTRYPOINT
@@ -156,3 +156,9 @@ CObjectPtr<IBACnetTimer>
 BACNET_ENTRYPOINT
 CreateBACnetTimer(
 	bool ManualReset);
+
+CObjectPtr<IBACnetThreadpoolTimer>
+BACNET_ENTRYPOINT
+CreateBACnetThreadpoolTimer(
+	TimerCallbackFunction pTimerCallback
+);

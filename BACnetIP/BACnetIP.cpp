@@ -3,7 +3,7 @@
 #include "LocalSocket.h"
 #include "WideAreaSubnet.h"
 
-CObjectPtr<IBACnetLocalSubnet> CreateLocalSubnet(CObjectPtr<IBACnetThreadPool> pThreadPool, U16 PortNumber)
+CObjectPtr<IBACnetLocalSubnet> CreateLocalSubnet(CObjectPtr<IBACnetThreadpool> pThreadPool, U16 PortNumber)
 {
 	try
 	{
@@ -15,7 +15,7 @@ CObjectPtr<IBACnetLocalSubnet> CreateLocalSubnet(CObjectPtr<IBACnetThreadPool> p
 	}
 }
 
-CObjectPtr<IBACnetWideAreaSubnet> CreateWideAreaSubnet(CObjectPtr<IBACnetThreadPool> pThreadPool, U16 PortNumber)
+CObjectPtr<IBACnetWideAreaSubnet> CreateWideAreaSubnet(CObjectPtr<IBACnetThreadpool> pThreadPool, U16 PortNumber)
 {
 	try
 	{

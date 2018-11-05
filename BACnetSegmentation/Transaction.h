@@ -25,9 +25,11 @@ protected:
 	CSegmentBuffer segs;
 	CObjectPtr<CSegmentAssembler> p;
 	CObjectPtr<IBACnetNetworkAddress> dest;
+private:
 	CObjectPtr<IBACnetEvent> pEvent;
-	HANDLE Timer;
+	CObjectPtr<IBACnetThreadpoolTimer> Timer;
 	BACnetResult ResultCode;
+protected:
 	U32 RetryCount;
 	U32 SegmentRetryCount;
 	U32 DuplicateCount;
@@ -46,6 +48,11 @@ protected:
 	MaxSegments MaxSegmentsAllowed;
 	bool SentAllSegments;
 
+private:
+	bool segwait;
+	BACnetResult OnTimerExpired(CObjectPtr<IBACnetThreadpool> pThreadpool, CallbackHandle pHandle, CObjectPtr<IBACnetThreadpoolTimer> pTimer);
+
+protected:
 	void StartRequestTimer(U32 Timeout);
 	void StartSegmentTimer(U32 Timeout);
 	void StopTimer(bool DontBlock = false);

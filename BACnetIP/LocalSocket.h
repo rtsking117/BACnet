@@ -12,7 +12,7 @@ class LocalSocket :
 	ReceiverCallbackFunction RXCallback;
 	sockaddr_in Addr;
 	CObjectPtr<WinSockManager> WinSock;
-	CObjectPtr<IBACnetThreadPool> pool;
+	CObjectPtr<IBACnetThreadpool> pool;
 	CObjectPtr<IBACnetThread> Listener;
 	CObjectPtr<IBACnetEvent> HasRXData;
 	CObjectPtr<IBACnetEvent> HasResponse;
@@ -40,7 +40,7 @@ class LocalSocket :
 	BACnetResult ListenerThread(CObjectPtr<IBACnetThread>);
 	
 public:
-	LocalSocket(CObjectPtr<IBACnetThreadPool> pThreadPool, U16 PortNumber);
+	LocalSocket(CObjectPtr<IBACnetThreadpool> pThreadPool, U16 PortNumber);
 	~LocalSocket();
 
 	//IBACnetPort
