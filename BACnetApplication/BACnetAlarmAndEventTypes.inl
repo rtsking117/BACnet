@@ -1,8 +1,44 @@
 #pragma once
 
+class BACnetClientCOV;
+class BACnetCOVMultipleSubscription;
+class BACnetCOVSubscription;
+class EventLogRecord;
+class BACnetEventNotificationSubscription;
+class BACnetLogData;
+class BACnetLogMultipleRecord;
+class BACnetLogRecord;
+class BACnetNotificationParameters;
+class BACnetRecipient;
+class BACnetRecipientProcess;
+class BACnetTimeStamp;
+
 #include "BACnetBasicTypes.inl"
 #include "BACnetPropertyTypes.inl"
 #include "BACnetAlarmAndEventServices.inl"
+
+
+//Recipient
+class BACnetRecipient : public
+	BACnetChoice<NoDefault,
+	BACnetChoiceElement<0, BACnetObjectIDType>,
+	BACnetChoiceElement<1, BACnetAddress>
+	>
+{
+public:
+
+};
+
+//Recipient Process
+class BACnetRecipientProcess : public
+	BACnetSequence<
+	BACnetSequenceElement<0, BACnetRecipient>,
+	BACnetSequenceElement<1, BACnetUnsigned32Type>
+	>
+{
+public:
+
+};
 
 //Client COV
 class BACnetClientCOV : public
@@ -88,33 +124,14 @@ public:
 
 };
 
-class BACnetConfirmedEventNotificationRequest;
-
-//Event Log Record
-class EventLogRecord : public
-	BACnetSequence<
-		BACnetSequenceElement<0, BACnetDateTimeType, false>,
-		BACnetSequenceElement<1,
-			BACnetChoice<NoDefault,
-				BACnetChoiceElement<0, BACnetLogStatusType>,
-				BACnetChoiceElement<1, BACnetConfirmedEventNotificationRequest>,
-				BACnetChoiceElement<2, BACnetRealValueType>
-			>, false
-		>
-	>
-{
-public:
-
-};
-
 //Event Notification Subscription
 class BACnetEventNotificationSubscription : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetRecipient, false>,
-		BACnetSequenceElement<1, BACnetUnsigned32Type, false>,
-		BACnetSequenceElement<2, BACnetBooleanType, false>,
-		BACnetSequenceElement<3, BACnetUnsignedType, false>
-	>
+		BACnetSequenceElement<0, BACnetRecipient>,
+		BACnetSequenceElement<1, BACnetUnsigned32Type>,
+		BACnetSequenceElement<2, BACnetBooleanType>,
+		BACnetSequenceElement<3, BACnetUnsignedType>
+		>
 {
 public:
 
@@ -124,66 +141,65 @@ public:
 class BACnetEventParameter : public
 	BACnetChoice<NoDefault,
 		BACnetChoiceElement<0,
-			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetBitStringType, false>,
+	BACnetSequence<
+				BACnetSequenceElement<0, BACnetUnsignedType>,
+				BACnetSequenceElement<1, BACnetBitStringType>,
 				BACnetSequenceElement<2, BACnetSequenceOf<BACnetBitStringType>, false>
-			>
+	>
 		>,
 		BACnetChoiceElement<1,
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<0, BACnetUnsignedType>,
 				BACnetSequenceElement<1, BACnetSequenceOf<BACnetPropertyStates>, false>
 			>
 		>,
-		BACnetChoiceElement<2,
+		BACnetChoiceElement<2, 
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
+				BACnetSequenceElement<0, BACnetUnsignedType>,
 				BACnetSequenceElement<1, 
 					BACnetChoice<NoDefault,
 						BACnetChoiceElement<0, BACnetBitStringType>,
 						BACnetChoiceElement<1, BACnetRealValueType>
-					>,
-					false
+					>, false
 				>
 			>
 		>,
-		BACnetChoiceElement<3, 
+		BACnetChoiceElement<3,
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetDeviceObjectPropertyReference, false>
+				BACnetSequenceElement<0, BACnetUnsignedType>,
+				BACnetSequenceElement<1, BACnetDeviceObjectPropertyReference>
 			>
 		>,
 		BACnetChoiceElement<4,
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetDeviceObjectPropertyReference, false>,
-				BACnetSequenceElement<2, BACnetRealValueType, false>,
-				BACnetSequenceElement<3, BACnetRealValueType, false>,
-				BACnetSequenceElement<4, BACnetRealValueType, false>
+				BACnetSequenceElement<0, BACnetUnsignedType>,
+				BACnetSequenceElement<1, BACnetDeviceObjectPropertyReference>,
+				BACnetSequenceElement<2, BACnetRealValueType>,
+				BACnetSequenceElement<3, BACnetRealValueType>,
+				BACnetSequenceElement<4, BACnetRealValueType>
 			>
 		>,
-		BACnetChoiceElement<5, 
+		BACnetChoiceElement<5,
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetRealValueType, false>,
-				BACnetSequenceElement<2, BACnetRealValueType, false>,
-				BACnetSequenceElement<3, BACnetRealValueType, false>
+				BACnetSequenceElement<0, BACnetUnsignedType>,
+				BACnetSequenceElement<1, BACnetRealValueType>,
+				BACnetSequenceElement<2, BACnetRealValueType>,
+				BACnetSequenceElement<3, BACnetRealValueType>
 			>
 		>,
 		BACnetChoiceElement<8,
 			BACnetSequence<
-				BACnetSequenceElement<0,BACnetUnsignedType, false>,
-				BACnetSequenceElement<1,BACnetSequenceOf<BACnetLifeSafetyStateType>, false>,
+				BACnetSequenceElement<0, BACnetUnsignedType>,
+				BACnetSequenceElement<1, BACnetSequenceOf<BACnetLifeSafetyStateType>, false>,
 				BACnetSequenceElement<2, BACnetSequenceOf<BACnetLifeSafetyStateType>, false>,
-				BACnetSequenceElement<3, BACnetDeviceObjectPropertyReference, false>
+				BACnetSequenceElement<3, BACnetDeviceObjectPropertyReference>
 			>
 		>,
-		BACnetChoiceElement<9,
+		BACnetChoiceElement<9, 
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsigned16Type, false>,
-				BACnetSequenceElement<1, BACnetUnsignedType, false>,
-				BACnetSequenceElement<2,
+				BACnetSequenceElement<0, BACnetUnsigned16Type>,
+				BACnetSequenceElement<1, BACnetUnsignedType>,
+				BACnetSequenceElement<2, 
 					BACnetSequenceOf<
 						BACnetChoice<NoDefault,
 							BACnetChoiceElement<NoTag, BACnetNullType>,
@@ -194,83 +210,83 @@ class BACnetEventParameter : public
 							BACnetChoiceElement<NoTag, BACnetDoubleType>,
 							BACnetChoiceElement<NoTag, BACnetOctetStringType>,
 							BACnetChoiceElement<NoTag, BACnetCharacterStringType>,
+							BACnetChoiceElement<NoTag, BACnetBitStringType>,
 							BACnetChoiceElement<NoTag, BACnetEnumeratedType>,
 							BACnetChoiceElement<NoTag, BACnetDateType>,
 							BACnetChoiceElement<NoTag, BACnetTimeType>,
 							BACnetChoiceElement<NoTag, BACnetObjectIDType>,
 							BACnetChoiceElement<0, BACnetDeviceObjectPropertyReference>
 						>
-					>,
-					false
+					>, false
 				>
 			>
 		>,
 		BACnetChoiceElement<10,
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetUnsigned32Type, false>
+				BACnetSequenceElement<0, BACnetUnsignedType>,
+				BACnetSequenceElement<1, BACnetUnsigned32Type>
 			>
 		>,
 		BACnetChoiceElement<11,
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetUnsignedType, false>,
-				BACnetSequenceElement<2, BACnetUnsignedType, false>
+				BACnetSequenceElement<0, BACnetUnsignedType>,
+				BACnetSequenceElement<1, BACnetUnsignedType>,
+				BACnetSequenceElement<2, BACnetUnsignedType>
 			>
 		>,
-		BACnetChoiceElement<13,
+		BACnetChoiceElement<13, 
 			BACnetSequence<
 				BACnetSequenceElement<0, BACnetSequenceOf<BACnetAccessEventType>, false>,
-				BACnetSequenceElement<1, BACnetDeviceObjectPropertyReference, false>
+				BACnetSequenceElement<1, BACnetDeviceObjectPropertyReference>
 			>
 		>,
-		BACnetChoiceElement<14,
+		BACnetChoiceElement<14, 
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetDoubleType, false>,
-				BACnetSequenceElement<2, BACnetDoubleType, false>,
-				BACnetSequenceElement<3, BACnetDoubleType, false>
+				BACnetSequenceElement<0, BACnetUnsignedType>,
+				BACnetSequenceElement<1, BACnetDoubleType>,
+				BACnetSequenceElement<2, BACnetDoubleType>,
+				BACnetSequenceElement<3, BACnetDoubleType>
 			>
 		>,
 		BACnetChoiceElement<15,
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetSignedType, false>,
-				BACnetSequenceElement<2, BACnetSignedType, false>,
-				BACnetSequenceElement<3, BACnetUnsignedType, false>
+				BACnetSequenceElement<0, BACnetUnsignedType>,
+				BACnetSequenceElement<1, BACnetSignedType>,
+				BACnetSequenceElement<2, BACnetSignedType>,
+				BACnetSequenceElement<3, BACnetUnsignedType>
 			>
 		>,
 		BACnetChoiceElement<16,
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetUnsignedType, false>,
-				BACnetSequenceElement<2, BACnetUnsignedType, false>,
-				BACnetSequenceElement<3, BACnetUnsignedType, false>
+				BACnetSequenceElement<0, BACnetUnsignedType>,
+				BACnetSequenceElement<1, BACnetUnsignedType>,
+				BACnetSequenceElement<2, BACnetUnsignedType>,
+				BACnetSequenceElement<3, BACnetUnsignedType>
 			>
 		>,
 		BACnetChoiceElement<17,
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetSequenceOf<BACnetCharacterStringType>, false>
+				BACnetSequenceElement<0, BACnetUnsignedType>,
+				BACnetSequenceElement<1, BACnetSequenceOf<BACnetCharacterStringType>>
 			>
 		>,
 		BACnetChoiceElement<18,
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>
+				BACnetSequenceElement<0, BACnetUnsignedType>,
+				BACnetSequenceElement<1, BACnetStatusFlagsType>
 			>
 		>,
 		BACnetChoiceElement<20, BACnetNullType>,
-		BACnetChoiceElement<21,
+		BACnetChoiceElement<21, 
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>
+				BACnetSequenceElement<0, BACnetUnsignedType>
 			>
 		>,
-		BACnetChoiceElement<22, 
+		BACnetChoiceElement<22,
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetSequenceOf<BACnetTimerStateType>, false>,
-				BACnetSequenceElement<2, BACnetDeviceObjectPropertyReference, false>
+				BACnetSequenceElement<0, BACnetUnsignedType>,
+				BACnetSequenceElement<1, BACnetSequenceOf<BACnetTimerStateType>>,
+				BACnetSequenceElement<2, BACnetDeviceObjectPropertyReference>
 			>
 		>
 	>
@@ -426,71 +442,102 @@ public:
 
 };
 
+
+//Time Stamp
+class BACnetTimeStamp : public
+	BACnetSequence<
+		BACnetSequenceElement<0, BACnetTimeType>,
+		BACnetSequenceElement<1, BACnetUnsigned16Type>,
+		BACnetSequenceElement<2, BACnetDateTimeType>
+	>
+{
+public:
+
+};
+
 //Notification Parameters
-class BACnetNotificationParameters : public
-	BACnetChoice < NoDefault,
-		BACnetChoiceElement<0,
+class BACnetChangeOfBitstringNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetBitStringType, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>
+		BACnetSequenceElement<0, BACnetBitStringType>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>
 			>
-		>,
-		BACnetChoiceElement<1,
+{
+
+};
+
+class BACnetChangeOfStateNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetPropertyStates, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>
+		BACnetSequenceElement<0, BACnetPropertyStates>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>
 			>
-		>,
-		BACnetChoiceElement<2,
+{
+
+};
+
+class BACnetChangeOfValueNotification : public
 			BACnetSequence<
 				BACnetSequenceElement<0,
 					BACnetChoice<NoDefault,
 						BACnetChoiceElement<0, BACnetBitStringType>,
 						BACnetChoiceElement<1, BACnetRealValueType>
-					>,
-					false
-				>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>
 			>
 		>,
-		BACnetChoiceElement<3,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>
+	>
+{
+
+};
+
+class BACnetCommandFailureNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetAnyType, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>,
-				BACnetSequenceElement<2, BACnetAnyType, false>
+		BACnetSequenceElement<0, BACnetAnyType>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>,
+		BACnetSequenceElement<2, BACnetAnyType>
 			>
-		>,
-		BACnetChoiceElement<4,
+{
+
+};
+
+class BACnetFloatingLimitNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetRealValueType, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>,
-				BACnetSequenceElement<2, BACnetRealValueType, false>,
-				BACnetSequenceElement<3, BACnetRealValueType, false>
+		BACnetSequenceElement<0, BACnetRealValueType>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>,
+		BACnetSequenceElement<2, BACnetRealValueType>,
+		BACnetSequenceElement<3, BACnetRealValueType>
 			>
-		>,
-		BACnetChoiceElement<5,
+{
+
+};
+
+class BACnetOutOfRangeNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetRealValueType, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>,
-				BACnetSequenceElement<2, BACnetRealValueType, false>,
-				BACnetSequenceElement<3, BACnetRealValueType, false>
+		BACnetSequenceElement<0, BACnetRealValueType>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>,
+		BACnetSequenceElement<2, BACnetRealValueType>,
+		BACnetSequenceElement<3, BACnetRealValueType>
 			>
-		>,
-		BACnetChoiceElement<6, BACnetSequenceOf<BACnetPropertyValue>>,
-		BACnetChoiceElement<8,
+{
+
+};
+
+class BACnetComplexEventNotification : public
+	BACnetSequenceOf<BACnetPropertyValue>
+{
+
+};
+
+class BACnetChangeOfLifeSafetyNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetLifeSafetyStateType, false>,
-				BACnetSequenceElement<1, BACnetLifeSafetyModeType, false>,
-				BACnetSequenceElement<2, BACnetStatusFlagsType, false>,
-				BACnetSequenceElement<3, BACnetLifeSafetyOperationType, false>
+		BACnetSequenceElement<0, BACnetLifeSafetyStateType>,
+		BACnetSequenceElement<1, BACnetLifeSafetyModeType>,
+		BACnetSequenceElement<2, BACnetStatusFlagsType>,
+		BACnetSequenceElement<3, BACnetLifeSafetyOperationType>
 			>
-		>,
-		BACnetChoiceElement < 9,
-			BACnetSequence <
-				BACnetSequenceElement<0, BACnetUnsigned16Type, false>,
-				BACnetSequenceElement<1, BACnetUnsignedType, false>,
-				BACnetSequenceElement<2,
-					BACnetSequenceOf<
+{
+
+};
+
+class BACnetExtendedNotificationParameter : public
 						BACnetChoice<NoDefault,
 							BACnetChoiceElement<NoTag, BACnetNullType>,
 							BACnetChoiceElement<NoTag, BACnetRealValueType>,
@@ -507,80 +554,116 @@ class BACnetNotificationParameters : public
 							BACnetChoiceElement<NoTag, BACnetObjectIDType>,
 							BACnetChoiceElement<0, BACnetDeviceObjectPropertyValue>
 						>
-					>,
-					false
+{
+
+};
+
+class BACnetExtendedNotification : public
+	BACnetSequence <
+		BACnetSequenceElement<0, BACnetUnsigned16Type>,
+		BACnetSequenceElement<1, BACnetUnsignedType>,
+		BACnetSequenceElement<2, BACnetSequenceOf<BACnetExtendedNotificationParameter>>
 				>
-			>
-		> ,
-		BACnetChoiceElement<10,
+{
+
+};
+
+class BACnetBufferReadyNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetDeviceObjectPropertyValue, false>,
-				BACnetSequenceElement<1, BACnetUnsigned32Type, false>,
-				BACnetSequenceElement<2, BACnetUnsigned32Type, false>
+		BACnetSequenceElement<0, BACnetDeviceObjectPropertyValue>,
+		BACnetSequenceElement<1, BACnetUnsigned32Type>,
+		BACnetSequenceElement<2, BACnetUnsigned32Type>
 			>
-		>,
-		BACnetChoiceElement<11,
+{
+
+};
+
+class BACnetUnsignedRangeNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>,
-				BACnetSequenceElement<2, BACnetUnsignedType, false>
+		BACnetSequenceElement<0, BACnetUnsignedType>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>,
+		BACnetSequenceElement<2, BACnetUnsignedType>
 			>
-		>,
-		BACnetChoiceElement<13,
+{
+
+};
+
+class BACnetAccessEventNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetAccessEventType, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>,
-				BACnetSequenceElement<2, BACnetUnsignedType, false>,
-				BACnetSequenceElement<3, BACnetTimeStamp, false>,
-				BACnetSequenceElement<4, BACnetDeviceObjectReference, false>,
+		BACnetSequenceElement<0, BACnetAccessEventType>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>,
+		BACnetSequenceElement<2, BACnetUnsignedType>,
+		BACnetSequenceElement<3, BACnetTimeStamp>,
+		BACnetSequenceElement<4, BACnetDeviceObjectReference>,
 				BACnetSequenceElement<5, BACnetAuthenticationFactorTypeType, true>
 			>
-		>,
-		BACnetChoiceElement<14,
+{
+
+};
+
+class BACnetDoubleOutOfRangeNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetDoubleType, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>,
-				BACnetSequenceElement<2, BACnetDoubleType, false>,
-				BACnetSequenceElement<3, BACnetDoubleType, false>
+		BACnetSequenceElement<0, BACnetDoubleType>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>,
+		BACnetSequenceElement<2, BACnetDoubleType>,
+		BACnetSequenceElement<3, BACnetDoubleType>
 			>
-		>,
-		BACnetChoiceElement<15,
+{
+
+};
+
+class BACnetSignedOutOfRangeNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetSignedType, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>,
-				BACnetSequenceElement<2, BACnetUnsignedType, false>,
-				BACnetSequenceElement<3, BACnetSignedType, false>
+		BACnetSequenceElement<0, BACnetSignedType>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>,
+		BACnetSequenceElement<2, BACnetUnsignedType>,
+		BACnetSequenceElement<3, BACnetSignedType>
 			>
-		>,
-		BACnetChoiceElement<16,
+{
+	
+};
+	
+class BACnetUnsignedOutOfRangeNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsignedType, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>,
-				BACnetSequenceElement<2, BACnetUnsignedType, false>,
-				BACnetSequenceElement<3, BACnetUnsignedType, false>
+		BACnetSequenceElement<0, BACnetUnsignedType>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>,
+		BACnetSequenceElement<2, BACnetUnsignedType>,
+		BACnetSequenceElement<3, BACnetUnsignedType>
 			>
-		>,
-		BACnetChoiceElement<17,
+{
+	
+};
+	
+class BACnetChangeOfCharacterStringNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetCharacterStringType, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>,
-				BACnetSequenceElement<2, BACnetCharacterStringType, false>
+		BACnetSequenceElement<0, BACnetCharacterStringType>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>,
+		BACnetSequenceElement<2, BACnetCharacterStringType>
 			>
-		>,
-		BACnetChoiceElement<18,
+{
+	
+};
+
+class BACnetChangeOfStatusFlagsNotification : public
 			BACnetSequence<
 				BACnetSequenceElement<0, BACnetAnyType, true>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>
+		BACnetSequenceElement<1, BACnetStatusFlagsType>
 			>
-		>,
-		BACnetChoiceElement<19,
+{
+
+};
+
+class BACnetChangeOfReliabilityNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetReliabilityType, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>,
-				BACnetSequenceElement<2, BACnetSequenceOf<BACnetPropertyValue>, false>
+		BACnetSequenceElement<0, BACnetReliabilityType>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>,
+		BACnetSequenceElement<2, BACnetSequenceOf<BACnetPropertyValue>>
 			>
-		>,
-		BACnetChoiceElement<21,
+{
+
+};
+
+class BACnetChangeOfDiscreteValueNotification : public
 			BACnetSequence<
 				BACnetSequenceElement<0,
 					BACnetChoice<NoDefault,
@@ -594,33 +677,49 @@ class BACnetNotificationParameters : public
 						BACnetChoiceElement<NoTag, BACnetTimeType>,
 						BACnetChoiceElement<NoTag, BACnetObjectIDType>,
 						BACnetChoiceElement<0, BACnetDateTimeType>
-					>,
-					false
-				>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>
 			>
-		>,
-		BACnetChoiceElement<22,
+				>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>
+			>
+{
+
+};
+
+class BACnetChangeOfTimerNotification : public
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetTimerStateType, false>,
-				BACnetSequenceElement<1, BACnetStatusFlagsType, false>,
-				BACnetSequenceElement<2, BACnetDateTimeType, false>,
+		BACnetSequenceElement<0, BACnetTimerStateType>,
+		BACnetSequenceElement<1, BACnetStatusFlagsType>,
+		BACnetSequenceElement<2, BACnetDateTimeType>,
 				BACnetSequenceElement<3, BACnetTimerTransitionType, true>,
 				BACnetSequenceElement<4, BACnetUnsignedType, true>,
 				BACnetSequenceElement<5, BACnetDateTimeType, true>
 			>
-		>
-	>
 {
-public:
 
 };
 
-//Recipient
-class BACnetRecipient : public
+class BACnetNotificationParameters : public
 	BACnetChoice<NoDefault,
-		BACnetChoiceElement<0, BACnetObjectIDType>,
-		BACnetChoiceElement<1, BACnetAddress>
+		BACnetChoiceElement<0, BACnetChangeOfBitstringNotification>,
+		BACnetChoiceElement<1, BACnetChangeOfStateNotification>,
+		BACnetChoiceElement<2, BACnetChangeOfValueNotification>,
+		BACnetChoiceElement<3, BACnetCommandFailureNotification>,
+		BACnetChoiceElement<4, BACnetFloatingLimitNotification>,
+		BACnetChoiceElement<5, BACnetOutOfRangeNotification>,
+		BACnetChoiceElement<6, BACnetComplexEventNotification>,
+		BACnetChoiceElement<8, BACnetChangeOfLifeSafetyNotification>,
+		BACnetChoiceElement<9, BACnetExtendedNotification>,
+		BACnetChoiceElement<10, BACnetBufferReadyNotification>,
+		BACnetChoiceElement<11, BACnetUnsignedRangeNotification>,
+		BACnetChoiceElement<13, BACnetAccessEventNotification>,
+		BACnetChoiceElement<14, BACnetDoubleOutOfRangeNotification>,
+		BACnetChoiceElement<15, BACnetSignedOutOfRangeNotification>,
+		BACnetChoiceElement<16, BACnetUnsignedOutOfRangeNotification>,
+		BACnetChoiceElement<17, BACnetChangeOfCharacterStringNotification>,
+		BACnetChoiceElement<18, BACnetChangeOfStatusFlagsNotification>,
+		BACnetChoiceElement<19, BACnetChangeOfReliabilityNotification>,
+		BACnetChoiceElement<21, BACnetChangeOfDiscreteValueNotification>,
+		BACnetChoiceElement<22, BACnetChangeOfTimerNotification>
 	>
 {
 public:
@@ -632,18 +731,6 @@ class BACnetRecipientProcess : public
 	BACnetSequence<
 		BACnetSequenceElement<0, BACnetRecipient, false>,
 		BACnetSequenceElement<1, BACnetUnsigned32Type, false>
-	>
-{
-public:
-
-};
-
-//Time Stamp
-class BACnetTimeStamp : public
-	BACnetSequence<
-		BACnetSequenceElement<0, BACnetTimeType, false>,
-		BACnetSequenceElement<1, BACnetUnsigned16Type, false>,
-		BACnetSequenceElement<2, BACnetDateTimeType, false>
 	>
 {
 public:

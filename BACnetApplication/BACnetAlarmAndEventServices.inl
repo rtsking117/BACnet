@@ -1,5 +1,24 @@
 #pragma once
 
+//Acknowledge Alarm
+class AcknowledgeAlarmRequest;
+class ConfirmedCOVNotificationRequest;
+class ConfirmedCOVNotificationMultipleRequest;
+class ConfirmedEventNotificationRequest;
+class GetAlarmSummaryResponse;
+class GetEnrollmentSummaryRequest;
+class GetEnrollmentSummaryResponse;
+class GetEventInformationRequest;
+class GetEventInformationResponse;
+class LifeSafetyOperationRequest;
+class SubscribeCOVRequest;
+class SubscribeCOVPropertyRequest;
+class SubscribeCOVPropertyMultipleRequest;
+class UnconfirmedCOVNotificationRequest;
+class UnconfirmedCOVNotificationMultipleRequest;
+class UnconfirmedEventNotificationRequest;
+
+
 #include "BACnetBasicTypes.inl"
 #include "BACnetComplexTypes.inl"
 #include "BACnetAlarmAndEventTypes.inl"
