@@ -2,6 +2,16 @@
 #include <process.h>
 #include <functional>
 
+BACnetResult MSTPMaster::LineDriver(CObjectPtr<IBACnetThread> thread)
+{
+	return BCE_NOT_IMPLEMENTED;
+}
+
+BACnetResult MSTPMaster::MasterStateMachine(CObjectPtr<IBACnetThread> thread)
+{
+	return BCE_NOT_IMPLEMENTED;
+}
+
 MSTPMaster::MSTPMaster():
 	sendbuf(nullptr),
 	recvbuf(nullptr),
@@ -47,6 +57,46 @@ MSTPMaster::~MSTPMaster()
 	InputBuffer = nullptr;
 	free(tmpbuf);
 	tmpbuf = nullptr;
+}
+
+BACnetResult MSTPMaster::Start()
+{
+	return BCE_NOT_IMPLEMENTED;
+}
+
+BACnetResult MSTPMaster::Stop()
+{
+	return BCE_NOT_IMPLEMENTED;
+}
+
+BACnetResult MSTPMaster::WriteMessage(CObjectPtr<IBACnetAddress> pDestinationAddress, CObjectPtr<IBACnetBuffer> pMessage, bool WaitForTransmit)
+{
+	return BCE_NOT_IMPLEMENTED;
+}
+
+CObjectPtr<IBACnetAddress> MSTPMaster::CreateAddress(U32 AddressSize, const U8* const AddressDataBuffer) const
+{
+	return nullptr;
+}
+
+CObjectPtr<IBACnetAddress> MSTPMaster::GetBroadcastAddress() const
+{
+	return nullptr;
+}
+
+U32 MSTPMaster::GetMaxHeaderLength() const
+{
+	return 0;
+}
+
+BACnetResult MSTPMaster::RegisterReceiverCallback(ReceiverCallbackFunction pCallback)
+{
+	return BCE_NOT_IMPLEMENTED;
+}
+
+BACnetResult MSTPMaster::RemoveReceiverCallback()
+{
+	return BCE_NOT_IMPLEMENTED;
 }
 
 U8 CalcHeaderCRC(U8* data, U32 size, U8 crc = 0)
