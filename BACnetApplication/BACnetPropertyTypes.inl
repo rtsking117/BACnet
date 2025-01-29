@@ -8,8 +8,8 @@
 //Device Object Property Reference
 class BACnetDeviceObjectPropertyReference : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetObjectIDType, false>,
-		BACnetSequenceElement<1, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<0, BACnetObjectIDType>,
+		BACnetSequenceElement<1, BACnetPropertyIdentifierType>,
 		BACnetSequenceElement<2, BACnetUnsignedType, true>,
 		BACnetSequenceElement<3, BACnetObjectIDType, true>
 	>
@@ -21,11 +21,11 @@ public:
 //Device Object Property Value
 class BACnetDeviceObjectPropertyValue : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetObjectIDType, false>,
-		BACnetSequenceElement<1, BACnetObjectIDType, false>,
-		BACnetSequenceElement<2, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<0, BACnetObjectIDType>,
+		BACnetSequenceElement<1, BACnetObjectIDType>,
+		BACnetSequenceElement<2, BACnetPropertyIdentifierType>,
 		BACnetSequenceElement<3, BACnetUnsignedType, true>,
-		BACnetSequenceElement<4, BACnetAnyType, false>
+		BACnetSequenceElement<4, BACnetAnyType>
 	>
 {
 public:
@@ -36,7 +36,7 @@ public:
 class BACnetDeviceObjectReference : public
 	BACnetSequence<
 		BACnetSequenceElement<0, BACnetObjectIDType, true>,
-		BACnetSequenceElement<1, BACnetObjectIDType, false>
+		BACnetSequenceElement<1, BACnetObjectIDType>
 	>
 {
 public:
@@ -46,7 +46,7 @@ public:
 //Group Channel Value
 class BACnetGroupChannelValue : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetUnsigned16Type, false>,
+		BACnetSequenceElement<0, BACnetUnsigned16Type>,
 		BACnetSequenceElement<1, BACnetUnsignedType, true>,
 		BACnetSequenceElement<NoTag, BACnetChannelValue, false>
 	>
@@ -58,8 +58,8 @@ public:
 //Object Property Reference
 class BACnetObjectPropertyReference : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetObjectIDType, false>,
-		BACnetSequenceElement<1, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<0, BACnetObjectIDType>,
+		BACnetSequenceElement<1, BACnetPropertyIdentifierType>,
 		BACnetSequenceElement<2, BACnetUnsignedType, true>
 	>
 {
@@ -70,11 +70,11 @@ public:
 //Object Property Value
 class BACnetObjectPropertyValue : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetObjectIDType, false>,
-		BACnetSequenceElement<1, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<0, BACnetObjectIDType>,
+		BACnetSequenceElement<1, BACnetPropertyIdentifierType>,
 		BACnetSequenceElement<2, BACnetUnsignedType, true>,
-		BACnetSequenceElement<3, BACnetAnyType, false>,
-		BACnetSequenceElement<4, BACnetUnsignedType, true>,
+		BACnetSequenceElement<3, BACnetAnyType>,
+		BACnetSequenceElement<4, BACnetUnsignedType, true>
 	>
 {
 public:
@@ -84,14 +84,14 @@ public:
 //Property Access Result
 class BACnetPropertyAccessResult : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetObjectIDType, false>,
-		BACnetSequenceElement<1, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<0, BACnetObjectIDType>,
+		BACnetSequenceElement<1, BACnetPropertyIdentifierType>,
 		BACnetSequenceElement<2, BACnetUnsignedType, true>,
 		BACnetSequenceElement<3, BACnetObjectIDType, true>,
 		BACnetSequenceElement<NoTag,
 			BACnetChoice<NoDefault,
 				BACnetChoiceElement<4, BACnetAnyType>,
-				BACnetChoiceElement<5, BACnetError>,
+				BACnetChoiceElement<5, BACnetError>
 			>, false
 		>
 	>
@@ -170,7 +170,7 @@ public:
 //Property Reference
 class BACnetPropertyReference : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<0, BACnetPropertyIdentifierType>,
 		BACnetSequenceElement<1, BACnetUnsignedType, true>
 	>
 {
@@ -229,9 +229,9 @@ public:
 //Propery Value
 class BACnetPropertyValue : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetPropertyIdentifierType, false>,
+		BACnetSequenceElement<0, BACnetPropertyIdentifierType>,
 		BACnetSequenceElement<1, BACnetUnsignedType, true>,
-		BACnetSequenceElement<2, BACnetAnyType, false>,
+		BACnetSequenceElement<2, BACnetAnyType>,
 		BACnetSequenceElement<3, BACnetUnsignedType, true>
 	>
 {
@@ -328,11 +328,11 @@ class BACnetError;
 //Read Access Result
 class ReadAccessResult : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetObjectIDType, false>,
+		BACnetSequenceElement<0, BACnetObjectIDType>,
 		BACnetSequenceElement<1,
 			BACnetSequenceOf<
 				BACnetSequence<
-					BACnetSequenceElement<2, BACnetPropertyIdentifierType, false>,
+					BACnetSequenceElement<2, BACnetPropertyIdentifierType>,
 					BACnetSequenceElement<3, BACnetUnsignedType, true>,
 					BACnetSequenceElement<NoTag,
 						BACnetChoice<NoDefault,
@@ -354,7 +354,7 @@ public:
 //Read Access Specification
 class ReadAccessSpecification : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetObjectIDType, false>,
+	BACnetSequenceElement<0, BACnetObjectIDType>,
 	BACnetSequenceElement<1, BACnetSequenceOf<BACnetPropertyReference>, false>
 	>
 {
@@ -365,7 +365,7 @@ public:
 //Write Access Result
 class WriteAccessSpecification : public
 	BACnetSequence<
-	BACnetSequenceElement<0, BACnetObjectIDType, false>,
+	BACnetSequenceElement<0, BACnetObjectIDType>,
 	BACnetSequenceElement<1, BACnetSequenceOf<BACnetPropertyValue>, false>
 	>
 {

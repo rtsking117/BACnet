@@ -8,11 +8,11 @@
 //Access Rule
 class BACnetAccessRule : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<0, BACnetEnumeratedType>,
 		BACnetSequenceElement<1, BACnetDeviceObjectPropertyReference, true>,
-		BACnetSequenceElement<2, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<2, BACnetEnumeratedType>,
 		BACnetSequenceElement<3, BACnetDeviceObjectReference, true>,
-		BACnetSequenceElement<4, BACnetBooleanType, false>
+		BACnetSequenceElement<4, BACnetBooleanType>
 	>
 {
 public:
@@ -22,8 +22,8 @@ public:
 //Assigned Access Rights
 class BACnetAssignedAccessRights : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetDeviceObjectReference, false>,
-		BACnetSequenceElement<1, BACnetBooleanType, false>,
+		BACnetSequenceElement<0, BACnetDeviceObjectReference>,
+		BACnetSequenceElement<1, BACnetBooleanType>,
 	>
 {
 public:
@@ -33,9 +33,9 @@ public:
 //Authentication Factor
 class BACnetAuthenticationFactor : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetAuthenticationFactorTypeType, false>,	
-		BACnetSequenceElement<1, BACnetUnsignedType, false>,
-		BACnetSequenceElement<2, BACnetOctetStringType, false>
+		BACnetSequenceElement<0, BACnetAuthenticationFactorTypeType>,	
+		BACnetSequenceElement<1, BACnetUnsignedType>,
+		BACnetSequenceElement<2, BACnetOctetStringType>
 	>
 {
 public:
@@ -45,7 +45,7 @@ public:
 //Authentication Factor Format
 class BACnetAuthenticationFactorFormat : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetAuthenticationFactorTypeType, false>,
+		BACnetSequenceElement<0, BACnetAuthenticationFactorTypeType>,
 		BACnetSequenceElement<1, BACnetUnsigned16Type, true>,
 		BACnetSequenceElement<2, BACnetUnsigned16Type, true>
 	>
@@ -60,13 +60,13 @@ class BACnetAuthenticationPolicy : public
 		BACnetSequenceElement<0, 
 			BACnetSequenceOf<
 				BACnetSequence<
-					BACnetSequenceElement<0, BACnetDeviceObjectReference, false>,
-					BACnetSequenceElement<1, BACnetUnsignedType, false>,
+					BACnetSequenceElement<0, BACnetDeviceObjectReference>,
+					BACnetSequenceElement<1, BACnetUnsignedType>,
 				>
 			>, false
 		>,
-		BACnetSequenceElement<1, BACnetBooleanType, false>,
-		BACnetSequenceElement<2, BACnetUnsignedType, false>
+		BACnetSequenceElement<1, BACnetBooleanType>,
+		BACnetSequenceElement<2, BACnetUnsignedType>
 	>
 {
 public:
@@ -76,8 +76,8 @@ public:
 //Credential Authentication Factor
 class BACnetCredentialAuthenticationFactor : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetAuthenticationFactorDisableType, false>,
-		BACnetSequenceElement<1, BACnetAuthenticationFactor, false>
+		BACnetSequenceElement<0, BACnetAuthenticationFactorDisableType>,
+		BACnetSequenceElement<1, BACnetAuthenticationFactor>
 	>
 {
 public:

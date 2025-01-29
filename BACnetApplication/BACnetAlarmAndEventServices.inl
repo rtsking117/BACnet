@@ -12,11 +12,11 @@
 //Acknowledge Alarm
 class AcknowledgeAlarmRequest : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
-		BACnetSequenceElement<1, BACnetObjectIDType, false>,
-		BACnetSequenceElement<2, BACnetEnumeratedType, false>,
-		BACnetSequenceElement<3, BACnetTimeStamp, false>,
-		BACnetSequenceElement<4, BACnetCharacterStringType, false>
+		BACnetSequenceElement<0, BACnetUnsigned32Type>,
+		BACnetSequenceElement<1, BACnetObjectIDType>,
+		BACnetSequenceElement<2, BACnetEnumeratedType>,
+		BACnetSequenceElement<3, BACnetTimeStamp>,
+		BACnetSequenceElement<4, BACnetCharacterStringType>
 	>
 {
 public:
@@ -26,10 +26,10 @@ public:
 //Confirmed COV Notification
 class ConfirmedCOVNotificationRequest : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
-		BACnetSequenceElement<1, BACnetObjectIDType, false>,
-		BACnetSequenceElement<2, BACnetObjectIDType, false>,
-		BACnetSequenceElement<3, BACnetUnsignedType, false>,
+		BACnetSequenceElement<0, BACnetUnsigned32Type>,
+		BACnetSequenceElement<1, BACnetObjectIDType>,
+		BACnetSequenceElement<2, BACnetObjectIDType>,
+		BACnetSequenceElement<3, BACnetUnsignedType>,
 		BACnetSequenceElement<4, BACnetSequenceOf<BACnetPropertyValue>, false>
 	>
 {
@@ -40,20 +40,20 @@ public:
 //Confirmed COV Notification Multiple
 class ConfirmedCOVNotificationMultipleRequest : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
-		BACnetSequenceElement<1, BACnetObjectIDType, false>,
-		BACnetSequenceElement<2, BACnetUnsignedType, false>,
+		BACnetSequenceElement<0, BACnetUnsigned32Type>,
+		BACnetSequenceElement<1, BACnetObjectIDType>,
+		BACnetSequenceElement<2, BACnetUnsignedType>,
 		BACnetSequenceElement<3, BACnetDateTimeType, true>,
 		BACnetSequenceElement<4,
 			BACnetSequenceOf<
 				BACnetSequence<
-					BACnetSequenceElement<0, BACnetObjectIDType, false>,
+					BACnetSequenceElement<0, BACnetObjectIDType>,
 					BACnetSequenceElement<1,
 						BACnetSequenceOf<
 							BACnetSequence<
-								BACnetSequenceElement<0, BACnetEnumeratedType, false>,
+								BACnetSequenceElement<0, BACnetEnumeratedType>,
 								BACnetSequenceElement<1, BACnetUnsignedType, true>,
-								BACnetSequenceElement<2, BACnetAnyType, false>,
+								BACnetSequenceElement<2, BACnetAnyType>,
 								BACnetSequenceElement<3, BACnetTimeType, true>
 							>
 						>, false
@@ -70,18 +70,18 @@ public:
 //Confirmed Event Notification
 class ConfirmedEventNotificationRequest : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
-		BACnetSequenceElement<1, BACnetObjectIDType, false>,
-		BACnetSequenceElement<2, BACnetObjectIDType, false>,
-		BACnetSequenceElement<3, BACnetTimeStamp, false>,
-		BACnetSequenceElement<4, BACnetUnsignedType, false>,
-		BACnetSequenceElement<5, BACnetUnsigned8Type, false>,
-		BACnetSequenceElement<6, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<0, BACnetUnsigned32Type>,
+		BACnetSequenceElement<1, BACnetObjectIDType>,
+		BACnetSequenceElement<2, BACnetObjectIDType>,
+		BACnetSequenceElement<3, BACnetTimeStamp>,
+		BACnetSequenceElement<4, BACnetUnsignedType>,
+		BACnetSequenceElement<5, BACnetUnsigned8Type>,
+		BACnetSequenceElement<6, BACnetEnumeratedType>,
 		BACnetSequenceElement<7, BACnetCharacterStringType, true>,
-		BACnetSequenceElement<8, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<8, BACnetEnumeratedType>,
 		BACnetSequenceElement<9, BACnetBooleanType, true>,
 		BACnetSequenceElement<10, BACnetEnumeratedType, true>,
-		BACnetSequenceElement<11, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<11, BACnetEnumeratedType>,
 		BACnetSequenceElement<12, BACnetNotificationParameters, true>
 	>
 {
@@ -106,14 +106,14 @@ public:
 //Get Enrollment Summary
 class GetEnrollmentSummaryRequest : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<0, BACnetEnumeratedType>,
 		BACnetSequenceElement<1, BACnetRecipientProcess, true>,
 		BACnetSequenceElement<2, BACnetEnumeratedType, true>,
 		BACnetSequenceElement<3, BACnetEnumeratedType, true>,
 		BACnetSequenceElement<4,
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetUnsigned8Type, false>,
-				BACnetSequenceElement<1, BACnetUnsigned8Type, false>
+				BACnetSequenceElement<0, BACnetUnsigned8Type>,
+				BACnetSequenceElement<1, BACnetUnsigned8Type>
 			>, true
 		>,
 		BACnetSequenceElement<5, BACnetUnsignedType, true>
@@ -153,17 +153,17 @@ class GetEventInformationResponse : public
 		BACnetSequenceElement<0,
 			BACnetSequenceOf<
 				BACnetSequence<
-					BACnetSequenceElement<0, BACnetObjectID, false>,
-					BACnetSequenceElement<1, BACnetEnumeratedType, false>,
-					BACnetSequenceElement<2, BACnetBitStringType, false>,
+					BACnetSequenceElement<0, BACnetObjectID>,
+					BACnetSequenceElement<1, BACnetEnumeratedType>,
+					BACnetSequenceElement<2, BACnetBitStringType>,
 					BACnetSequenceElement<3, BACnetSequenceOf<BACnetTimeStamp>, false>,
-					BACnetSequenceElement<4, BACnetEnumeratedType, false>,
-					BACnetSequenceElement<5, BACnetBitStringType, false>,
+					BACnetSequenceElement<4, BACnetEnumeratedType>,
+					BACnetSequenceElement<5, BACnetBitStringType>,
 					BACnetSequenceElement<6, BACnetSequenceOf<BACnetUnsignedType>, false>
 				>
 			>, false
 		>,
-		BACnetSequenceElement<1, BACnetBooleanType, false>
+		BACnetSequenceElement<1, BACnetBooleanType>
 	>
 {
 public:
@@ -173,9 +173,9 @@ public:
 //Life Safety Operation
 class LifeSafetyOperationRequest : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
-		BACnetSequenceElement<1, BACnetCharacterStringType, false>,
-		BACnetSequenceElement<2, BACnetEnumeratedType, false>,
+		BACnetSequenceElement<0, BACnetUnsigned32Type>,
+		BACnetSequenceElement<1, BACnetCharacterStringType>,
+		BACnetSequenceElement<2, BACnetEnumeratedType>,
 		BACnetSequenceElement<3, BACnetObjectIDType, true>
 	>
 {
@@ -185,8 +185,8 @@ class LifeSafetyOperationRequest : public
 //Subscribe COV
 class SubscribeCOVRequest : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
-		BACnetSequenceElement<1, BACnetObjectIDType, false>,
+		BACnetSequenceElement<0, BACnetUnsigned32Type>,
+		BACnetSequenceElement<1, BACnetObjectIDType>,
 		BACnetSequenceElement<2, BACnetBooleanType, true>,
 		BACnetSequenceElement<3, BACnetUnsignedType, true>
 	>
@@ -198,11 +198,11 @@ public:
 //Subscribe COV Property
 class SubscribeCOVPropertyRequest : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
-		BACnetSequenceElement<1, BACnetObjectIDType, false>,
+		BACnetSequenceElement<0, BACnetUnsigned32Type>,
+		BACnetSequenceElement<1, BACnetObjectIDType>,
 		BACnetSequenceElement<2, BACnetBooleanType, true>,
 		BACnetSequenceElement<3, BACnetUnsignedType, true>,
-		BACnetSequenceElement<4, BACnetPropertyReference, false>,
+		BACnetSequenceElement<4, BACnetPropertyReference>,
 		BACnetSequenceElement<5, BACnetRealValueType, true>
 	>
 {
@@ -213,20 +213,20 @@ public:
 //Subscribe COV Property Multiple
 class SubscribeCOVPropertyMultipleRequest : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
+		BACnetSequenceElement<0, BACnetUnsigned32Type>,
 		BACnetSequenceElement<1, BACnetBooleanType, true>,
 		BACnetSequenceElement<2, BACnetUnsignedType, true>,
 		BACnetSequenceElement<3, BACnetUnsignedType, true>,
 		BACnetSequenceElement<4,
 			BACnetSequenceOf<
 				BACnetSequence<
-					BACnetSequenceElement<0, BACnetObjectIDType, false>,
+					BACnetSequenceElement<0, BACnetObjectIDType>,
 					BACnetSequenceElement<1,
 						BACnetSequenceOf<
 							BACnetSequence<
-								BACnetSequenceElement<0, BACnetPropertyReference, false>,
+								BACnetSequenceElement<0, BACnetPropertyReference>,
 								BACnetSequenceElement<1, BACnetRealValueType, true>,
-								BACnetSequenceElement<2, BACnetBooleanType, false>
+								BACnetSequenceElement<2, BACnetBooleanType>
 							>
 						>, false
 					>
@@ -245,11 +245,11 @@ public:
 
 class UnconfirmedCOVNotificationRequest : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
-		BACnetSequenceElement<1, BACnetObjectIDType, false>,
-		BACnetSequenceElement<2, BACnetObjectIDType, false>,
-		BACnetSequenceElement<3, BACnetUnsignedType, false>,
-		BACnetSequenceElement<4, BACnetSequenceOf<BACnetPropertyValue>, false>,
+		BACnetSequenceElement<0, BACnetUnsigned32Type>,
+		BACnetSequenceElement<1, BACnetObjectIDType>,
+		BACnetSequenceElement<2, BACnetObjectIDType>,
+		BACnetSequenceElement<3, BACnetUnsignedType>,
+		BACnetSequenceElement<4, BACnetSequenceOf<BACnetPropertyValue>, false>
 	>
 {
 public:
@@ -258,29 +258,29 @@ public:
 
 class UnconfirmedCOVNotificationMultipleRequest : public
 	BACnetSequence <
-		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
-		BACnetSequenceElement<1, BACnetObjectIDType, false>,
-		BACnetSequenceElement<2, BACnetUnsignedType, false>,
+		BACnetSequenceElement<0, BACnetUnsigned32Type>,
+		BACnetSequenceElement<1, BACnetObjectIDType>,
+		BACnetSequenceElement<2, BACnetUnsignedType>,
 		BACnetSequenceElement<3, BACnetDateTimeType, true>,
 		BACnetSequenceElement<4,
 			BACnetSequenceOf<
 				BACnetSequence<
-					BACnetSequenceElement<0, BACnetObjectIDType, false>,
+					BACnetSequenceElement<0, BACnetObjectIDType>,
 					BACnetSequenceElement<1,
 						BACnetSequenceOf<
 							BACnetSequence<
-								BACnetSequenceElement<0, BACnetPropertyIdentifierType, false>,
+								BACnetSequenceElement<0, BACnetPropertyIdentifierType>,
 								BACnetSequenceElement<1, BACnetUnsignedType, true>,
-								BACnetSequenceElement<2, BACnetAnyType, false>,
-								BACnetSequenceElement<3, BACnetTimeType, true>,
+								BACnetSequenceElement<2, BACnetAnyType>,
+								BACnetSequenceElement<3, BACnetTimeType, true>
 							>
 						>,
 						false
-					>,
+				>
 				>
 			>,
 			false
-		>,
+		>
 	>
 {
 public:
@@ -289,19 +289,19 @@ public:
 
 class UnconfirmedEventNotificationRequest : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetUnsigned32Type, false>,
-		BACnetSequenceElement<1, BACnetObjectIDType, false>,
-		BACnetSequenceElement<2, BACnetObjectIDType, false>,
-		BACnetSequenceElement<3, BACnetTimeStamp, false>,
-		BACnetSequenceElement<4, BACnetUnsignedType, false>,
-		BACnetSequenceElement<5, BACnetUnsigned8Type, false>,
-		BACnetSequenceElement<6, BACnetEventTypeType, false>,
+		BACnetSequenceElement<0, BACnetUnsigned32Type>,
+		BACnetSequenceElement<1, BACnetObjectIDType>,
+		BACnetSequenceElement<2, BACnetObjectIDType>,
+		BACnetSequenceElement<3, BACnetTimeStamp>,
+		BACnetSequenceElement<4, BACnetUnsignedType>,
+		BACnetSequenceElement<5, BACnetUnsigned8Type>,
+		BACnetSequenceElement<6, BACnetEventTypeType>,
 		BACnetSequenceElement<7, BACnetCharacterStringType, true>,
-		BACnetSequenceElement<8, BACnetNotifyTypeType, false>,
+		BACnetSequenceElement<8, BACnetNotifyTypeType>,
 		BACnetSequenceElement<9, BACnetBooleanType, true>,
 		BACnetSequenceElement<10, BACnetEventStateType, true>,
-		BACnetSequenceElement<11, BACnetEventStateType, false>,
-		BACnetSequenceElement<12, BACnetNotificationParameters, true>,
+		BACnetSequenceElement<11, BACnetEventStateType>,
+		BACnetSequenceElement<12, BACnetNotificationParameters, true>
 	>
 {
 public:

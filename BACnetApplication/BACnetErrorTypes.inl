@@ -40,8 +40,8 @@ public:
 //Change List Error
 class ChangeListError : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetError, false>,
-		BACnetSequenceElement<1, BACnetUnsignedType, false>
+		BACnetSequenceElement<0, BACnetError>,
+		BACnetSequenceElement<1, BACnetUnsignedType>
 	>
 {
 public:
@@ -51,8 +51,8 @@ public:
 //Create Object Error
 class CreateObjectError : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetError, false>,
-		BACnetSequenceElement<1, BACnetUnsignedType, false>
+		BACnetSequenceElement<0, BACnetError>,
+		BACnetSequenceElement<1, BACnetUnsignedType>
 	>
 {
 public:
@@ -94,9 +94,9 @@ public:
 //Confirmed Private Transfer Error
 class ConfirmedPrivateTransferError : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetError, false>,
-		BACnetSequenceElement<1, BACnetUnsigned16Type, false>,
-		BACnetSequenceElement<2, BACnetUnsignedType, false>,
+		BACnetSequenceElement<0, BACnetError>,
+		BACnetSequenceElement<1, BACnetUnsigned16Type>,
+		BACnetSequenceElement<2, BACnetUnsignedType>,
 		BACnetSequenceElement<3, BACnetAnyType, true>
 	>
 {
@@ -107,12 +107,12 @@ public:
 //Subscribe COV Property Multiple Error
 class SubscribeCOVPropertyMultipleError : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetError, false>,
+		BACnetSequenceElement<0, BACnetError>,
 		BACnetSequenceElement<1, 
 			BACnetSequence<
-				BACnetSequenceElement<0, BACnetObjectIDType, false>,
-				BACnetSequenceElement<1, BACnetPropertyReference, false>,
-				BACnetSequenceElement<2, BACnetError, false>,
+				BACnetSequenceElement<0, BACnetObjectIDType>,
+				BACnetSequenceElement<1, BACnetPropertyReference>,
+				BACnetSequenceElement<2, BACnetError>
 			>, false
 		>
 	>
@@ -124,8 +124,8 @@ public:
 //Write Property Multiple Error
 class WritePropertyMultipleError : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetError, false>,
-		BACnetSequenceElement<1, BACnetObjectPropertyReference, false>
+		BACnetSequenceElement<0, BACnetError>,
+		BACnetSequenceElement<1, BACnetObjectPropertyReference>
 	>
 {
 public:
@@ -135,7 +135,7 @@ public:
 //VT Close Error
 class VTCloseError : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetError, false>,
+		BACnetSequenceElement<0, BACnetError>,
 		BACnetSequenceElement<1, BACnetSequenceOf<BACnetUnsigned8Type>, true>
 	>
 {

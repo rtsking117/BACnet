@@ -770,7 +770,7 @@ public:
 			value.SetType(ValueType_Constructed);
 			value.SetTag(NoTag);
 		}
-		for each(T v in seq)
+		for(T v : seq)
 		{
 			BACnetResult r;
 			//sequence type?
@@ -801,10 +801,10 @@ struct is_bacnet_template<BACnetSequenceOf<T>> : public std::true_type {};
 template<typename T>
 struct is_sequence<BACnetSequenceOf<T>> : public std::true_type { };
 
-template<U8 TagValue, typename T, bool Optional>
+template<U8 TagValue, typename T, bool Optional = false>
 class BACnetSequenceElement
 {
-	//static_assert((T != NoTag) || (is_application<VT>::value), "Complex or context-tagged data must have a valid tag.");
+	//static_assert((TagValue != NoTag) || (is_application<T>::value), "Complex or context-tagged data must have a valid tag.");
 public:
 	static constexpr U8 Tag = TagValue;
 	static constexpr bool IsOptional = Optional;

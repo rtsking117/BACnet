@@ -48,20 +48,20 @@ public:
 //COV Multiple Subscription
 class BACnetCOVMultipleSubscription : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetRecipientProcess, false>,
-		BACnetSequenceElement<1, BACnetBooleanType, false>,
-		BACnetSequenceElement<2, BACnetUnsignedType, false>,
-		BACnetSequenceElement<3, BACnetUnsignedType, false>,
+		BACnetSequenceElement<0, BACnetRecipientProcess>,
+		BACnetSequenceElement<1, BACnetBooleanType>,
+		BACnetSequenceElement<2, BACnetUnsignedType>,
+		BACnetSequenceElement<3, BACnetUnsignedType>,
 		BACnetSequenceElement<4, 
 			BACnetSequenceOf<
 				BACnetSequence<
-					BACnetSequenceElement<0, BACnetObjectIDType, false>,
+					BACnetSequenceElement<0, BACnetObjectIDType>,
 					BACnetSequenceElement<1,
 						BACnetSequenceOf<
 							BACnetSequence<
-								BACnetSequenceElement<0, BACnetPropertyReference, false>,
+								BACnetSequenceElement<0, BACnetPropertyReference>,
 								BACnetSequenceElement<1, BACnetRealValueType, true>,
-								BACnetSequenceElement<2, BACnetBooleanType, false>
+								BACnetSequenceElement<2, BACnetBooleanType>
 							>
 						>, false
 					>
@@ -77,10 +77,10 @@ public:
 //COV Subscription
 class BACnetCOVSubscription : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetRecipientProcess, false>,
-		BACnetSequenceElement<1, BACnetObjectPropertyReference, false>,
-		BACnetSequenceElement<2, BACnetBooleanType, false>,
-		BACnetSequenceElement<3, BACnetUnsignedType, false>,
+		BACnetSequenceElement<0, BACnetRecipientProcess>,
+		BACnetSequenceElement<1, BACnetObjectPropertyReference>,
+		BACnetSequenceElement<2, BACnetBooleanType>,
+		BACnetSequenceElement<3, BACnetUnsignedType>,
 		BACnetSequenceElement<4, BACnetRealValueType, true>
 	>
 {
@@ -392,8 +392,8 @@ public:
 //Log Multiple Record
 class BACnetLogMultipleRecord : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetDateTimeType, false>,
-		BACnetSequenceElement<1, BACnetLogData, false>
+		BACnetSequenceElement<0, BACnetDateTimeType>,
+		BACnetSequenceElement<1, BACnetLogData>
 	>
 {
 public:
@@ -403,7 +403,7 @@ public:
 //Log Record
 class BACnetLogRecord : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetDateTimeType, false>,
+		BACnetSequenceElement<0, BACnetDateTimeType>,
 		BACnetSequenceElement<1, 
 			BACnetChoice<NoDefault,
 				BACnetChoiceElement<0, BACnetLogStatusType>,

@@ -144,7 +144,7 @@ public:
 //VT Data Ack
 class VTDataResponse : public
 	BACnetSequence<
-		BACnetSequenceElement<0, BACnetBooleanType, false>,
+		BACnetSequenceElement<0, BACnetBooleanType>,
 		BACnetSequenceElement<1, BACnetUnsignedType, true>
 	>
 {

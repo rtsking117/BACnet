@@ -45,7 +45,7 @@ class BACnetSpecialEvent : public
 			>, false
 		>,
 		BACnetSequenceElement<2, BACnetSequenceOf<BACnetTimeValue>, false>,
-		BACnetSequenceElement<3, BACnetUnsignedType, false>
+		BACnetSequenceElement<3, BACnetUnsignedType>
 	>
 {
 public:
