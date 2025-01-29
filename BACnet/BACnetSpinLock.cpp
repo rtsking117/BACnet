@@ -1,13 +1,11 @@
 #include "BACnetSpinLock.h"
 #include <exception>
-using namespace std;
-
 
 CBACnetSpinLock::CBACnetSpinLock(U32 SpinCount)
 {
 	if(!InitializeCriticalSectionAndSpinCount(&cs, SpinCount))
 	{
-		throw exception("Critical Section object could not be created!");
+		throw std::exception("Critical Section object could not be created!");
 	}
 }
 

@@ -3,13 +3,12 @@
 #include "BACnetInterface.h"
 #include "ObjectWrapper.h"
 #include <list>
-using namespace std;
 
 
 class TransmitBuffer :
 	public ObjectWrapper<IBACnetTransmitBuffer>
 {
-	list<CObjectPtr<IBACnetBuffer>> buflist;
+	std::list<CObjectPtr<IBACnetBuffer>> buflist;
 	U32 totlen;
 
 public:

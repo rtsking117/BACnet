@@ -6,7 +6,6 @@
 #include "UTF16.h"
 #include "ISO 8859-1.h"
 #include <memory>
-using namespace std;
 
 struct BACnetStringImpl
 {

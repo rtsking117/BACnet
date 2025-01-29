@@ -3,6 +3,9 @@
 #include "Support.h"
 #include "BACnetRequestParser.h"
 
+using std::cout;
+using std::endl;
+
 CObjectPtr<IBACnetEvent> close = nullptr;
 
 static BOOL CALLBACK SignalHandler(DWORD ctrltype)

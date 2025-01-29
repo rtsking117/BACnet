@@ -1,7 +1,6 @@
 #pragma once
 
 #include <unordered_map>
-using namespace std;
 
 class TransactionSet;
 
@@ -10,12 +9,12 @@ class TransactionSet;
 class TransactionSet : 
 	public ObjectWrapper<IBACnetUnknown>
 {
-	typedef pair<U8, CObjectPtr<IBACnetNetworkAddress>> TransactionKey;
+	typedef std::pair<U8, CObjectPtr<IBACnetNetworkAddress>> TransactionKey;
 	struct HashAddressPair
 	{
 		size_t operator()(const TransactionKey& _Keyval) const;
 	};
-	typedef unordered_map<TransactionKey, CObjectPtr<CTransaction>, HashAddressPair> TransactionMap;
+	typedef std::unordered_map<TransactionKey, CObjectPtr<CTransaction>, HashAddressPair> TransactionMap;
 	TransactionMap m;
 	SRWLOCK lock;
 

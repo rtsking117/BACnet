@@ -2,7 +2,6 @@
 
 #include <BACnetInterface.h>
 #include <vector>
-using namespace std;
 
 #ifdef BACNETAPPLICATION_EXPORTS
 #define BACNETAPP_ENTRYPOINT BACNET_EXPORT

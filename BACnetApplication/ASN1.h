@@ -2,7 +2,6 @@
 
 #include "BACnetApplication.h"
 #include <memory>
-using namespace std;
 
 namespace ASN1
 {

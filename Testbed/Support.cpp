@@ -2,6 +2,13 @@
 #include "Testbed.h"
 #include "Support.h"
 
+using std::cout;
+using std::endl;
+using std::hex;
+using std::dec;
+using std::setfill;
+using std::setw;
+
 void PrintTabs(int ntabs)
 {
 	for(int i = 0; i < ntabs; ++i)

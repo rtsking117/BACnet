@@ -1,11 +1,10 @@
 #pragma once
 #include "ObjectWrapper.h"
 #include <vector>
-using namespace std;
 
 class CSegmentBuffer
 {
-	vector<CObjectPtr<IBACnetBuffer>> segbuf;
+	std::vector<CObjectPtr<IBACnetBuffer>> segbuf;
 	U32 CurrentWindowIndex;
 	U32 TotalLength;
 public:

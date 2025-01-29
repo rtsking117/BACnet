@@ -4,7 +4,6 @@
 #include "WinSockManager.h"
 #include "IPAddress.h"
 #include <atomic>
-using namespace std;
 
 class LocalSocket :
 	public ObjectWrapper<IBACnetLocalSubnet>
@@ -22,7 +21,7 @@ class LocalSocket :
 	SOCKET sock;
 	U16 AsyncResultCode;
 	U16 FDLifetime;
-	atomic<bool> HasPendingCommand;
+	std::atomic<bool> HasPendingCommand;
 	bool AutoRenew;
 
 	BACnetResult WriteBVLL(sockaddr_in to, U8 messageid, U8 * pBuffer, U16 BufferLength);

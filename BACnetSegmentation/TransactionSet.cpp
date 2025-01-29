@@ -27,7 +27,7 @@ CObjectPtr<CTransaction> TransactionSet::Find(U8 InvokeID, CObjectPtr<IBACnetNet
 bool TransactionSet::Add(CObjectPtr<CTransaction> trx)
 {
 	AcquireSRWLockExclusive(&lock);
-	auto it = m.insert(pair<TransactionKey, CObjectPtr<CTransaction>>(TransactionKey(trx->GetInvokeID(), trx->GetSender()), trx));
+	auto it = m.insert(std::pair<TransactionKey, CObjectPtr<CTransaction>>(TransactionKey(trx->GetInvokeID(), trx->GetSender()), trx));
 	ReleaseSRWLockExclusive(&lock);
 	return it.second;
 }

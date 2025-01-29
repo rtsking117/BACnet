@@ -1,6 +1,5 @@
 #include "UTF8.h"
 #include <type_traits>
-using namespace std;
 
 bool IsValidByte(U8 c)
 {

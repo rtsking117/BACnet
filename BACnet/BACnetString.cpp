@@ -1,9 +1,6 @@
 #include "BACnetString.h"
-#include <memory>
-
-using namespace std;
-
 #include "BACnetStringImpl.h"
+#include <memory>
 
 BACnetString::BACnetString(size_t size) :
 	pImpl(new BACnetStringImpl(size))
@@ -34,7 +31,7 @@ BACnetString::BACnetString(const BACnetString & Other):
 }
 
 BACnetString::BACnetString(BACnetString && Other):
-	pImpl(move(Other.pImpl))
+	pImpl(std::move(Other.pImpl))
 {
 	Other.pImpl = nullptr;
 }
@@ -109,7 +106,7 @@ void ReverseString(BACnetStringImpl* pImpl)
 		{
 			secondpass = true;
 		}
-		swap(pImpl->str[i], pImpl->str[j]);
+		std::swap(pImpl->str[i], pImpl->str[j]);
 	}
 	if(secondpass)
 	{
@@ -117,7 +114,7 @@ void ReverseString(BACnetStringImpl* pImpl)
 		{
 			if(IsLowSurrogate(pImpl->str[i]))
 			{
-				swap(pImpl->str[i], pImpl->str[i + 1]);
+				std::swap(pImpl->str[i], pImpl->str[i + 1]);
 			}
 		}
 	}
@@ -160,7 +157,7 @@ BACnetString & BACnetString::operator=(const BACnetString & Other)
 
 BACnetString & BACnetString::operator=(BACnetString && Other)
 {
-	swap(pImpl, Other.pImpl);
+	std::swap(pImpl, Other.pImpl);
 	return *this;
 }
 
@@ -288,7 +285,7 @@ size_t BACnetString::AsUTF32(U32* String, size_t Size) const
 #pragma region String to integer conversion
 
 template<typename T,
-	typename UT = make_unsigned<T>::type>
+	typename UT = std::make_unsigned_t<T>>
 	T ParseIntVal(BACnetString::iterator cp, BACnetString::iterator* end, U8 NumericBase)
 {
 	//initialize the ending index.
@@ -493,7 +490,7 @@ T ParseFloatVal(BACnetString::iterator cp, BACnetString::iterator* end)
 	bool isneg = false;
 	bool ishex = false;
 	int exponent = 0;
-	constexpr int digitmax = is_same<float, T>::value ? MAX_FLOAT_DIGITS : MAX_DOUBLE_DIGITS;
+	constexpr int digitmax = std::is_same_v<float, T> ? MAX_FLOAT_DIGITS : MAX_DOUBLE_DIGITS;
 	U8 mantissa[digitmax] = { 0 };
 	//pull in the sign, if it exists.
 	switch(*cp)
@@ -567,7 +564,7 @@ void ConvertIntegerToString(BACnetStringImpl* pstr, T value, I32 Base)
 		pstr->size += EncodeCodePoint16('0', pstr->str);
 		++pstr->length;
 	}
-	else if(is_signed<T>::value && Base == 10)
+	else if(std::is_signed_v<T> && Base == 10)
 	{
 		if(value < 0)
 		{
