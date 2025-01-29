@@ -7,20 +7,38 @@
 template<typename...>
 struct is_bacnet_template : public std::false_type { };
 
+template<typename T>
+constexpr bool is_bacnet_template_v = is_bacnet_template<T>::value;
+
 template<typename...> 
 struct is_application : public std::false_type { };
+
+template<typename T>
+constexpr bool is_application_v = is_application<T>::value;
 
 template<typename...>
 struct is_choice : public std::false_type { };
 
+template<typename T>
+constexpr bool is_choice_v = is_choice<T>::value;
+
 template<typename...>
 struct is_choice_element : public std::false_type { };
+
+template<typename T>
+constexpr bool is_choice_element_v = is_choice_element<T>::value;
 
 template<typename...>
 struct is_sequence : public std::false_type { };
 
+template<typename T>
+constexpr bool is_sequence_v = is_sequence<T>::value;
+
 template<typename...>
 struct is_sequence_element : public std::false_type { };
+
+template<typename T>
+constexpr bool is_sequence_element_v = is_sequence_element<T>::value;
 
 static const U8 NoTag = 0xFF;
 
@@ -73,12 +91,12 @@ public:
 template<BACnetValueType VT, typename T>
 struct is_bacnet_template<BACnetApplicationValue<VT, T>> : public std::true_type {};
 
-static_assert(is_bacnet_template<BACnetApplicationValue<ValueType_Unsigned, U16>>::value == true, "is_bacnet_template does not return true on BACnetApplicationValue");
+static_assert(is_bacnet_template_v<BACnetApplicationValue<ValueType_Unsigned, U16>> == true, "is_bacnet_template does not return true on BACnetApplicationValue");
 
 template<BACnetValueType VT, typename T>
 struct is_application<BACnetApplicationValue<VT,T>> : public std::true_type {};
 
-static_assert(is_application<BACnetApplicationValue<ValueType_Boolean, bool>>::value == true, "is_application does not return true on BACnetApplicationValue");
+static_assert(is_application_v<BACnetApplicationValue<ValueType_Boolean, bool>> == true, "is_application does not return true on BACnetApplicationValue");
 
 //specialization of the above for NULL
 template<>
@@ -122,8 +140,8 @@ public:
 	}
 };
 
-static_assert(is_bacnet_template<BACnetApplicationValue<ValueType_Null, void>>::value == true, "is_bacnet_template does not return true on BACnetApplicationValue<Null>");
-static_assert(is_application<BACnetApplicationValue<ValueType_Null, void>>::value == true, "is_application does not return true on BACnetApplicationValue<Null>");
+static_assert(is_bacnet_template_v<BACnetApplicationValue<ValueType_Null, void>> == true, "is_bacnet_template does not return true on BACnetApplicationValue<Null>");
+static_assert(is_application_v<BACnetApplicationValue<ValueType_Null, void>> == true, "is_application does not return true on BACnetApplicationValue<Null>");
 
 /*
 ANY type
@@ -176,9 +194,9 @@ public:
 template<>
 struct is_bacnet_template<BACnetAnyType> : public std::true_type {};
 
-static_assert(is_bacnet_template<BACnetAnyType>::value == true, "is_bacnet_template does not return true on BACnetAnyType");
+static_assert(is_bacnet_template_v<BACnetAnyType> == true, "is_bacnet_template does not return true on BACnetAnyType");
 
-static_assert(is_application<BACnetAnyType>::value == false, "is_application does not return false on BACnetAnyType");
+static_assert(is_application_v<BACnetAnyType> == false, "is_application does not return false on BACnetAnyType");
 
 /*
 "Specialization" of BACnetAnyType specifically for use in BACnetTimeValue.
@@ -237,12 +255,12 @@ public:
 template<>
 struct is_bacnet_template<BACnetApplicationAnyType> : public std::true_type {};
 
-static_assert(is_bacnet_template<BACnetApplicationAnyType>::value == true, "is_bacnet_template does not return true on BACnetApplicationAnyType");
+static_assert(is_bacnet_template_v<BACnetApplicationAnyType> == true, "is_bacnet_template does not return true on BACnetApplicationAnyType");
 
 template<>
 struct is_application<BACnetApplicationAnyType> : public std::true_type { };
 
-static_assert(is_application<BACnetApplicationAnyType>::value == true, "is_application does not return true on BACnetApplicationAnyType");
+static_assert(is_application_v<BACnetApplicationAnyType> == true, "is_application does not return true on BACnetApplicationAnyType");
 
 /*
 "Specialization" of BACnetAnyType specifically for use in BACnetNameValue.
@@ -334,12 +352,12 @@ public:
 template<>
 struct is_bacnet_template<BACnetApplicationAnyDateTimeType> : public std::true_type {};
 
-static_assert(is_bacnet_template<BACnetApplicationAnyDateTimeType>::value == true, "is_bacnet_template does not return true on BACnetApplicationAnyDateTimeType");
+static_assert(is_bacnet_template_v<BACnetApplicationAnyDateTimeType> == true, "is_bacnet_template does not return true on BACnetApplicationAnyDateTimeType");
 
 template<>
 struct is_application<BACnetApplicationAnyDateTimeType> : public std::true_type {};
 
-static_assert(is_application<BACnetApplicationAnyDateTimeType>::value == true, "is_application does not return true on BACnetApplicationAnyDateTimeType");
+static_assert(is_application_v<BACnetApplicationAnyDateTimeType> == true, "is_application does not return true on BACnetApplicationAnyDateTimeType");
 
 template<U32 Tag, typename T>
 class BACnetChoiceElement
@@ -358,7 +376,7 @@ public:
 
 	BACnetResult Decode(const BACnetValue &value)
 	{
-		if(is_sequence<ValueType>::value)
+		if constexpr(is_sequence_v<ValueType>)
 		{
 			if(!value.IsConstructedData())
 			{
@@ -388,7 +406,7 @@ public:
 		{
 			return r;
 		}
-		if(TagNumber != NoTag)
+		if constexpr(TagNumber != NoTag)
 		{
 			value.SetTag(TagNumber);
 		}
@@ -424,7 +442,6 @@ struct BACnetChoiceElementHolder<0, BACnetChoiceStorage<T, Tail...>>
 };
 
 //numeric iteration still needs to find type
-
 template <U32 Index, typename T, typename... Tail>
 struct BACnetChoiceElementHolder<Index, BACnetChoiceStorage<T, Tail...>>
 {
@@ -486,10 +503,7 @@ private:
 		{
 			choiceval = Other.choiceval;
 		}
-		else
-		{
-			Remaining.CopySelection(--Selection, Other.Remaining);
-		}
+		Remaining.CopySelection(--Selection, Other.Remaining);
 	}
 
 	void DestroySelection(U32 Selection)
@@ -498,10 +512,7 @@ private:
 		{
 			choiceval.~T();
 		}
-		else
-		{
-			Remaining.DestroySelection(--Selection);
-		}
+		Remaining.DestroySelection(--Selection);
 	}
 public:
 	//default constructor does nothing - we cannot initialize this directly.
@@ -539,20 +550,16 @@ public:
 				}
 			}
 			//We need a tag number, but this value does not have one. skip to the next.
-			return Remaining.Decode(++selection, value);
 		}
-		if(value.GetTag() == T::TagNumber)
+		else if(value.GetTag() == T::TagNumber)
 		{
 			//this is the value.
 			return choiceval.Decode(value);
 		}
-		else
-		{
-			return Remaining.Decode(++selection, value);
-		}
+		return Remaining.Decode(++selection, value);
 	}
 
-	BACnetResult Encode(U32 selection, BACnetValue &value)
+	BACnetResult Encode(U32 selection, BACnetValue& value)
 	{
 		if(selection == 0)
 		{
@@ -587,6 +594,14 @@ public:
 		if(IsValid())
 		{
 			//copy the other's storage.
+			storage.CopySelection(selection, Other.storage);
+		}
+	}
+
+	BACnetChoice(BACnetChoice<DefaultChoice, Types...>&& Other) : selection(Other.selection)
+	{
+		if(IsValid())
+		{
 			storage.CopySelection(selection, Other.storage);
 		}
 	}
@@ -687,6 +702,19 @@ class BACnetSequenceOf
 	std::vector<T> seq;
 public:
 
+	BACnetSequenceOf() {}
+	BACnetSequenceOf(BACnetSequenceOf<T>& Other) :
+		seq(Other.seq)
+	{
+
+	}
+	BACnetSequenceOf(BACnetSequenceOf<T>&& Other)
+	{
+		std::swap(seq, Other.seq);
+	}
+
+	~BACnetSequenceOf() {}
+
 	bool IsValid()
 	{
 		return true;
@@ -744,7 +772,7 @@ public:
 		{
 			BACnetResult r = 0;
 			T elem;
-			if(is_sequence<T>::value)
+			if(is_sequence_v<T>)
 			{
 				r = elem.Decode(value, index);
 			}
@@ -774,7 +802,7 @@ public:
 		{
 			BACnetResult r;
 			//sequence type?
-			if(is_sequence<T>::value)
+			if(is_sequence_v<T>)
 			{
 				//encode it directly into this value.
 				r = v.Encode(value);
@@ -860,6 +888,7 @@ struct is_sequence_element<BACnetSequenceElement<Tag,T,Opt>> : public std::true_
 
 template<typename... T> class BACnetSequence;
 
+//Type iterator
 template<U32 Index, typename... T> struct BACnetSequenceElementHolder;
 
 template <typename T, typename... Tail>
@@ -915,6 +944,8 @@ class BACnetSequence<T, Tail...> : private BACnetSequence<Tail...>
 {
 	static_assert(is_sequence_element<T>::value, "T is not a BACnetSequenceElement.");
 
+	using Base = BACnetSequence<Tail...>;
+
 	T ThisValue;
 	bool IsPresent;
 
@@ -922,25 +953,30 @@ public:
 
 	BACnetSequence() {}
 
+	BACnetSequence(std::enable_if<T::IsOptional, BACnetSequence<T, Tail...>&> Other)
+	{
+		
+	}
+
 	template<U32 Index>
-	typename std::enable_if_t<(Index == 0) && (T::IsOptional == false), bool>
+	typename std::enable_if_t<(Index == 0) && (!T::IsOptional), bool>
 		is_present()
 	{
 		return true;
 	}
 
 	template <U32 Index>
-	typename std::enable_if_t<Index == 0, bool>
+	typename std::enable_if_t<Index == 0 && (T::IsOptional), bool>
 		is_present()
 	{
 		return IsPresent;
 	}
 
 	template <U32 Index>
-	typename std::enable_if_t<Index != 0, bool> 
+	typename std::enable_if_t<Index != 0, bool>
 		is_present()
 	{
-		return BACnetSequence<Tail...>::is_present<Index - 1>();
+		return Base::is_present<Index - 1>();
 	}
 
 	template<U32 Index>
@@ -950,7 +986,7 @@ public:
 	}
 
 	template <U32 Index>
-	typename std::enable_if_t<Index == 0, void>
+	typename std::enable_if_t<Index == 0 && T::IsOptional == true, void>
 		make_present(bool ShouldBePresent)
 	{
 		IsPresent = ShouldBePresent;
@@ -960,7 +996,7 @@ public:
 	typename std::enable_if_t<Index != 0, void>
 		make_present(bool ShouldBePresent)
 	{
-		BACnetSequence<Tail...>::make_present<Index - 1>(ShouldBePresent);
+		Base::make_present<Index - 1>(ShouldBePresent);
 	}
 
 	template <U32 Index>
@@ -976,7 +1012,7 @@ public:
 		Index != 0, typename BACnetSequenceElementHolder<Index, BACnetSequence<T, Tail...>>::Type::ValueType&>
 		get()
 	{
-		return BACnetSequence<Tail...>::get<Index - 1>();
+		return Base::get<Index - 1>();
 	}
 
 	bool IsValid()
@@ -1000,7 +1036,7 @@ public:
 				(T::Tag != NoTag && value.GetElement(index).GetTag() != T::Tag))
 			{
 				//Forward past this element.
-				return BACnetSequence<Tail...>::Decode(value, index);
+				return Base::Decode(value, index);
 			}
 			//index is valid and either the tag or the type matches.
 			BACnetResult r = ThisValue.Decode(value.GetElement(index++));
@@ -1009,7 +1045,7 @@ public:
 				return r;
 			}
 			IsPresent = true;
-			return BACnetSequence<Tail...>::Decode(value, index);
+			return Base::Decode(value, index);
 		}
 		else
 		{
@@ -1028,7 +1064,7 @@ public:
 				//either wrong type or lower error.
 				return r;
 			}
-			return BACnetSequence<Tail...>::Decode(value, index);
+			return Base::Decode(value, index);
 		}
 	}
 
@@ -1050,7 +1086,7 @@ protected:
 			}
 			value.AddValue(val);
 		}
-		return BACnetSequence<Tail...>::Encode_(value);
+		return Base::Encode_(value);
 	}
 
 	template<typename VT = T>
@@ -1070,7 +1106,7 @@ protected:
 			//untagged sequence - copy the elements of the temporary into the parent sequence.
 		}
 		value.AddValue(val);
-		return BACnetSequence<Tail...>::Encode_(value);
+		return Base::Encode_(value);
 	}
 
 public:

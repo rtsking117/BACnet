@@ -106,6 +106,52 @@ class ConfirmedEventNotificationRequest : public
 {
 public:
 
+
+	bool HasMessageText()
+	{
+		return is_present<7>();
+	}
+
+	bool IsACKRequired()
+	{
+		return is_present<9>() && get<9>().get();
+	}
+
+	bool HasFromState()
+	{
+		return is_present<10>();
+	}
+
+	bool HasEventValues()
+	{
+		return is_present<12>();
+	}
+
+	BACnetNotificationParameters GetEventValues()
+	{
+		if(!HasEventValues())
+		{
+			__debugbreak();
+		}
+		return get<12>();
+	}
+};
+
+//Event Log Record
+class EventLogRecord : public
+	BACnetSequence<
+	BACnetSequenceElement<0, BACnetDateTimeType>,
+		BACnetSequenceElement<1,
+			BACnetChoice<NoDefault,
+				BACnetChoiceElement<0, BACnetLogStatusType>,
+				BACnetChoiceElement<1, ConfirmedEventNotificationRequest>,
+				BACnetChoiceElement<2, BACnetRealValueType>
+			>, false
+		>
+	>
+{
+public:
+
 };
 
 //Get Alarm Summary Ack
@@ -295,7 +341,7 @@ class UnconfirmedCOVNotificationMultipleRequest : public
 							>
 						>,
 						false
-				>
+					>
 				>
 			>,
 			false

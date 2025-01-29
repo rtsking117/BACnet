@@ -1,7 +1,7 @@
 #include "BACnetRequestParser.h"
 #include <BACnetApplication.h>
 #include <BACnetErrorTypes.inl>
-#include <BACnetAlarmServices.inl>
+#include <BACnetAlarmAndEventServices.inl>
 #include <BACnetFileServices.inl>
 #include <BACnetObjectAccessServices.inl>
 #include <BACnetRemoteDeviceManagementServices.inl>
@@ -130,7 +130,44 @@ BACnetResult BACnetRequestParser::OnConfirmedRequest(CObjectPtr<IBACnetTransacti
 			{
 				return tx->Reject((RejectCode)BCNRESULT_CODE(r));
 			}
-
+			BACnetError err;
+			err.SetError(ErrorClass::Property, ErrorCode::UnknownProperty);
+			CObjectPtr<IBACnetBuffer> buf;
+			r = EncodeRequest(buf, err);
+			if(BCE_FAILED(r))
+			{
+				tx->Reject(Reject_Other);
+				return r;
+			}
+			return tx->SendError(buf);
+		}
+	case CS_ConfirmedEventNotification:
+		{
+			ConfirmedEventNotificationRequest req;
+			BACnetResult r = DecodeRequest(tx->GetTransactionData(), req);
+			if(BCE_FAILED(r))
+			{
+				return tx->Reject((RejectCode)BCNRESULT_CODE(r));
+			}
+			if(req.HasEventValues())
+			{
+				BACnetNotificationParameters params = req.GetEventValues();
+				if(params.IsEventTypeSelected(BACnetEventType::ChangeOfState))
+				{
+					BACnetPropertyStates state = params.GetEventType<BACnetEventType::ChangeOfState>().get<0>();
+					printf("Selected state: %u\n", state.get_selection());
+				}
+			}
+			BACnetError err;
+			err.SetError(ErrorClass::Property, ErrorCode::UnknownProperty);
+			CObjectPtr<IBACnetBuffer> buf;
+			r = EncodeRequest(buf, err);
+			if(BCE_FAILED(r))
+			{
+				tx->Reject(Reject_Other);
+				return r;
+			}
+			return tx->SendError(buf);
 		}
 	default:
 		return tx->Reject(Reject_UnrecognizedService);
