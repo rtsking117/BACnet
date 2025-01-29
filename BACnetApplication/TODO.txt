@@ -262,3 +262,28 @@ Enumerations:
 Typedefs:
 	
 	WeekNDay									- PARTIAL
+
+
+Optimal layout: 
+
+	BACnetSequenceOf:
+		std::vector<T> 
+
+	BACnetChoice:
+		union BACnetChoiceStorage:
+			BACnetChoiceElement<T> v1;
+			BACnetChoiceElement<U> v2;
+			BACnetChoiceElement<V> v3;
+			BACnetChoiceElement<W> v4;
+			...
+		u32 Selection
+
+	BACnetSequence:
+		BACnetSequenceElement<T, true> v1;
+		BACnetSequenceElement<U> v2;
+		BACnetSequenceElement<V, true> v3;
+		BACnetSequenceElement<W> v4;
+		...
+		bool Isv1Present;
+		bool Isv3Present;
+
