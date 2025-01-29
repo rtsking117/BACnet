@@ -82,5 +82,3 @@ public:
 
 
 };
-
-const int x = sizeof(MSTPMaster);
