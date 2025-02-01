@@ -134,7 +134,7 @@ CreateBACnetThread(
 
 CObjectPtr<IBACnetThreadpool>
 BACNET_ENTRYPOINT
-CreateThreadpool();
+CreateBACnetThreadpool();
 
 CObjectPtr<IBACnetEvent>
 BACNET_ENTRYPOINT

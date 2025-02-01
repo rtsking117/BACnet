@@ -1,7 +1,7 @@
 #include "Thread.h"
 
 
-DWORD_PTR CThread::ThreadEntry()
+DWORD CThread::ThreadEntry()
 {
 	//check on cancel.
 	if(cancel->IsSet())
@@ -9,7 +9,13 @@ DWORD_PTR CThread::ThreadEntry()
 		//don't even bother running.
 		return 0;
 	}
-	return (DWORD_PTR)tf(this);
+	return (DWORD)tf(this);
+}
+
+DWORD CThread::ThreadEntrypoint(void* param)
+{
+	CObjectPtr<CThread> me = (CThread*)param;
+	return me->ThreadEntry();
 }
 
 CThread::CThread(ThreadFunction tf):
@@ -45,11 +51,7 @@ BACnetResult CThread::Start()
 		thread = INVALID_HANDLE_VALUE;
 	}
 	cancel->Reset();
-	thread = (HANDLE)CreateThread(nullptr, 0, [](void* param) -> DWORD_PTR
-	{
-		CObjectPtr<CThread> me = (CThread*)param;
-		return me->ThreadEntry();
-	}, this, CREATE_SUSPENDED, nullptr);
+	thread = (HANDLE)CreateThread(nullptr, 0, CThread::ThreadEntrypoint, this, CREATE_SUSPENDED, nullptr);
 	if(thread == INVALID_HANDLE_VALUE)
 	{
 		return BCNRESULT_FROM_SYSTEM(GetLastError());

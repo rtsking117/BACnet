@@ -29,7 +29,7 @@ int main()
 	system("chcp 65001");
 	close = CreateBACnetEvent(true, false);
 	BOOL ret = SetConsoleCtrlHandler(SignalHandler, TRUE);
-	CObjectPtr<IBACnetThreadPool> tp = CreateThreadPool();
+	CObjectPtr<IBACnetThreadpool> tp = CreateBACnetThreadpool();
 	CObjectPtr<IBACnetLocalSubnet> local = CreateLocalSubnet(tp);
 	CObjectPtr<IBACnetNetwork> net = CreateSimpleNetwork(tp);
 	CObjectPtr<IBACnetTransactionManager> tsm = CreateTransactionManager(128);

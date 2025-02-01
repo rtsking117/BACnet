@@ -11,6 +11,7 @@ class CThread :
 	HANDLE thread;
 	BACnetResult exitcode;
 
+	static DWORD CALLBACK ThreadEntrypoint(void* pvParam);
 	DWORD ThreadEntry();
 
 public:
