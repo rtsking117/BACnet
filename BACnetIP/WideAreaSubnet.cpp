@@ -45,6 +45,73 @@ BACnetResult WideAreaSubnet::WriteBVLL(sockaddr_in to, U8 messageid, CObjectPtr<
 	return BC_OK;
 }
 
+BACnetResult WideAreaSubnet::StartListenerThread()
+{
+	return Listener->Start();
+}
+
+BACnetResult WideAreaSubnet::StopListenerThread()
+{
+	Listener->Cancel();
+	if (BCE_FAILED(WaitForObject(Listener, 10000)))
+	{
+		//problem.
+		Listener->Terminate(BCNRESULT_FROM_SYSTEM(ERROR_DBG_TERMINATE_THREAD));
+	}
+	return Listener->GetExitCode();
+}
+
+
+BACnetResult WideAreaSubnet::SendCommandAndWait(sockaddr_in to, U8 messageid, U8* pBuffer, U16 BufferLength, U16& ResponseCode)
+{
+	ResponseCode = 0;
+	if (HasPendingCommand)
+	{
+		return BCE_BVLC_COMMAND_PENDING;
+	}
+	HasPendingCommand = true;
+	HasResponse->Reset();
+	BACnetResult r = WriteBVLL(to, messageid, pBuffer, BufferLength);
+	if (BCE_FAILED(r))
+	{
+		HasPendingCommand = false;
+		return r;
+	}
+	CObjectPtr<IBACnetWaitableObject> o[] = { Listener->GetCancellationEvent(), HasResponse };
+	U32 object = 0;
+	r = WaitForObjects(o, object, false);
+	if (BCE_FAILED(r))
+	{
+		HasPendingCommand = false;
+		return r;
+	}
+	if (object == 0)
+	{
+		//canceled.  <<<<< I think you can tell where I'm from with this.
+		HasPendingCommand = false;
+		return BCE_OPERATION_CANCELED;
+	}
+	//not an error, not a cancellation. Only option - we got back a response!
+	ResponseCode = AsyncResultCode;
+	HasPendingCommand = false;
+	return BC_OK;
+}
+
+BACnetResult WideAreaSubnet::SignalCommandResponse(U16 ResponseCode)
+{
+	//a command must be pending to signal a response to another thread.
+	if (!HasPendingCommand)
+	{
+		//we don't actually care about this return code.
+		return BCE_BVLC_NO_PENDING_COMMAND;
+	}
+	//store aside the response code.
+	AsyncResultCode = ResponseCode;
+	//and wake up the waiting thread.
+	HasResponse->Set();
+	return BC_OK;
+}
+
 BACnetResult WideAreaSubnet::ListenerThread(CObjectPtr<IBACnetThread> thread)
 {
 	static U8 bvll[4] = { 0 };
@@ -299,12 +366,22 @@ BACnetResult WideAreaSubnet::RemoveReceiverCallback()
 
 BACnetResult WideAreaSubnet::Start()
 {
-	return BACnetResult();
+	if (RXCallback == nullptr)
+	{
+		return BCE_NOT_INITIALIZED;
+	}
+	//Start listener thread.
+	BACnetResult r = StartListenerThread();
+	if (BCE_FAILED(r))
+	{
+		return r;
+	}
+	return BC_OK;
 }
 
 BACnetResult WideAreaSubnet::Stop()
 {
-	return BACnetResult();
+	return StopListenerThread();
 }
 
 CObjectPtr<IBACnetIPAddress> WideAreaSubnet::CreateIPAddress(const U8 * const pIpAddress, U16 usPort, const U8 * const pSubnetMask) const
