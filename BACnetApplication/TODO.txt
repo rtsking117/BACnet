@@ -279,11 +279,12 @@ Optimal layout:
 		u32 Selection
 
 	BACnetSequence:
-		BACnetSequenceElement<T, true> v1;
-		BACnetSequenceElement<U> v2;
-		BACnetSequenceElement<V, true> v3;
-		BACnetSequenceElement<W> v4;
-		...
+		BACnetSequenceStorage:
+			BACnetSequenceElement<T, true> v1;
+			BACnetSequenceElement<U> v2;
+			BACnetSequenceElement<V, true> v3;
+			BACnetSequenceElement<W> v4;
+			...
 		bool Isv1Present;
 		bool Isv3Present;
-
+		...

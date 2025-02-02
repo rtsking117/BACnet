@@ -46,12 +46,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)BACnet;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)BACnet;$(ProjectDir)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)BACnet;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)BACnet;$(ProjectDir)Include;$(IncludePath)</IncludePath>
     <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -91,33 +91,153 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ASN1.h" />
-    <ClInclude Include="BACnetAPDU.h" />
-    <ClInclude Include="BACnetApplication.h" />
-    <ClInclude Include="BACnetEnum.h" />
-    <ClInclude Include="BACnetError.h" />
-    <ClInclude Include="BACnetValue.h" />
+    <ClInclude Include="Include\APDU\BACnetAPDU.h" />
+    <ClInclude Include="Include\BasicASN1.h" />
+    <ClInclude Include="Include\ComplexASN1.h" />
+    <ClInclude Include="Include/BACnetApplication.h" />
+    <ClInclude Include="Include/BACnetEnum.h" />
+    <ClInclude Include="Include/BACnetError.h" />
+    <ClInclude Include="Include/BACnetValue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ASN1.cpp" />
     <ClCompile Include="BACnetValue.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Include\APDU\NetworkSecurity\BACnetNetworkSecurityPolicy.inl" />
     <Text Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="BACnetAccessControlTypes.inl" />
-    <None Include="BACnetAlarmAndEventServices.inl" />
-    <None Include="BACnetBasicTypes.inl" />
-    <None Include="BACnetComplexTypes.inl" />
-    <None Include="BACnetAlarmAndEventTypes.inl" />
-    <None Include="BACnetErrorTypes.inl" />
-    <None Include="BACnetFileServices.inl" />
-    <None Include="BACnetObjectAccessServices.inl" />
-    <None Include="BACnetPropertyTypes.inl" />
-    <None Include="BACnetRemoteDeviceManagementServices.inl" />
-    <None Include="BACnetScheduleTypes.inl" />
-    <None Include="BACnetVirtualTerminalServices.inl" />
+    <None Include="Include\APDU\AccessControl\BACnetAccessRule.inl" />
+    <None Include="Include\APDU\AccessControl\BACnetAssignedAccessRights.inl" />
+    <None Include="Include\APDU\AccessControl\BACnetAuthenticationFactor.inl" />
+    <None Include="Include\APDU\AccessControl\BACnetAuthenticationFactorFormat.inl" />
+    <None Include="Include\APDU\AccessControl\BACnetAuthenticationPolicy.inl" />
+    <None Include="Include\APDU\AccessControl\BACnetCredentialAuthenticationFactor.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\AcknowledgeAlarmRequest.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetClientCOV.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetCOVMultipleSubscription.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetCOVNotification.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetCOVSubscription.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetDestination.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetEventNotificationSubscription.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetEventParameter.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetFaultParameter.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetLogData.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetLogMultipleRecord.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetLogRecord.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetNotificationParameters.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetPortPermission.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetRecipient.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetRecipientProcess.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\ConfirmedCOVNotificationMultipleRequest.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\ConfirmedCOVNotificationRequest.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\ConfirmedEventNotificationRequest.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\BACnetEventLogRecord.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\GetAlarmSummaryResponse.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\GetEnrollmentSummaryRequest.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\GetEnrollmentSummaryResponse.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\GetEventInformationRequest.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\GetEventInformationResponse.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\LifeSafetyOperationRequest.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\SubscribeCOVPropertyMultipleRequest.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\SubscribeCOVPropertyRequest.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\SubscribeCOVRequest.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\UnconfirmedCOVNotificationMultipleRequest.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\UnconfirmedCOVNotificationRequest.inl" />
+    <None Include="Include\APDU\AlarmAndEvent\UnconfirmedEventNotificationRequest.inl" />
+    <None Include="Include\APDU\Common\BACnetAccumulatorRecord.inl" />
+    <None Include="Include\APDU\Common\BACnetActionCommand.inl" />
+    <None Include="Include\APDU\Common\BACnetActionList.inl" />
+    <None Include="Include\APDU\Common\BACnetBasicTypes.inl" />
+    <None Include="Include\APDU\Common\BACnetDateTime.inl" />
+    <None Include="Include\APDU\Common\BACnetEnumeratedTypes.inl" />
+    <None Include="Include\APDU\Common\BACnetLightingCommand.inl" />
+    <None Include="Include\APDU\Common\BACnetNamedTypes.inl" />
+    <None Include="Include\APDU\Common\BACnetNameValue.inl" />
+    <None Include="Include\APDU\Common\BACnetNameValueCollection.inl" />
+    <None Include="Include\APDU\Common\BACnetOptionalBinaryPV.inl" />
+    <None Include="Include\APDU\Common\BACnetOptionalCharacterString.inl" />
+    <None Include="Include\APDU\Common\BACnetOptionalReal.inl" />
+    <None Include="Include\APDU\Common\BACnetOptionalUnsigned.inl" />
+    <None Include="Include\APDU\Common\BACnetPrescale.inl" />
+    <None Include="Include\APDU\Common\BACnetProcessIDSelection.inl" />
+    <None Include="Include\APDU\Common\BACnetScale.inl" />
+    <None Include="Include\APDU\Common\BACnetShedLevel.inl" />
+    <None Include="Include\APDU\Common\BACnetTimerStateChangeValue.inl" />
+    <None Include="Include\APDU\Common\BACnetTimeStamp.inl" />
+    <None Include="Include\APDU\Elevators\BACnetAssignedLandingCalls.inl" />
+    <None Include="Include\APDU\Elevators\BACnetLandingCallStatus.inl" />
+    <None Include="Include\APDU\Elevators\BACnetLandingDoorStatus.inl" />
+    <None Include="Include\APDU\Elevators\BACnetLiftCarCallState.inl" />
+    <None Include="Include\APDU\Files\ReadFileRequest.inl" />
+    <None Include="Include\APDU\Files\ReadFileResponse.inl" />
+    <None Include="Include\APDU\Files\WriteFileRequest.inl" />
+    <None Include="Include\APDU\Files\WriteFileResponse.inl" />
+    <None Include="Include\APDU\Networking\BACnetAddress.inl" />
+    <None Include="Include\APDU\Networking\BACnetAddressBinding.inl" />
+    <None Include="Include\APDU\Networking\BACnetBDTEntry.inl" />
+    <None Include="Include\APDU\Networking\BACnetFDTEntry.inl" />
+    <None Include="Include\APDU\Networking\BACnetHostAddress.inl" />
+    <None Include="Include\APDU\Networking\BACnetHostAndPort.inl" />
+    <None Include="Include\APDU\Networking\BACnetRouterEntry.inl" />
+    <None Include="Include\APDU\Networking\BACnetVMACEntry.inl" />
+    <None Include="Include\APDU\NetworkSecurity\BACnetKeyIdentifier.inl" />
+    <None Include="Include\APDU\NetworkSecurity\BACnetSecurityKeySet.inl" />
+    <None Include="Include\APDU\ObjectAccess\AddListElementRequest.inl" />
+    <None Include="Include\APDU\ObjectAccess\CreateObjectRequest.inl" />
+    <None Include="Include\APDU\ObjectAccess\CreateObjectResponse.inl" />
+    <None Include="Include\APDU\ObjectAccess\DeleteObjectRequest.inl" />
+    <None Include="Include\APDU\ObjectAccess\ReadPropertyMultipleRequest.inl" />
+    <None Include="Include\APDU\ObjectAccess\ReadPropertyMultipleResponse.inl" />
+    <None Include="Include\APDU\ObjectAccess\ReadPropertyRequest.inl" />
+    <None Include="Include\APDU\ObjectAccess\ReadPropertyResponse.inl" />
+    <None Include="Include\APDU\ObjectAccess\ReadRangeRequest.inl" />
+    <None Include="Include\APDU\ObjectAccess\ReadRangeResponse.inl" />
+    <None Include="Include\APDU\ObjectAccess\RemoveListElementRequest.inl" />
+    <None Include="Include\APDU\ObjectAccess\WriteGroupRequest.inl" />
+    <None Include="Include\APDU\ObjectAccess\WritePropertyMultipleRequest.inl" />
+    <None Include="Include\APDU\ObjectAccess\WritePropertyRequest.inl" />
+    <None Include="Include\APDU\PropertyAccess\BACnetDeviceObjectPropertyReference.inl" />
+    <None Include="Include\APDU\PropertyAccess\BACnetDeviceObjectPropertyValue.inl" />
+    <None Include="Include\APDU\PropertyAccess\BACnetDeviceObjectReference.inl" />
+    <None Include="Include\APDU\PropertyAccess\BACnetGroupChannelValue.inl" />
+    <None Include="Include\APDU\PropertyAccess\BACnetObjectPropertyReference.inl" />
+    <None Include="Include\APDU\PropertyAccess\BACnetObjectPropertyValue.inl" />
+    <None Include="Include\APDU\PropertyAccess\BACnetPriorityArray.inl" />
+    <None Include="Include\APDU\PropertyAccess\BACnetPriorityValue.inl" />
+    <None Include="Include\APDU\PropertyAccess\BACnetPropertyAccessResult.inl" />
+    <None Include="Include\APDU\PropertyAccess\BACnetPropertyReference.inl" />
+    <None Include="Include\APDU\PropertyAccess\BACnetPropertyStates.inl" />
+    <None Include="Include\APDU\PropertyAccess\BACnetPropertyValue.inl" />
+    <None Include="Include\APDU\PropertyAccess\BACnetSetpointReference.inl" />
+    <None Include="Include\APDU\PropertyAccess\ReadAccessResult.inl" />
+    <None Include="Include\APDU\PropertyAccess\ReadAccessSpecification.inl" />
+    <None Include="Include\APDU\PropertyAccess\WriteAccessSpecification.inl" />
+    <None Include="Include\APDU\RemoteDevices\ConfirmedPrivateTransferRequest.inl" />
+    <None Include="Include\APDU\RemoteDevices\ConfirmedPrivateTransferResponse.inl" />
+    <None Include="Include\APDU\RemoteDevices\ConfirmedTextMessageRequest.inl" />
+    <None Include="Include\APDU\RemoteDevices\DeviceCommunicationControlRequest.inl" />
+    <None Include="Include\APDU\RemoteDevices\IAmRequest.inl" />
+    <None Include="Include\APDU\RemoteDevices\IHaveRequest.inl" />
+    <None Include="Include\APDU\RemoteDevices\ReinitializeDeviceRequest.inl" />
+    <None Include="Include\APDU\RemoteDevices\TimeSynchronizationRequest.inl" />
+    <None Include="Include\APDU\RemoteDevices\UnconfirmedPrivateTransferRequest.inl" />
+    <None Include="Include\APDU\RemoteDevices\UnconfirmedTextMessageRequest.inl" />
+    <None Include="Include\APDU\RemoteDevices\UTCTimeSynchronizationRequest.inl" />
+    <None Include="Include\APDU\RemoteDevices\WhoHasRequest.inl" />
+    <None Include="Include\APDU\RemoteDevices\WhoIsRequest.inl" />
+    <None Include="Include\APDU\Schedules\BACnetCalendarEntry.inl" />
+    <None Include="Include\APDU\Schedules\BACnetDailySchedule.inl" />
+    <None Include="Include\APDU\Schedules\BACnetDateRange.inl" />
+    <None Include="Include\APDU\Schedules\BACnetSpecialEvent.inl" />
+    <None Include="Include\APDU\Schedules\BACnetTimeValue.inl" />
+    <None Include="Include\APDU\VirtualTerminal\BACnetVTSession.inl" />
+    <None Include="Include\APDU\VirtualTerminal\VTCloseRequest.inl" />
+    <None Include="Include\APDU\VirtualTerminal\VTDataRequest.inl" />
+    <None Include="Include\APDU\VirtualTerminal\VTDataResponse.inl" />
+    <None Include="Include\APDU\VirtualTerminal\VTOpenRequest.inl" />
+    <None Include="Include\APDU\VirtualTerminal\VTOpenResponse.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

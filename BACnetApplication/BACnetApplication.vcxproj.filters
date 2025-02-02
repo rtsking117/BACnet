@@ -22,25 +22,73 @@
     <Filter Include="Header Files\Public\APDU">
       <UniqueIdentifier>{fdff6d24-417e-4446-9a36-c009567a5c3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Public\APDU\Common">
+      <UniqueIdentifier>{8cc3a047-cb57-4a17-a54e-7586a3c136b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\Property Access">
+      <UniqueIdentifier>{62ab066a-b0bd-4542-9c18-48aea0abb7b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\Access Control">
+      <UniqueIdentifier>{d1c27e90-6fa1-40f3-bf91-caed20badca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\Virtual Terminal">
+      <UniqueIdentifier>{dfd8cec6-474a-49f1-8a85-ca61e811fdd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\Remote Device Management">
+      <UniqueIdentifier>{95f0e67f-d7f5-41cd-bb8b-2f72e494928d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\Networking">
+      <UniqueIdentifier>{b8628b26-5074-47b4-8868-f5d5abf5e9e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\Object Access">
+      <UniqueIdentifier>{83524457-cd28-41c7-8aa1-9a386da722c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\File Access">
+      <UniqueIdentifier>{c672e499-e54e-450b-89ae-7df1d16cad3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\Alarm &amp; Event">
+      <UniqueIdentifier>{c41d3b0d-acd3-4ed4-bdfd-c20676582248}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\Alarm &amp; Event\Services">
+      <UniqueIdentifier>{751b07de-a455-4b40-bd18-761042b5e6e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\Alarm &amp; Event\Types">
+      <UniqueIdentifier>{6c2d8b73-d8c1-4d18-91c7-5e922c28971b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\Schedules">
+      <UniqueIdentifier>{fceb0c71-9ded-463a-a461-7810146372a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\Network Security">
+      <UniqueIdentifier>{71b10ae1-1f72-4db3-bc0b-4d952242882e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\Elevators">
+      <UniqueIdentifier>{607b7b8c-c85a-4a7d-93ec-4e0fa5b9da57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Public\APDU\Common\Miscellaneous">
+      <UniqueIdentifier>{2b00dfd7-88d4-438e-b146-db4d8d881c69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BACnetApplication.h">
+    <ClInclude Include="Include\BasicASN1.h">
       <Filter>Header Files\Public</Filter>
     </ClInclude>
-    <ClInclude Include="BACnetValue.h">
+    <ClInclude Include="Include\ComplexASN1.h">
       <Filter>Header Files\Public</Filter>
     </ClInclude>
-    <ClInclude Include="ASN1.h">
+    <ClInclude Include="Include/BACnetApplication.h">
       <Filter>Header Files\Public</Filter>
     </ClInclude>
-    <ClInclude Include="BACnetError.h">
+    <ClInclude Include="Include/BACnetEnum.h">
       <Filter>Header Files\Public</Filter>
     </ClInclude>
-    <ClInclude Include="BACnetEnum.h">
+    <ClInclude Include="Include/BACnetError.h">
       <Filter>Header Files\Public</Filter>
     </ClInclude>
-    <ClInclude Include="BACnetAPDU.h">
+    <ClInclude Include="Include/BACnetValue.h">
       <Filter>Header Files\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\APDU\BACnetAPDU.h">
+      <Filter>Header Files\Public\APDU</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -53,43 +101,400 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />
+    <Text Include="Include\APDU\NetworkSecurity\BACnetNetworkSecurityPolicy.inl">
+      <Filter>Header Files\Public\APDU\Network Security</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
-    <None Include="BACnetBasicTypes.inl">
-      <Filter>Header Files\Public\APDU</Filter>
+    <None Include="Include\APDU\PropertyAccess\BACnetDeviceObjectPropertyReference.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
     </None>
-    <None Include="BACnetPropertyTypes.inl">
-      <Filter>Header Files\Public\APDU</Filter>
+    <None Include="Include\APDU\PropertyAccess\BACnetDeviceObjectPropertyValue.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
     </None>
-    <None Include="BACnetFileServices.inl">
-      <Filter>Header Files\Public\APDU</Filter>
+    <None Include="Include\APDU\PropertyAccess\BACnetDeviceObjectReference.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
     </None>
-    <None Include="BACnetObjectAccessServices.inl">
-      <Filter>Header Files\Public\APDU</Filter>
+    <None Include="Include\APDU\PropertyAccess\BACnetGroupChannelValue.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
     </None>
-    <None Include="BACnetRemoteDeviceManagementServices.inl">
-      <Filter>Header Files\Public\APDU</Filter>
+    <None Include="Include\APDU\PropertyAccess\BACnetObjectPropertyReference.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
     </None>
-    <None Include="BACnetVirtualTerminalServices.inl">
-      <Filter>Header Files\Public\APDU</Filter>
+    <None Include="Include\APDU\PropertyAccess\BACnetObjectPropertyValue.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
     </None>
-    <None Include="BACnetErrorTypes.inl">
-      <Filter>Header Files\Public\APDU</Filter>
+    <None Include="Include\APDU\PropertyAccess\BACnetPropertyAccessResult.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
     </None>
-    <None Include="BACnetComplexTypes.inl">
-      <Filter>Header Files\Public\APDU</Filter>
+    <None Include="Include\APDU\PropertyAccess\BACnetPropertyReference.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
     </None>
-    <None Include="BACnetAccessControlTypes.inl">
-      <Filter>Header Files\Public\APDU</Filter>
+    <None Include="Include\APDU\PropertyAccess\BACnetPropertyStates.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
     </None>
-    <None Include="BACnetScheduleTypes.inl">
-      <Filter>Header Files\Public\APDU</Filter>
+    <None Include="Include\APDU\PropertyAccess\BACnetPropertyValue.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
     </None>
-    <None Include="BACnetAlarmAndEventServices.inl">
-      <Filter>Header Files\Public\APDU</Filter>
+    <None Include="Include\APDU\PropertyAccess\BACnetSetpointReference.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
     </None>
-    <None Include="BACnetAlarmAndEventTypes.inl">
-      <Filter>Header Files\Public\APDU</Filter>
+    <None Include="Include\APDU\PropertyAccess\ReadAccessResult.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
+    </None>
+    <None Include="Include\APDU\PropertyAccess\ReadAccessSpecification.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
+    </None>
+    <None Include="Include\APDU\PropertyAccess\WriteAccessSpecification.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetBasicTypes.inl">
+      <Filter>Header Files\Public\APDU\Common</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetEnumeratedTypes.inl">
+      <Filter>Header Files\Public\APDU\Common</Filter>
+    </None>
+    <None Include="Include\APDU\VirtualTerminal\BACnetVTSession.inl">
+      <Filter>Header Files\Public\APDU\Virtual Terminal</Filter>
+    </None>
+    <None Include="Include\APDU\VirtualTerminal\VTCloseRequest.inl">
+      <Filter>Header Files\Public\APDU\Virtual Terminal</Filter>
+    </None>
+    <None Include="Include\APDU\VirtualTerminal\VTDataRequest.inl">
+      <Filter>Header Files\Public\APDU\Virtual Terminal</Filter>
+    </None>
+    <None Include="Include\APDU\VirtualTerminal\VTDataResponse.inl">
+      <Filter>Header Files\Public\APDU\Virtual Terminal</Filter>
+    </None>
+    <None Include="Include\APDU\VirtualTerminal\VTOpenRequest.inl">
+      <Filter>Header Files\Public\APDU\Virtual Terminal</Filter>
+    </None>
+    <None Include="Include\APDU\VirtualTerminal\VTOpenResponse.inl">
+      <Filter>Header Files\Public\APDU\Virtual Terminal</Filter>
+    </None>
+    <None Include="Include\APDU\RemoteDevices\ConfirmedPrivateTransferRequest.inl">
+      <Filter>Header Files\Public\APDU\Remote Device Management</Filter>
+    </None>
+    <None Include="Include\APDU\RemoteDevices\ConfirmedPrivateTransferResponse.inl">
+      <Filter>Header Files\Public\APDU\Remote Device Management</Filter>
+    </None>
+    <None Include="Include\APDU\RemoteDevices\ConfirmedTextMessageRequest.inl">
+      <Filter>Header Files\Public\APDU\Remote Device Management</Filter>
+    </None>
+    <None Include="Include\APDU\RemoteDevices\DeviceCommunicationControlRequest.inl">
+      <Filter>Header Files\Public\APDU\Remote Device Management</Filter>
+    </None>
+    <None Include="Include\APDU\RemoteDevices\IAmRequest.inl">
+      <Filter>Header Files\Public\APDU\Remote Device Management</Filter>
+    </None>
+    <None Include="Include\APDU\RemoteDevices\IHaveRequest.inl">
+      <Filter>Header Files\Public\APDU\Remote Device Management</Filter>
+    </None>
+    <None Include="Include\APDU\RemoteDevices\ReinitializeDeviceRequest.inl">
+      <Filter>Header Files\Public\APDU\Remote Device Management</Filter>
+    </None>
+    <None Include="Include\APDU\RemoteDevices\TimeSynchronizationRequest.inl">
+      <Filter>Header Files\Public\APDU\Remote Device Management</Filter>
+    </None>
+    <None Include="Include\APDU\RemoteDevices\UnconfirmedPrivateTransferRequest.inl">
+      <Filter>Header Files\Public\APDU\Remote Device Management</Filter>
+    </None>
+    <None Include="Include\APDU\RemoteDevices\UnconfirmedTextMessageRequest.inl">
+      <Filter>Header Files\Public\APDU\Remote Device Management</Filter>
+    </None>
+    <None Include="Include\APDU\RemoteDevices\UTCTimeSynchronizationRequest.inl">
+      <Filter>Header Files\Public\APDU\Remote Device Management</Filter>
+    </None>
+    <None Include="Include\APDU\RemoteDevices\WhoHasRequest.inl">
+      <Filter>Header Files\Public\APDU\Remote Device Management</Filter>
+    </None>
+    <None Include="Include\APDU\RemoteDevices\WhoIsRequest.inl">
+      <Filter>Header Files\Public\APDU\Remote Device Management</Filter>
+    </None>
+    <None Include="Include\APDU\Networking\BACnetAddress.inl">
+      <Filter>Header Files\Public\APDU\Networking</Filter>
+    </None>
+    <None Include="Include\APDU\Networking\BACnetAddressBinding.inl">
+      <Filter>Header Files\Public\APDU\Networking</Filter>
+    </None>
+    <None Include="Include\APDU\Networking\BACnetBDTEntry.inl">
+      <Filter>Header Files\Public\APDU\Networking</Filter>
+    </None>
+    <None Include="Include\APDU\Networking\BACnetFDTEntry.inl">
+      <Filter>Header Files\Public\APDU\Networking</Filter>
+    </None>
+    <None Include="Include\APDU\Networking\BACnetHostAddress.inl">
+      <Filter>Header Files\Public\APDU\Networking</Filter>
+    </None>
+    <None Include="Include\APDU\Networking\BACnetHostAndPort.inl">
+      <Filter>Header Files\Public\APDU\Networking</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\AddListElementRequest.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\CreateObjectRequest.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\CreateObjectResponse.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\DeleteObjectRequest.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\ReadPropertyMultipleRequest.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\ReadPropertyMultipleResponse.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\ReadPropertyRequest.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\ReadPropertyResponse.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\ReadRangeRequest.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\ReadRangeResponse.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\RemoveListElementRequest.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\WriteGroupRequest.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\WritePropertyMultipleRequest.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\ObjectAccess\WritePropertyRequest.inl">
+      <Filter>Header Files\Public\APDU\Object Access</Filter>
+    </None>
+    <None Include="Include\APDU\Files\ReadFileRequest.inl">
+      <Filter>Header Files\Public\APDU\File Access</Filter>
+    </None>
+    <None Include="Include\APDU\Files\ReadFileResponse.inl">
+      <Filter>Header Files\Public\APDU\File Access</Filter>
+    </None>
+    <None Include="Include\APDU\Files\WriteFileRequest.inl">
+      <Filter>Header Files\Public\APDU\File Access</Filter>
+    </None>
+    <None Include="Include\APDU\Files\WriteFileResponse.inl">
+      <Filter>Header Files\Public\APDU\File Access</Filter>
+    </None>
+    <None Include="Include\APDU\AccessControl\BACnetAccessRule.inl">
+      <Filter>Header Files\Public\APDU\Access Control</Filter>
+    </None>
+    <None Include="Include\APDU\AccessControl\BACnetAssignedAccessRights.inl">
+      <Filter>Header Files\Public\APDU\Access Control</Filter>
+    </None>
+    <None Include="Include\APDU\AccessControl\BACnetAuthenticationFactor.inl">
+      <Filter>Header Files\Public\APDU\Access Control</Filter>
+    </None>
+    <None Include="Include\APDU\AccessControl\BACnetAuthenticationFactorFormat.inl">
+      <Filter>Header Files\Public\APDU\Access Control</Filter>
+    </None>
+    <None Include="Include\APDU\AccessControl\BACnetAuthenticationPolicy.inl">
+      <Filter>Header Files\Public\APDU\Access Control</Filter>
+    </None>
+    <None Include="Include\APDU\AccessControl\BACnetCredentialAuthenticationFactor.inl">
+      <Filter>Header Files\Public\APDU\Access Control</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\AcknowledgeAlarmRequest.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\ConfirmedCOVNotificationMultipleRequest.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\ConfirmedCOVNotificationRequest.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\ConfirmedEventNotificationRequest.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\GetAlarmSummaryResponse.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\GetEnrollmentSummaryRequest.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\GetEnrollmentSummaryResponse.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\GetEventInformationRequest.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\GetEventInformationResponse.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\LifeSafetyOperationRequest.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\SubscribeCOVPropertyMultipleRequest.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\SubscribeCOVPropertyRequest.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\SubscribeCOVRequest.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\UnconfirmedCOVNotificationMultipleRequest.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\UnconfirmedCOVNotificationRequest.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\UnconfirmedEventNotificationRequest.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Services</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetEventLogRecord.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetNotificationParameters.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetDateTime.inl">
+      <Filter>Header Files\Public\APDU\Common</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetTimeStamp.inl">
+      <Filter>Header Files\Public\APDU\Common</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetCOVNotification.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetRecipient.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetRecipientProcess.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetClientCOV.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetEventNotificationSubscription.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetEventParameter.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetCOVMultipleSubscription.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetCOVSubscription.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetFaultParameter.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetLogData.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetLogMultipleRecord.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetLogRecord.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\Schedules\BACnetCalendarEntry.inl">
+      <Filter>Header Files\Public\APDU\Schedules</Filter>
+    </None>
+    <None Include="Include\APDU\Schedules\BACnetDailySchedule.inl">
+      <Filter>Header Files\Public\APDU\Schedules</Filter>
+    </None>
+    <None Include="Include\APDU\Schedules\BACnetDateRange.inl">
+      <Filter>Header Files\Public\APDU\Schedules</Filter>
+    </None>
+    <None Include="Include\APDU\Schedules\BACnetSpecialEvent.inl">
+      <Filter>Header Files\Public\APDU\Schedules</Filter>
+    </None>
+    <None Include="Include\APDU\Schedules\BACnetTimeValue.inl">
+      <Filter>Header Files\Public\APDU\Schedules</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetNamedTypes.inl">
+      <Filter>Header Files\Public\APDU\Common</Filter>
+    </None>
+    <None Include="Include\APDU\Networking\BACnetVMACEntry.inl">
+      <Filter>Header Files\Public\APDU\Networking</Filter>
+    </None>
+    <None Include="Include\APDU\Networking\BACnetRouterEntry.inl">
+      <Filter>Header Files\Public\APDU\Networking</Filter>
+    </None>
+    <None Include="Include\APDU\NetworkSecurity\BACnetKeyIdentifier.inl">
+      <Filter>Header Files\Public\APDU\Network Security</Filter>
+    </None>
+    <None Include="Include\APDU\NetworkSecurity\BACnetSecurityKeySet.inl">
+      <Filter>Header Files\Public\APDU\Network Security</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetDestination.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
+    </None>
+    <None Include="Include\APDU\Elevators\BACnetAssignedLandingCalls.inl">
+      <Filter>Header Files\Public\APDU\Elevators</Filter>
+    </None>
+    <None Include="Include\APDU\Elevators\BACnetLandingCallStatus.inl">
+      <Filter>Header Files\Public\APDU\Elevators</Filter>
+    </None>
+    <None Include="Include\APDU\Elevators\BACnetLandingDoorStatus.inl">
+      <Filter>Header Files\Public\APDU\Elevators</Filter>
+    </None>
+    <None Include="Include\APDU\Elevators\BACnetLiftCarCallState.inl">
+      <Filter>Header Files\Public\APDU\Elevators</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetAccumulatorRecord.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetActionCommand.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetActionList.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetNameValue.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetNameValueCollection.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetOptionalBinaryPV.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetOptionalCharacterString.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetOptionalReal.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetOptionalUnsigned.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetPrescale.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetScale.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetShedLevel.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetLightingCommand.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetProcessIDSelection.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\Common\BACnetTimerStateChangeValue.inl">
+      <Filter>Header Files\Public\APDU\Common\Miscellaneous</Filter>
+    </None>
+    <None Include="Include\APDU\PropertyAccess\BACnetPriorityArray.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
+    </None>
+    <None Include="Include\APDU\PropertyAccess\BACnetPriorityValue.inl">
+      <Filter>Header Files\Public\APDU\Property Access</Filter>
+    </None>
+    <None Include="Include\APDU\AlarmAndEvent\BACnetPortPermission.inl">
+      <Filter>Header Files\Public\APDU\Alarm &amp; Event\Types</Filter>
     </None>
   </ItemGroup>
 </Project>
